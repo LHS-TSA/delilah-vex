@@ -29,6 +29,44 @@ int slowModePercent = 4;        // Percent to reduce forward motion 4 = 1/4
 int slowModePercentSide = 3;    // Percent to recude sideways motion 3 = 1/3
 int jsThreshold = 25; 					// Minimum amount for joystick register movement
 
+// SECTION: Movement Functions
+
+void mvtForwardLeft(short speed) {
+  if (slowMode) { speed = speed / slowModePercent; }
+
+  if (!isFlipped) {
+    motor[leftFront] = -speed;
+  } else {
+    motor[rightFront] = -speed;
+  }
+}
+
+void mvtForwardRight(short speed) {
+  if (slowMode) { speed = speed / slowModePercent; }
+
+  if (!isFlipped) {
+    motor[rightFront] = speed;
+  } else {
+    motor[leftFront] = speed;
+  }
+}
+
+void mvtSide(short speed) {
+  if (isFlipped) { speed = -speed; }
+  if (slowMode) { speed = speed / slowModePercentSide; }
+  motor[sideMotor] = speed;
+}
+
+void mvtHighHang(short speed) {
+	if (speed < 0 && SensorValue(armSwitch) != 0) {
+		motor[armLeft] = 0;
+		motor[armRight] = 0;
+	} else {
+		motor[armLeft] = speed;
+  	motor[armRight] = -speed;
+  }
+}
+
 // Pre-Autonomous Functions
 void pre_auton()
 {
