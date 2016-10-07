@@ -67,6 +67,53 @@ void mvtHighHang(short speed) {
   }
 }
 
+// SECTION: Controller Functions
+
+// Flip sides
+void testBtn8D() {
+  while (vexRT[Btn8D]) {
+    wait1Msec(250);
+    isFlipped = !isFlipped;
+    if (isFlipped) { SensorValue[ledRed] = 1; } else { SensorValue[ledRed] = 0;	}
+  }
+}
+
+// Toggle slowMode
+void testBtn8R() {
+  while (vexRT[Btn8R]) {
+    wait1Msec(250);
+    slowMode = !slowMode;
+    if (slowMode) { SensorValue[ledGreen] = 1; } else { SensorValue[ledGreen] = 0;	}
+  }
+}
+
+void testJoysticks() {
+  // Joysticks
+  if (vexRT[Ch3] <= -jsThreshold || vexRT[Ch3] >= jsThreshold) {
+    mvtForwardRight(vexRT[Ch3]);
+  } else {
+    mvtForwardRight(0);
+  }
+
+  if (vexRT[Ch2] <= -jsThreshold || vexRT[Ch2] >= jsThreshold) {
+    mvtForwardLeft(vexRT[Ch2]);
+  } else {
+    mvtForwardLeft(0);
+  }
+}
+
+void testSideMovement() {
+  while(vexRT[Btn6D]) { mvtSide(127); }
+  while(vexRT[Btn5D]) { mvtSide(-127); }
+  mvtSide(0);
+}
+
+void testHighHang() {
+  while(vexRT[Btn7U]) { mvtHighHang(127); }
+  while(vexRT[Btn7D]) { mvtHighHang(-127); }
+  mvtHighHang(0);
+}
+
 // Pre-Autonomous Functions
 void pre_auton()
 {
