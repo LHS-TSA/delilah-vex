@@ -115,12 +115,22 @@ void testHighHang() {
 }
 
 // Pre-Autonomous Functions
+// -> All activities that occur before the competition starts
 void pre_auton()
 {
   bStopTasksBetweenModes = true;
 
-  // All activities that occur before the competition starts
-  // Example: clearing encoders, setting servo positions, ...
+  // Slave Motors
+  slaveMotor(leftBack, leftFront);
+  slaveMotor(leftMid, leftFront);
+
+  slaveMotor(rightBack, rightFront);
+  slaveMotor(rightMid, rightFront);
+
+  // Turn off LEDs
+  SensorValue[ledRed] = 0;
+  SensorValue[ledGreen] = 0;
+
 }
 
 // Autonomous Task
@@ -137,14 +147,11 @@ task autonomous()
 // User Control Task
 task usercontrol()
 {
-  while (true)
-  {
-    // ........................................................................
-    // Insert user code here. This is where you use the joystick values to
-    // update your motors, etc.
-    // ........................................................................
-
-    // Remove this function call once you have "real" code.
-    UserControlCodePlaceholderForTesting();
-  }
+  while (true) {
+	  testBtn8D();
+    testBtn8R();
+		testJoysticks();
+		testSideMovement();
+		testHighHang();
+	}
 }
