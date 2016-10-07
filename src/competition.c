@@ -22,6 +22,13 @@
 //Main competition background code...do not modify!
 #include "Vex_Competition_Includes.c"
 
+// Global Variables
+bool isFlipped = false;					// Toggles front side
+bool slowMode = false;          // Reduces speed by below percents
+int slowModePercent = 4;        // Percent to reduce forward motion 4 = 1/4
+int slowModePercentSide = 3;    // Percent to recude sideways motion 3 = 1/3
+int jsThreshold = 25; 					// Minimum amount for joystick register movement
+
 // Pre-Autonomous Functions
 void pre_auton()
 {
