@@ -27,7 +27,7 @@ void mvtForwardLeft(short speed) {
   if (!isFlipped) {
     motor[leftFront] = -speed;
   } else {
-    motor[leftFront] = speed;
+    motor[rightFront] = -speed;
   }
 }
 
@@ -37,7 +37,7 @@ void mvtForwardRight(short speed) {
   if (!isFlipped) {
     motor[rightFront] = speed;
   } else {
-    motor[rightFront] = -speed;
+    motor[leftFront] = speed;
   }
 }
 
