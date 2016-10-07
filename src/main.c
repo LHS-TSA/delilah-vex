@@ -1,5 +1,6 @@
 #pragma config(Sensor, dgtl2,  ledRed,         sensorLEDtoVCC)
 #pragma config(Sensor, dgtl3,  ledGreen,       sensorLEDtoVCC)
+#pragma config(Sensor, dgtl4,  armSwitch,      sensorTouch)
 #pragma config(Motor,  port1,           rightFront,    tmotorVex393_HBridge, openLoop, driveRight)
 #pragma config(Motor,  port2,           rightMid,      tmotorVex393_MC29, openLoop, driveRight)
 #pragma config(Motor,  port3,           rightBack,     tmotorVex393_MC29, openLoop, driveRight)
@@ -17,6 +18,46 @@ bool slowMode = false;
 int slowModePercent = 4;
 int slowModePercentSide = 3;
 int jsThreshold = 25; 					// Minimum amount for joystick to move
+
+// SECTION: Movement Functions
+
+void mvtForwardLeft(short speed) {
+  if (slowMode) { speed = speed / slowModePercent; }
+
+  if (!isFlipped) {
+    motor[leftFront] = -speed;
+  } else {
+    motor[leftFront] = speed;
+  }
+}
+
+void mvtForwardRight(short speed) {
+  if (slowMode) { speed = speed / slowModePercent; }
+
+  if (!isFlipped) {
+    motor[rightFront] = speed;
+  } else {
+    motor[rightFront] = -speed;
+  }
+}
+
+void mvtSide(short speed) {
+  if (isFlipped) { speed = -speed; }
+  if (slowMode) { speed = speed / slowModePercentSide; }
+  motor[sideMotor] = speed;
+}
+
+void mvtHighHang(short speed) {
+	if (speed < 0 && SensorValue(armSwitch) != 0) {
+		motor[armLeft] = 0;
+		motor[armRight] = 0;
+	} else {
+		motor[armLeft] = speed;
+  	motor[armRight] = -speed;
+  }
+}
+
+// SECTION: Controller Functions
 
 // Flip sides
 void testBtn8D() {
@@ -36,71 +77,32 @@ void testBtn8R() {
   }
 }
 
-void movementNorm() {
+void testJoysticks() {
   // Joysticks
   if (vexRT[Ch3] <= -jsThreshold || vexRT[Ch3] >= jsThreshold) {
-    if (!slowMode) {motor[leftFront] = vexRT[Ch3]; } else {	motor[leftFront] = vexRT[Ch3] / slowModePercent; }
-    } else {
-    motor[leftFront] = 0;
+    mvtForwardRight(vexRT[Ch3]);
+  } else {
+    mvtForwardRight(0);
   }
 
   if (vexRT[Ch2] <= -jsThreshold || vexRT[Ch2] >= jsThreshold) {
-    if (!slowMode) {motor[rightFront] = -vexRT[Ch2]; } else {	motor[rightFront] = -vexRT[Ch2] / slowModePercent; }
-    } else {
-    motor[rightFront] = 0;
-  }
-
-  // Side Movement
-  if (!slowMode) {
-    while(vexRT[Btn6D]) { motor[sideMotor] = -127; }
-    while(vexRT[Btn5D]) { motor[sideMotor] = 127; }
+    mvtForwardLeft(vexRT[Ch2]);
   } else {
-    while(vexRT[Btn6D]) { motor[sideMotor] = -127 / slowModePercentSide; }
-    while(vexRT[Btn5D]) { motor[sideMotor] = 127 / slowModePercentSide; }
+    mvtForwardLeft(0);
   }
-  motor[sideMotor] = 0;
 }
 
-void movementFlip() {
-  // Joysticks
-  if (vexRT[Ch3] <= -jsThreshold || vexRT[Ch3] >= jsThreshold) {
-    if (!slowMode) {motor[rightFront] = vexRT[Ch3]; } else {	motor[rightFront] = vexRT[Ch3] / slowModePercent; }
-  } else {
-    motor[rightFront] = 0;
-  }
-
-  if (vexRT[Ch2] <= -jsThreshold || vexRT[Ch2] >= jsThreshold) {
-    if (!slowMode) {motor[leftFront] = -vexRT[Ch2]; } else {	motor[leftFront] = -vexRT[Ch2] / slowModePercent; }
-  } else {
-    motor[leftFront] = 0;
-  }
-
-  // Side Movement
-  if (!slowMode) {
-    while(vexRT[Btn6D]) { motor[sideMotor] = 127; }
-    while(vexRT[Btn5D]) { motor[sideMotor] = -127; }
-  } else {
-    while(vexRT[Btn6D]) { motor[sideMotor] = 127 / slowModePercentSide; }
-    while(vexRT[Btn5D]) { motor[sideMotor] = -127 / slowModePercentSide; }
-  }
-  motor[sideMotor] = 0;
+void testSideMovement() {
+  while(vexRT[Btn6D]) { mvtSide(127); }
+  while(vexRT[Btn5D]) { mvtSide(-127); }
+  mvtSide(0);
 }
 
-void highHang() {
-  while(vexRT[Btn7U]) {
-    motor[armLeft] = 127;
-    motor[armRight] = -127;
-  }
-
-  while(vexRT[Btn7D]) {
-    motor[armLeft] = -127;
-    motor[armRight] = 127;
-  }
-
-  motor[armLeft] = 0;
-  motor[armRight] = 0;
+void testHighHang() {
+  while(vexRT[Btn7U]) { mvtHighHang(127); }
+  while(vexRT[Btn7D]) { mvtHighHang(-127); }
+  mvtHighHang(0);
 }
-
 
 task main() {
 	//Slave Motors
@@ -116,7 +118,8 @@ task main() {
 	while (true) {
 	  testBtn8D();
     testBtn8R();
-		if (isFlipped) { movementNorm(); } else { movementFlip(); }
-		highHang();
+		testJoysticks();
+		testSideMovement();
+		testHighHang();
 	}
 }
