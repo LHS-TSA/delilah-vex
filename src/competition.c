@@ -70,7 +70,7 @@ void mvtHighHang(short speed) {
 // SECTION: Controller Functions
 
 // Flip sides
-void testBtn8D() {
+void ctlFlipSides() {
   while (vexRT[Btn8D]) {
     wait1Msec(250);
     isFlipped = !isFlipped;
@@ -79,7 +79,7 @@ void testBtn8D() {
 }
 
 // Toggle slowMode
-void testBtn8R() {
+void ctlSlowMode() {
   while (vexRT[Btn8R]) {
     wait1Msec(250);
     slowMode = !slowMode;
@@ -87,7 +87,7 @@ void testBtn8R() {
   }
 }
 
-void testJoysticks() {
+void ctlJoysticks() {
   // Joysticks
   if (vexRT[Ch3] <= -jsThreshold || vexRT[Ch3] >= jsThreshold) {
     mvtForwardRight(vexRT[Ch3]);
@@ -102,13 +102,13 @@ void testJoysticks() {
   }
 }
 
-void testSideMovement() {
+void ctlSideMovement() {
   while(vexRT[Btn6D]) { mvtSide(127); }
   while(vexRT[Btn5D]) { mvtSide(-127); }
   mvtSide(0);
 }
 
-void testHighHang() {
+void ctlHighHang() {
   while(vexRT[Btn7U]) { mvtHighHang(127); }
   while(vexRT[Btn7D]) { mvtHighHang(-127); }
   mvtHighHang(0);
@@ -148,10 +148,10 @@ task autonomous()
 task usercontrol()
 {
   while (true) {
-	  testBtn8D();
-    testBtn8R();
-		testJoysticks();
-		testSideMovement();
-		testHighHang();
+	  ctlFlipSides();
+    ctlSlowMode();
+		ctlJoysticks();
+		ctlSideMovement();
+		tctlHighHang();
 	}
 }
