@@ -116,8 +116,7 @@ void ctlHighHang() {
 
 // Pre-Autonomous Functions
 // -> All activities that occur before the competition starts
-void pre_auton()
-{
+void pre_auton() {
   bStopTasksBetweenModes = true;
 
   // Slave Motors
@@ -134,8 +133,7 @@ void pre_auton()
 }
 
 // Autonomous Task
-task autonomous()
-{
+task autonomous() {
   // ..........................................................................
   // Insert user code here.
   // ..........................................................................
@@ -145,8 +143,7 @@ task autonomous()
 }
 
 // User Control Task
-task usercontrol()
-{
+task usercontrol() {
   while (true) {
 	  ctlFlipSides();
     ctlSlowMode();
