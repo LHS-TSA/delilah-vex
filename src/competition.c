@@ -121,7 +121,13 @@ void logState() {
     writeDebugStreamLine("loopCount,leftMotor,rightMotor,sideMotor,highHang,slowMode,isFlipped");
   }
 
-  writeDebugStreamLine(loopCount + "," + motor[leftFront] + "," + motor[rightFront] + "," + motor[sideMotor] + "," + motor[armLeft] + "," + slowMode + "," + isFlipped);
+  writeDebugStream("%i", loopCount);
+  writeDebugStream(",%i",motor[leftFront]);
+  writeDebugStream(",%i", motor[rightFront]);
+  writeDebugStream(",%i",motor[sideMotor]);
+  writeDebugStream(",%i",motor[armLeft]);
+  writeDebugStream(",%b",slowMode);
+  writeDebugStream(",%b/n",isFlipped);
 }
 
 // Pre-Autonomous Functions
@@ -160,6 +166,6 @@ task usercontrol() {
     ctlSlowMode();
 		ctlJoysticks();
 		ctlSideMovement();
-		tctlHighHang();
+		ctlHighHang();
 	}
 }
