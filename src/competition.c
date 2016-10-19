@@ -128,6 +128,8 @@ void logState() {
   writeDebugStream(",%i",motor[armLeft]);
   writeDebugStream(",%b",slowMode);
   writeDebugStream(",%b/n",isFlipped);
+
+  loopCount++;
 }
 
 // Pre-Autonomous Functions
