@@ -28,6 +28,7 @@ bool slowMode = false;          // Reduces speed by below percents
 int slowModePercent = 4;        // Percent to reduce forward motion 4 = 1/4
 int slowModePercentSide = 3;    // Percent to recude sideways motion 3 = 1/3
 int jsThreshold = 25; 					// Minimum amount for joystick register movement
+unsigned int loopCount = 0;     // Debug counting
 
 // SECTION: Movement Functions
 
@@ -114,6 +115,15 @@ void ctlHighHang() {
   mvtHighHang(0);
 }
 
+void logState() {
+  // Debug Header
+  if (loopCount == 0) {
+    writeDebugStreamLine("loopCount,leftMotor,rightMotor,sideMotor,highHang,slowMode,isFlipped");
+  }
+
+  writeDebugStreamLine(loopCount + "," + motor[leftFront] + "," + motor[rightFront] + "," + motor[sideMotor] + "," + motor[armLeft] + "," + slowMode + "," + isFlipped);
+}
+
 // Pre-Autonomous Functions
 // -> All activities that occur before the competition starts
 void pre_auton() {
@@ -145,6 +155,7 @@ task autonomous() {
 // User Control Task
 task usercontrol() {
   while (true) {
+    logState();
 	  ctlFlipSides();
     ctlSlowMode();
 		ctlJoysticks();
