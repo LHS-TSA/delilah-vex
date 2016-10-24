@@ -32,6 +32,7 @@ int slowModePercent = 4;        // Percent to reduce forward motion (Default 4)
 int slowModePercentSide = 3;    // Percent to reduce sideways motion (Default 3)
 int jsThreshold = 25; 					// Minimum amount for joystick register movement
 int sidewaysForwardPercent = 6; // Percent to move forward when going sideways (Default 6)
+int shaftFullCycle = 392;       // Shaft encoder value at 1 revolution
 unsigned int loopCount = 0;     // Debug output counter
 
 // SECTION: Movement Functions
