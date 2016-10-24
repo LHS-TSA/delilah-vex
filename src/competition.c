@@ -80,15 +80,39 @@ void mvtSide(signed char speed) {
 
   if (speed < 0) {
     if (!isFlipped) {
-      motor[leftFront] = (motor[leftFront] - (speed / sidewaysForwardPercent) > 0 ? -127 : motor[leftFront] - (speed / sidewaysForwardPercent);
+      int fwdSpeed = motor[leftFront] - (speed / sidewaysForwardPercent);
+
+      if (fwdSpeed <= 0) {
+        motor[leftFront] = fwdSpeed;
+      } else {
+        motor[leftFront] = -127;
+      }
     } else {
-      motor[rightFront] = (motor[rightFront] - (speed / sidewaysForwardPercent) > 0 ? -127 : motor[rightFront] - (speed / sidewaysForwardPercent);
+      int fwdSpeed = motor[rightFront] - (speed / sidewaysForwardPercent);
+
+      if (fwdSpeed <= 0) {
+        motor[rightFront] = fwdSpeed;
+      } else {
+        motor[rightFront] = -127;
+      }
     }
   } else if (speed > 0) {
     if (!isFlipped) {
-      motor[rightFront] = (motor[rightFront] + (speed / sidewaysForwardPercent) < 0 ? 127 : motor[rightFront] + (speed / sidewaysForwardPercent);
+      int fwdSpeed = motor[rightFront] + (speed / sidewaysForwardPercent);
+
+      if (fwdSpeed >= 0) {
+        motor[rightFront] = fwdSpeed;
+      } else {
+        motor[rightFront] = 127;
+      }
     } else {
-      motor[leftFront] = (motor[leftFront] + (speed / sidewaysForwardPercent) < 0 ? 127 : motor[leftFront] + (speed / sidewaysForwardPercent);
+      int fwdSpeed = motor[leftFront] + (speed / sidewaysForwardPercent);
+
+      if (fwdSpeed >= 0) {
+        motor[leftFront] = fwdSpeed;
+      } else {
+        motor[leftFront] = 127;
+      }
     }
   }
 
