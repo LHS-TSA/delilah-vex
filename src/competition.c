@@ -26,8 +26,9 @@
 bool isFlipped = false;         // Toggles which side is front
 bool slowMode = false;          // Reduces speed by indicated percent
 int slowModePercent = 4;        // Percent to reduce forward motion (Default 4)
-int slowModePercentSide = 3;    // Percent to recude sideways motion (Default 3)
+int slowModePercentSide = 3;    // Percent to reduce sideways motion (Default 3)
 int jsThreshold = 25; 					// Minimum amount for joystick register movement
+int sidewaysForwardPercent = 6; // Percent to move forward when going sideways (Default 6)
 unsigned int loopCount = 0;     // Debug output counter
 
 // SECTION: Movement Functions
@@ -76,6 +77,21 @@ void mvtForwardRight(signed char speed) {
 void mvtSide(signed char speed) {
   if (isFlipped) { speed = -speed; }
   if (slowMode) { speed = speed / slowModePercentSide; }
+
+  if (speed < 0) {
+    if (!isFlipped) {
+      motor[leftFront] = (motor[leftFront] - (speed / sidewaysForwardPercent) > 0 ? -127 : motor[leftFront] - (speed / sidewaysForwardPercent);
+    } else {
+      motor[rightFront] = (motor[rightFront] - (speed / sidewaysForwardPercent) > 0 ? -127 : motor[rightFront] - (speed / sidewaysForwardPercent);
+    }
+  } else if (speed > 0) {
+    if (!isFlipped) {
+      motor[rightFront] = (motor[rightFront] + (speed / sidewaysForwardPercent) < 0 ? 127 : motor[rightFront] + (speed / sidewaysForwardPercent);
+    } else {
+      motor[leftFront] = (motor[leftFront] + (speed / sidewaysForwardPercent) < 0 ? 127 : motor[leftFront] + (speed / sidewaysForwardPercent);
+    }
+  }
+
   motor[sideMotor] = speed;
 }
 
