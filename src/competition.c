@@ -23,15 +23,22 @@
 #include "Vex_Competition_Includes.c"
 
 // Global Variables
-bool isFlipped = false;					// Toggles front side
-bool slowMode = false;          // Reduces speed by below percents
-int slowModePercent = 4;        // Percent to reduce forward motion 4 = 1/4
-int slowModePercentSide = 3;    // Percent to recude sideways motion 3 = 1/3
+bool isFlipped = false;         // Toggles which side is front
+bool slowMode = false;          // Reduces speed by indicated percent
+int slowModePercent = 4;        // Percent to reduce forward motion (Default 4)
+int slowModePercentSide = 3;    // Percent to recude sideways motion (Default 3)
 int jsThreshold = 25; 					// Minimum amount for joystick register movement
-unsigned int loopCount = 0;     // Debug counting
+unsigned int loopCount = 0;     // Debug output counter
 
 // SECTION: Movement Functions
 
+/**
+ * Left motors movement control.
+ * Sets the value of the left motors in normal mode or right motors in flipped
+ * mode; Speed is divided by slowModePercent if in slow mode
+ *
+ * @param speed Speed in range -127 to 127
+ */
 void mvtForwardLeft(short speed) {
   if (slowMode) { speed = speed / slowModePercent; }
 
@@ -42,6 +49,13 @@ void mvtForwardLeft(short speed) {
   }
 }
 
+/**
+ * Right motors movement control.
+ * Sets the value of the right motors in normal mode or left motors in flipped
+ * mode; Speed is divided by slowModePercent if in slow mode
+ *
+ * @param speed Speed in range -127 to 127
+ */
 void mvtForwardRight(short speed) {
   if (slowMode) { speed = speed / slowModePercent; }
 
@@ -52,12 +66,26 @@ void mvtForwardRight(short speed) {
   }
 }
 
+/**
+ * Left motors movement control.
+ * Sets the value of the side motors in normal mode; Value is negated in flipped
+ * mode; Speed is divided by slowModePercentSide if in slow mode
+ *
+ * @param speed Speed in range -127 to 127
+ */
 void mvtSide(short speed) {
   if (isFlipped) { speed = -speed; }
   if (slowMode) { speed = speed / slowModePercentSide; }
   motor[sideMotor] = speed;
 }
 
+/**
+ * High hang motors movement control.
+ * Sets the value of the high hang motors in normal mode; Value is not effected
+ * by flipped mode or slow mode
+ *
+ * @param speed Speed in range -127 to 127
+ */
 void mvtHighHang(short speed) {
 	if (speed < 0 && SensorValue(armSwitch) != 0) {
 		motor[armLeft] = 0;
@@ -70,16 +98,24 @@ void mvtHighHang(short speed) {
 
 // SECTION: Controller Functions
 
-// Flip sides
+/**
+ * Controls when front side of robot is swapped.
+ * Tests for presses to Btn8D and flips the bool value isFlipped when activated;
+ * The red led will be active when in flipped mode
+ */
 void ctlFlipSides() {
   while (vexRT[Btn8D]) {
-    wait1Msec(250);
+    wait1Msec(250);       // This is to keep button press from rapidly switching
     isFlipped = !isFlipped;
     if (isFlipped) { SensorValue[ledRed] = 1; } else { SensorValue[ledRed] = 0;	}
   }
 }
 
-// Toggle slowMode
+/**
+ * Controls when motors are at reduced speed.
+ * Tests for presses to Btn8R and flips the bool value slowMode when activated;
+ * The green led will be active when in slow mode
+ */
 void ctlSlowMode() {
   while (vexRT[Btn8R]) {
     wait1Msec(250);
@@ -88,8 +124,12 @@ void ctlSlowMode() {
   }
 }
 
+/**
+ * Controls the speed of the left and right motors.
+ * Tests Ch3 for right motors and Ch2 for left motors; Does not activate movement
+ * without joystick being over jsThreshold to prevent ghost movement
+ */
 void ctlJoysticks() {
-  // Joysticks
   if (vexRT[Ch3] <= -jsThreshold || vexRT[Ch3] >= jsThreshold) {
     mvtForwardRight(vexRT[Ch3]);
   } else {
@@ -103,21 +143,34 @@ void ctlJoysticks() {
   }
 }
 
+/**
+ * Controls the speed of the side motor.
+ * Tests Btn6D and Bth5D for activation and sets speed to highest level for the
+ * duration of their activation
+ */
 void ctlSideMovement() {
   while(vexRT[Btn6D]) { mvtSide(127); }
   while(vexRT[Btn5D]) { mvtSide(-127); }
   mvtSide(0);
 }
 
+/**
+ * Controls the speed of the high hang motors.
+ * Tests Btn7U and Btn7D for activation and sets speed to highest level for the
+ * duration of their activation
+ */
 void ctlHighHang() {
   while(vexRT[Btn7U]) { mvtHighHang(127); }
   while(vexRT[Btn7D]) { mvtHighHang(-127); }
   mvtHighHang(0);
 }
 
+/**
+ * Logs the state of the motors.
+ * Writes to the Debug Stream in a comma-seperated formatted list
+ */
 void logState() {
-  // Debug Header
-  if (loopCount == 0) {
+  if (loopCount == 0) {   // Prints the dubug header on first output
     writeDebugStreamLine("loopCount,leftMotor,rightMotor,sideMotor,highHang,slowMode,isFlipped");
   }
 
@@ -132,8 +185,11 @@ void logState() {
   loopCount++;
 }
 
-// Pre-Autonomous Functions
-// -> All activities that occur before the competition starts
+/**
+ * Pre-Autonomous Functions.
+ * Includes all activities that occur before the competition starts; Turns the
+ * leds off and sets up the slave motors.
+ */
 void pre_auton() {
   bStopTasksBetweenModes = true;
 
@@ -147,20 +203,21 @@ void pre_auton() {
   // Turn off LEDs
   SensorValue[ledRed] = 0;
   SensorValue[ledGreen] = 0;
-
 }
 
-// Autonomous Task
+/**
+ * Autonomous Task.
+ */
 task autonomous() {
-  // ..........................................................................
   // Insert user code here.
-  // ..........................................................................
 
   // Remove this function call once you have "real" code.
   AutonomousCodePlaceholderForTesting();
 }
 
-// User Control Task
+/**
+ * User Control Task.
+ */
 task usercontrol() {
   while (true) {
     logState();
