@@ -39,7 +39,7 @@ unsigned int loopCount = 0;     // Debug output counter
  *
  * @param speed Speed in range -127 to 127
  */
-void mvtForwardLeft(short speed) {
+void mvtForwardLeft(signed char speed) {
   if (slowMode) { speed = speed / slowModePercent; }
 
   if (!isFlipped) {
@@ -56,7 +56,7 @@ void mvtForwardLeft(short speed) {
  *
  * @param speed Speed in range -127 to 127
  */
-void mvtForwardRight(short speed) {
+void mvtForwardRight(signed char speed) {
   if (slowMode) { speed = speed / slowModePercent; }
 
   if (!isFlipped) {
@@ -73,7 +73,7 @@ void mvtForwardRight(short speed) {
  *
  * @param speed Speed in range -127 to 127
  */
-void mvtSide(short speed) {
+void mvtSide(signed char speed) {
   if (isFlipped) { speed = -speed; }
   if (slowMode) { speed = speed / slowModePercentSide; }
   motor[sideMotor] = speed;
@@ -86,7 +86,7 @@ void mvtSide(short speed) {
  *
  * @param speed Speed in range -127 to 127
  */
-void mvtHighHang(short speed) {
+void mvtHighHang(signed char speed) {
   if (speed < 0 && SensorValue(armSwitch) != 0) {
     motor[armLeft] = 0;
     motor[armRight] = 0;
