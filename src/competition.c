@@ -179,8 +179,8 @@ void logState() {
   writeDebugStream(",%i", motor[rightFront]);
   writeDebugStream(",%i",motor[sideMotor]);
   writeDebugStream(",%i",motor[armLeft]);
-  writeDebugStream(",%b",slowMode);
-  writeDebugStream(",%b/n",isFlipped);
+  writeDebugStream(",%d",slowMode);
+  writeDebugStreamLine(",%d",isFlipped);
 
   loopCount++;
 }
