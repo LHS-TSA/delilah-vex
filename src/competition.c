@@ -104,7 +104,7 @@ void mvtHighHang(short speed) {
  * The red led will be active when in flipped mode
  */
 void ctlFlipSides() {
-  while (vexRT[Btn8D]) {
+  if (vexRT[Btn8D]) {
     wait1Msec(250);       // This is to keep button press from rapidly switching
     isFlipped = !isFlipped;
     if (isFlipped) { SensorValue[ledRed] = 1; } else { SensorValue[ledRed] = 0;	}
@@ -117,7 +117,7 @@ void ctlFlipSides() {
  * The green led will be active when in slow mode
  */
 void ctlSlowMode() {
-  while (vexRT[Btn8R]) {
+  if (vexRT[Btn8R]) {
     wait1Msec(250);
     slowMode = !slowMode;
     if (slowMode) { SensorValue[ledGreen] = 1; } else { SensorValue[ledGreen] = 0;	}
@@ -149,9 +149,13 @@ void ctlJoysticks() {
  * duration of their activation
  */
 void ctlSideMovement() {
-  while(vexRT[Btn6D]) { mvtSide(127); }
-  while(vexRT[Btn5D]) { mvtSide(-127); }
-  mvtSide(0);
+  if (vexRT[Btn6D]) {
+    mvtSide(127);
+  } else if (vexRT[Btn5D]) {
+    mvtSide(-127);
+  } else {
+    mvtSide(0);
+  }
 }
 
 /**
@@ -160,9 +164,13 @@ void ctlSideMovement() {
  * duration of their activation
  */
 void ctlHighHang() {
-  while(vexRT[Btn7U]) { mvtHighHang(127); }
-  while(vexRT[Btn7D]) { mvtHighHang(-127); }
-  mvtHighHang(0);
+  if (vexRT[Btn7U]) {
+    mvtHighHang(127);
+  } else if (vexRT[Btn7D]) {
+    mvtHighHang(-127);
+  } else {
+    mvtHighHang(0);
+  }
 }
 
 /**
