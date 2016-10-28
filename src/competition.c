@@ -90,45 +90,6 @@ void mvtSide(signed char speed) {
   if (isFlipped) { speed = -speed; }
   if (slowMode) { speed = speed / slowModePercentSide; }
 
-  /*
-  if (speed < 0) {
-    if (!isFlipped) {
-      int fwdSpeed = motor[leftMaster] - (speed / sidewaysForwardPercent);
-
-      if (fwdSpeed <= -127) {
-        motor[leftMaster] = fwdSpeed;
-      } else {
-        motor[leftMaster] = -127;
-      }
-    } else {
-      int fwdSpeed = motor[rightMaster] - (speed / sidewaysForwardPercent);
-
-      if (fwdSpeed <= -127) {
-        motor[rightMaster] = fwdSpeed;
-      } else {
-        motor[rightMaster] = -127;
-      }
-    }
-  } else if (speed > 0) {
-    if (!isFlipped) {
-      int fwdSpeed = motor[rightMaster] + (speed / sidewaysForwardPercent);
-
-      if (fwdSpeed >= 127) {
-        motor[rightMaster] = fwdSpeed;
-      } else {
-        motor[rightMaster] = 127;
-      }
-    } else {
-      int fwdSpeed = motor[leftMaster] + (speed / sidewaysForwardPercent);
-
-      if (fwdSpeed >= 127) {
-        motor[leftMaster] = fwdSpeed;
-      } else {
-        motor[leftMaster] = 127;
-      }
-    }
-  }
-	*/
   motor[sideMotor] = speed;
 }
 
