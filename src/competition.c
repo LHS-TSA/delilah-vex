@@ -236,7 +236,7 @@ void ctlFlipSides() {
   if (vexRT[Btn8D]) {
     wait1Msec(250);       // This is to keep button press from rapidly switching
     isFlipped = !isFlipped;
-    SensorValue[ledRed] = (isFlipped ? 1 : 0);
+    SensorValue[ledRed] = (isFlipped ? 0 : 1);
   }
 }
 
@@ -281,7 +281,7 @@ void ctlHighHangMode() {
     	wait1Msec(62);
     	SensorValue[ledRed] = 0;
     	wait1Msec(62);
-    	SensorValue[ledRed] = (isFlipped ? 1 : 0);
+    	SensorValue[ledRed] = (isFlipped ? 0 : 1);
     }
   }
 }
@@ -371,8 +371,8 @@ void pre_auton() {
   slaveMotor(rightSlave1, rightMaster);
 
   // Turn off LEDs
-  SensorValue[ledRed] = 0;
-  SensorValue[ledGreen] = 0;
+  SensorValue[ledGreen] = (slowMode ? 1 : 0);
+  SensorValue[ledRed] = (isFlipped ? 0 : 1);
 }
 
 /**
