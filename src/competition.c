@@ -110,33 +110,119 @@ void mvtHighHang(signed char speed) {
   }
 }
 
+// SECTION: Autonomous Movement
+
 /**
- * Autonomous movement control.
- * Controls the motion of the motors during an autonomous period; distFwd and
- * distSide are in inches
+ * Autonomous forward encoder movement control.
+ * Controls the motion of the motors using the motor encoders during an
+ * autonomous period; dist is in inches
  */
-void mvtAuton(int distFwd, int distSide, bool arm) {
+void mvtAutonFwdEnc(int dist, signed char speed) {
+  if (speed == 0) { return; }
+
   SensorValue[leftEncoder] = 0;
   SensorValue[rightEncoder] = 0;
 
-  distFwd *= shaftOneInch;
-  distSide *= timeOneInch;
+  dist *= shaftOneInch;
 
   while (SensorValue[leftEncoder] < distFwd && SensorValue[rightEncoder] < distFwd) {
-    mvtForwardLeft(127);
-    mvtForwardRight(127);
+    mvtForwardLeft(speed);
+    mvtForwardRight(speed);
   }
 
   mvtForwardLeft(0);
   mvtForwardRight(0);
+}
 
-  mvtSide(127);
-  wait1Msec(distSide);
+/**
+ * Autonomous forward sonar movement control.
+ * Controls the motion of the motors using the sonar thing I can't spell during an
+ * autonomous period; dist is in inches; relative adds to current position
+ */
+void mvtAutonFwdSnr(int dist, signed char speed, bool relative) {
+  if (speed == 0) { return; }
 
-  if (arm) {
-      mvtHighHang(127);
-      wait1Msec()
+  if (SensorValue[sonarFront] == -1) {
+    for (int i=0; i<4; i++) {
+      SensorValue[ledGreen] = 1;
+      SensorValue[ledRed] = 1;
+      wait1Msec(25);
+      SensorValue[ledGreen] = 0;
+      SensorValue[ledRed] = 0;
+      wait1Msec(25);
+    }
+    SensorValue[ledGreen] = (slowMode ? 1 : 0);
+    SensorValue[ledRed] = (isFlipped ? 1 : 0);
+
+    mvtAutonFwdEnc(dist, speed);
+    return;
   }
+
+  if (relative) {
+    dist += SensorValue[sonarFront];
+  }
+
+  while (SensorValue[sonarFront] < distFwd) {
+    mvtForwardLeft(speed);
+    mvtForwardRight(speed);
+  }
+
+  mvtForwardLeft(0);
+  mvtForwardRight(0);
+}
+
+/**
+ * Autonomous sideways movement control.
+ * Controls the motion of the sideways motors during an autonomous period;
+ * dist is in inches, speed is in range -+ 127
+ */
+void mvtAutonSide(int dist, signed char speed) {
+  dist *= timeOneInch;
+
+  mvtSide(speed);
+  wait1Msec(dist);
+  mvtSide(0);
+
+  if (speed > 0) {
+   mvtForwardRight(127);
+   wait1Msec(50);
+   mvtForwardRight(0);
+  } else {
+   mvtForwardLeft(127);
+   wait1Msec(50);
+   mvtForwardLeft(0);
+  }
+}
+
+ /**
+  * Autonomous star knocking movement control.
+  * Controls the high hang bar during the autonomous period;
+  */
+void mvtAutonStar() {
+  // Extend Arm
+  mvtHighHang(127);
+  wait1Msec(500);
+  mvtHighHang(0);
+
+  // Move back
+  mvtForwardLeft(-127);
+  mvtForwardRight(-127);
+  wait1Msec(200);
+  mvtForwardLeft(0);
+  mvtForwardRight(0);
+
+  // Lower arm
+  while (SensorValue[armSwitch]) {
+    mvtHighHang(-127);
+  }
+  mvtHighHang(0);
+
+  //
+  mvtForwardLeft(127);
+  mvtForwardRight(127);
+  wait1Msec(200);
+  mvtForwardLeft(0);
+  mvtForwardRight(0);
 }
 
 // SECTION: Controller Functions
