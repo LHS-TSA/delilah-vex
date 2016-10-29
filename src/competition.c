@@ -39,6 +39,18 @@ int timeOneInch = 58;           // Miliseconds to spin for one inch
 int MotorCorrection = 111;			// Percent to decrease left motors
 unsigned int loopCount = 0;     // Debug output counter
 
+// SECTION: Status Functions
+
+/**
+ * Resets LEDs.
+ * Turns the green led on if the robot is in slow mode and turns the red led on
+ * if the current front of robot is the push-bar side
+ */
+void statResetLeds() {
+  SensorValue[ledRed] = (isFlipped ? 0 : 1);
+  SensorValue[ledGreen] = (slowMode ? 1 : 0);
+}
+
 // SECTION: Movement Functions
 
 /**
@@ -154,8 +166,7 @@ void mvtAutonFwdSnr(int dist, signed char speed, bool relative) {
       SensorValue[ledRed] = 0;
       wait1Msec(25);
     }
-    SensorValue[ledGreen] = (slowMode ? 1 : 0);
-    SensorValue[ledRed] = (isFlipped ? 0 : 1);
+    statResetLeds();
 
     mvtAutonFwdEnc(dist, speed);
     return;
@@ -243,7 +254,7 @@ void ctlFlipSides() {
   if (vexRT[Btn8D]) {
     wait1Msec(250);       // This is to keep button press from rapidly switching
     isFlipped = !isFlipped;
-    SensorValue[ledRed] = (isFlipped ? 0 : 1);
+    statResetLeds();
   }
 }
 
@@ -256,7 +267,7 @@ void ctlSlowMode() {
   if (vexRT[Btn8R]) {
     wait1Msec(250);
     slowMode = !slowMode;
-    SensorValue[ledGreen] = (slowMode ? 1 : 0);
+    statResetLeds();
   }
 }
 
@@ -278,7 +289,6 @@ void ctlHighHangMode() {
       wait1Msec(62);
       SensorValue[ledGreen] = 0;
       wait1Msec(62);
-      SensorValue[ledGreen] = (slowMode ? 1 : 0);
     } else {
       SensorValue[ledRed] = 1;
       wait1Msec(62);
@@ -288,8 +298,8 @@ void ctlHighHangMode() {
       wait1Msec(62);
       SensorValue[ledRed] = 0;
       wait1Msec(62);
-      SensorValue[ledRed] = (isFlipped ? 0 : 1);
     }
+    statResetLeds();
   }
 }
 
@@ -377,9 +387,8 @@ void pre_auton() {
   slaveMotor(rightSlave2, rightMaster);
   slaveMotor(rightSlave1, rightMaster);
 
-  // Turn off LEDs
-  SensorValue[ledGreen] = (slowMode ? 1 : 0);
-  SensorValue[ledRed] = (isFlipped ? 0 : 1);
+  // Set LEDs to correct values
+  statResetLeds();
 }
 
 /**
