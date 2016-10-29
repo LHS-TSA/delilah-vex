@@ -79,10 +79,13 @@ task autonomous() {
     mvtAutonStar();
     mvtAutonSide(distSideMvt * 1.5, autonSpeed);
   }
+
+  /*
   for (int i=0; i<10; i++) {
     mvtAutonStar();
     mvtAutonSide(distSideMvt, autonSpeed);
   }
+  */
 }
 
 /**

@@ -14,12 +14,12 @@ void mvtAutonFwdEnc(int dist, signed char speed) {
   SensorValue[leftEncoder] = 0;
   SensorValue[rightEncoder] = 0;
 
-  dist *= shaftOneInch;
+  dist *= timeOneInch;
 
-  while (SensorValue[leftEncoder] < dist && SensorValue[rightEncoder] < dist) {
-    mvtForwardLeft(speed);
-    mvtForwardRight(speed);
-  }
+  mvtForwardLeft(speed);
+  mvtForwardRight(speed);
+
+  wait1Msec(dist);              // Remove once encoders work
 
   mvtForwardLeft(0);
   mvtForwardRight(0);
@@ -102,11 +102,11 @@ void mvtAutonStar() {
   mvtHighHang(0);
 
   // Move back so doesn't climb fence
-  mvtForwardLeft(-127);
-  mvtForwardRight(-127);
-  wait1Msec(350);               // High hang shift duration
-  mvtForwardLeft(0);
-  mvtForwardRight(0);
+    mvtForwardLeft(-127);
+    mvtForwardRight(-127);
+    wait1Msec(350);               // High hang shift duration
+    mvtForwardLeft(0);
+    mvtForwardRight(0);
 
   // Lower arm
   while (SensorValue[armSwitch] == 0) {
