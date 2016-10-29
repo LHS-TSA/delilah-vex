@@ -375,22 +375,20 @@ void pre_auton() {
  * Autonomous Task.
  */
 task autonomous() {
-  int distFwd = 20;             // Distance to move forward at the start
+  int distSideMvt = 12;
+  int autonSpeed = (SensorValue[autoJumper] ? -127 : 127);
 
-  while (SensorValue(sonarFront) < distFwd) {
-		mvtForwardLeft(127);
-		mvtForwardRight(127);
-	}
-
-
-	mvtForwardRight(127);
-	mvtForwardLeft(127);
-	wait1Msec(1000);
-	mvtForwardRight(0);
-	mvtForwardLeft(0);
-
-  // Remove this function call once you have "real" code.
-  // AutonomousCodePlaceholderForTesting();
+  mvtAutonFwdSnr(55, 127, false);
+  mvtAutonSide(distSideMvt * 1.5, autonSpeed);
+  mvtAutonSide(distSideMvt * 1.5, autonSpeed);
+  for (int i=0; i<4; i++) {
+    mvtAutonStar();
+    mvtAutonSide(distSideMvt * 1.5, autonSpeed);
+  }
+  for (int i=0; i<10; i++) {
+    mvtAutonStar();
+    mvtAutonSide(distSideMvt * 1.5, autonSpeed);
+  }
 }
 
 /**
