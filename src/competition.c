@@ -33,15 +33,11 @@ bool modeHighHang = false;			// Disables the motor protection on high hang
 int slowModePercent = 4;        // Percent to reduce forward motion (Default 4)
 int slowModePercentSide = 3;    // Percent to reduce sideways motion (Default 3)
 int jsThreshold = 25; 					// Minimum amount for joystick register movement
-int sidewaysForwardPercent = 6; // Percent to move forward when going sideways (Default 6)
 int shaftFullCycle = 392;       // Shaft encoder value at one revolution
 int shaftOneInch = 31;          // Shaft encoder value at one inch
 int timeOneInch = 58;           // Miliseconds to spin for one inch
-int timeHighHang = -1;          // Milliseconds to extend high hang arm
 int MotorCorrection = 111;			// Percent to decrease left motors
 unsigned int loopCount = 0;     // Debug output counter
-
-// 0.8833569001017092
 
 // SECTION: Movement Functions
 
