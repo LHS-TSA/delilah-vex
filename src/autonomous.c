@@ -67,8 +67,7 @@ void mvtAutonFwdSnr(int dist, signed char speed, bool relative) {
 
 /**
  * Autonomous sideways movement control.
- * Controls the motion of the sideways motors during an autonomous period;
- * dist is in inches, speed is in range -+ 127
+ * Controls the motion of the sideways motors during an autonomous period
  *
  * @param dist Distance to move forward in inches
  * @param speed Speed in range -127 to 127
