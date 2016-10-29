@@ -81,7 +81,7 @@ task autonomous() {
   }
   for (int i=0; i<10; i++) {
     mvtAutonStar();
-    mvtAutonSide(distSideMvt * 1.5, autonSpeed);
+    mvtAutonSide(distSideMvt, autonSpeed);
   }
 }
 

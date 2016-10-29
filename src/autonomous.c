@@ -98,18 +98,18 @@ void mvtAutonSide(int dist, signed char speed) {
 void mvtAutonStar() {
   // Extend Arm
   mvtHighHang(127);
-  wait1Msec(500);               // High hang upwards duration
+  wait1Msec(1500);               // High hang upwards duration
   mvtHighHang(0);
 
   // Move back so doesn't climb fence
   mvtForwardLeft(-127);
   mvtForwardRight(-127);
-  wait1Msec(200);               // High hang shift duration
+  wait1Msec(350);               // High hang shift duration
   mvtForwardLeft(0);
   mvtForwardRight(0);
 
   // Lower arm
-  while (SensorValue[armSwitch]) {
+  while (SensorValue[armSwitch] == 0) {
     mvtHighHang(-127);
   }
   mvtHighHang(0);
@@ -117,7 +117,7 @@ void mvtAutonStar() {
   // Return to position
   mvtForwardLeft(127);
   mvtForwardRight(127);
-  wait1Msec(200);               // High hang return shift duration
+  wait1Msec(350);               // High hang return shift duration
   mvtForwardLeft(0);
   mvtForwardRight(0);
 }
