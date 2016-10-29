@@ -38,17 +38,9 @@ void mvtAutonFwdSnr(int dist, signed char speed, bool relative) {
   if (speed == 0) { return; }
 
   if (SensorValue[sonarFront] == -1) {    // If sensor is messed up
-    for (int i=0; i<4; i++) {
-      SensorValue[ledGreen] = 1;
-      SensorValue[ledRed] = 1;
-      wait1Msec(25);
-      SensorValue[ledGreen] = 0;
-      SensorValue[ledRed] = 0;
-      wait1Msec(25);
-    }
-    statResetLeds();
+    statFlashLeds(4);
 
-    mvtAutonFwdEnc(dist, speed);
+    mvtAutonFwdEnc(65, speed);
     return;
   }
 
@@ -79,6 +71,7 @@ void mvtAutonSide(int dist, signed char speed) {
   wait1Msec(dist);
   mvtSide(0);
 
+  /*
   if (speed > 0) {
    mvtForwardRight(127);
    wait1Msec(50);               // Sideways correction timing
@@ -88,6 +81,7 @@ void mvtAutonSide(int dist, signed char speed) {
    wait1Msec(50);               // Sideways correction timing
    mvtForwardLeft(0);
   }
+  */
 }
 
  /**
@@ -98,26 +92,26 @@ void mvtAutonSide(int dist, signed char speed) {
 void mvtAutonStar() {
   // Extend Arm
   mvtHighHang(127);
-  wait1Msec(1500);               // High hang upwards duration
+  wait1Msec(1250);               // High hang upwards duration
   mvtHighHang(0);
 
   // Move back so doesn't climb fence
-    mvtForwardLeft(-127);
-    mvtForwardRight(-127);
-    wait1Msec(350);               // High hang shift duration
+    mvtForwardLeft(-65);
+    mvtForwardRight(-65);
+    wait1Msec(100);               // High hang shift duration
     mvtForwardLeft(0);
     mvtForwardRight(0);
 
   // Lower arm
   while (SensorValue[armSwitch] == 0) {
-    mvtHighHang(-127);
+    mvtHighHang(-65);
   }
   mvtHighHang(0);
 
   // Return to position
-  mvtForwardLeft(127);
-  mvtForwardRight(127);
-  wait1Msec(350);               // High hang return shift duration
+  mvtForwardLeft(65);
+  mvtForwardRight(65);
+  wait1Msec(120);               // High hang return shift duration
   mvtForwardLeft(0);
   mvtForwardRight(0);
 }

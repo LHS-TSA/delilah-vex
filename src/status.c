@@ -9,3 +9,16 @@ void statResetLeds() {
   SensorValue[ledRed] = (isFlipped ? 0 : 1);
   SensorValue[ledGreen] = (slowMode ? 1 : 0);
 }
+
+void statFlashLeds(int amt) {
+  for (int i=0; i<amt; i++) {
+    SensorValue[ledGreen] = 1;
+    SensorValue[ledRed] = 1;
+    wait1Msec(50);
+    SensorValue[ledGreen] = 0;
+    SensorValue[ledRed] = 0;
+    wait1Msec(50);
+  }
+
+  statResetLeds();
+}
