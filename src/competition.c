@@ -121,7 +121,7 @@ void mvtAutonFwdEnc(int dist, signed char speed) {
 
   dist *= shaftOneInch;
 
-  while (SensorValue[leftEncoder] < distFwd && SensorValue[rightEncoder] < distFwd) {
+  while (SensorValue[leftEncoder] < dist && SensorValue[rightEncoder] < dist) {
     mvtForwardLeft(speed);
     mvtForwardRight(speed);
   }
@@ -158,7 +158,7 @@ void mvtAutonFwdSnr(int dist, signed char speed, bool relative) {
     dist += SensorValue[sonarFront];
   }
 
-  while (SensorValue[sonarFront] < distFwd) {
+  while (SensorValue[sonarFront] < dist) {
     mvtForwardLeft(speed);
     mvtForwardRight(speed);
   }
@@ -259,25 +259,25 @@ void ctlHighHangMode() {
     modeHighHang = !modeHighHang;
 
     if (modeHighHang) {
-    	SensorValue[ledGreen] = 1;
-    	wait1Msec(62);
-    	SensorValue[ledGreen] = 0;
-    	wait1Msec(62);
-    	SensorValue[ledGreen] = 1;
-    	wait1Msec(62);
-    	SensorValue[ledGreen] = 0;
-    	wait1Msec(62);
-    	SensorValue[ledGreen] = (slowMode ? 1 : 0);
+      SensorValue[ledGreen] = 1;
+      wait1Msec(62);
+      SensorValue[ledGreen] = 0;
+      wait1Msec(62);
+      SensorValue[ledGreen] = 1;
+      wait1Msec(62);
+      SensorValue[ledGreen] = 0;
+      wait1Msec(62);
+      SensorValue[ledGreen] = (slowMode ? 1 : 0);
     } else {
-    	SensorValue[ledRed] = 1;
-    	wait1Msec(62);
-    	SensorValue[ledRed] = 0;
-    	wait1Msec(62);
-    	SensorValue[ledRed] = 1;
-    	wait1Msec(62);
-    	SensorValue[ledRed] = 0;
-    	wait1Msec(62);
-    	SensorValue[ledRed] = (isFlipped ? 0 : 1);
+      SensorValue[ledRed] = 1;
+      wait1Msec(62);
+      SensorValue[ledRed] = 0;
+      wait1Msec(62);
+      SensorValue[ledRed] = 1;
+      wait1Msec(62);
+      SensorValue[ledRed] = 0;
+      wait1Msec(62);
+      SensorValue[ledRed] = (isFlipped ? 0 : 1);
     }
   }
 }
