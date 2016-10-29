@@ -1,5 +1,5 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
-#pragma config(Sensor, dgtl1,  autoJumper,   sensorTouch)
+#pragma config(Sensor, dgtl1,  autonJumper,  sensorTouch)
 #pragma config(Sensor, dgtl2,  ledRed,       sensorLEDtoVCC)
 #pragma config(Sensor, dgtl3,  ledGreen,     sensorLEDtoVCC)
 #pragma config(Sensor, dgtl4,  sonarFront,   sensorSONAR_inch)
@@ -387,7 +387,7 @@ void pre_auton() {
  */
 task autonomous() {
   int distSideMvt = 12;
-  int autonSpeed = (SensorValue[autoJumper] ? -127 : 127);
+  int autonSpeed = (SensorValue[autonJumper] ? -127 : 127);
 
   mvtAutonFwdSnr(55, 127, false);
   mvtAutonSide(distSideMvt * 1.5, autonSpeed);
