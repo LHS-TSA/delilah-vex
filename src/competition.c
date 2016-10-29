@@ -23,7 +23,7 @@
 // Select Download method as "competition"
 #pragma competitionControl(Competition)
 
-//Main competition background code...do not modify!
+// Main competition background code
 #include "Vex_Competition_Includes.c"
 
 // Global Variables
@@ -39,6 +39,7 @@ int timeOneInch = 58;           // Miliseconds to spin for one inch
 int MotorCorrection = 111;			// Percent to decrease left motors
 unsigned int loopCount = 0;     // Debug output counter
 
+// Include functions
 #include "status.c"
 #include "movement.c"
 #include "autonomous.c"
