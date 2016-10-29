@@ -1,6 +1,9 @@
 # Delilah-Vex
 **Stephen and John's Vex Robot Source**
 
+### Documentation ###
+  See [DOCUMENTATION.md](DOCUMENTATION.md)
+
 ### Licensing ###
 This program is released under the [GPL v3 License](LICENSE).
 ```
