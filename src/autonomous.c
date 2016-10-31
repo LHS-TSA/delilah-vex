@@ -8,21 +8,21 @@
  * @param dist Distance to move forward in inches
  * @param speed Speed in range -127 to 127
  */
-void mvtAutonFwdEnc(int dist, signed char speed) {
+void atn_mvtFwdEnc(int dist, signed char speed) {
   if (speed == 0) { return; }
 
   SensorValue[leftEncoder] = 0;
   SensorValue[rightEncoder] = 0;
 
-  dist *= timeOneInch;
+  dist *= TIME_ONE_INCH;
 
-  mvtForwardLeft(speed);
-  mvtForwardRight(speed);
+  mvt_setForwardLeft(speed);
+  mvt_setForwardRight(speed);
 
   wait1Msec(dist);              // Remove once encoders work
 
-  mvtForwardLeft(0);
-  mvtForwardRight(0);
+  mvt_setForwardLeft(0);
+  mvt_setForwardRight(0);
 }
 
 /**
@@ -34,13 +34,13 @@ void mvtAutonFwdEnc(int dist, signed char speed) {
  * @param speed Speed in range -127 to 127
  * @param relative add to current position
  */
-void mvtAutonFwdSnr(int dist, signed char speed, bool relative) {
+void atn_mvtFwdSnr(int dist, signed char speed, bool relative) {
   if (speed == 0) { return; }
 
   if (SensorValue[sonarFront] == -1) {    // If sensor is messed up
-    statFlashLeds(4);
+    stat_flashLeds(4);
 
-    mvtAutonFwdEnc(65, speed);
+    atn_mvtFwdEnc(65, speed);
     return;
   }
 
@@ -49,12 +49,12 @@ void mvtAutonFwdSnr(int dist, signed char speed, bool relative) {
   }
 
   while (SensorValue[sonarFront] < dist) {
-    mvtForwardLeft(speed);
-    mvtForwardRight(speed);
+    mvt_setForwardLeft(speed);
+    mvt_setForwardRight(speed);
   }
 
-  mvtForwardLeft(0);
-  mvtForwardRight(0);
+  mvt_setForwardLeft(0);
+  (0);
 }
 
 /**
@@ -64,12 +64,12 @@ void mvtAutonFwdSnr(int dist, signed char speed, bool relative) {
  * @param dist Distance to move forward in inches
  * @param speed Speed in range -127 to 127
  */
-void mvtAutonSide(int dist, signed char speed) {
-  dist *= timeOneInch;
+void atn_mvtSide(int dist, signed char speed) {
+  dist *= TIME_ONE_INCH;
 
-  mvtSide(speed);
+  mvt_setSide(speed);
   wait1Msec(dist);
-  mvtSide(0);
+  mvt_setSide(0);
 
   /*
   if (speed > 0) {
@@ -89,29 +89,29 @@ void mvtAutonSide(int dist, signed char speed) {
   * Controls the high hang bar during the autonomous period; Extends arm, moves
   * back, retracts arm, and returns to initial position
   */
-void mvtAutonStar() {
+void atn_mvtStar() {
   // Extend Arm
-  mvtHighHang(127);
+  mvt_setHighHang(127);
   wait1Msec(1250);               // High hang upwards duration
-  mvtHighHang(0);
+  mvt_setHighHang(0);
 
   // Move back so doesn't climb fence
-    mvtForwardLeft(-65);
-    mvtForwardRight(-65);
+    mvt_setForwardLeft(-65);
+    mvt_setForwardRight(-65);
     wait1Msec(100);               // High hang shift duration
-    mvtForwardLeft(0);
-    mvtForwardRight(0);
+    mvt_setForwardLeft(0);
+    mvt_setForwardRight(0);
 
   // Lower arm
   while (SensorValue[armSwitch] == 0) {
-    mvtHighHang(-65);
+    mvt_setHighHang(-65);
   }
-  mvtHighHang(0);
+  mvt_setHighHang(0);
 
   // Return to position
-  mvtForwardLeft(65);
-  mvtForwardRight(65);
+  mvt_setForwardLeft(65);
+  mvt_setForwardRight(65);
   wait1Msec(120);               // High hang return shift duration
-  mvtForwardLeft(0);
-  mvtForwardRight(0);
+  mvt_setForwardLeft(0);
+  mvt_setForwardRight(0);
 }

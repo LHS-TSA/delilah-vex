@@ -24,19 +24,12 @@
 
 // Main competition background code
 #include "Vex_Competition_Includes.c"
+#include "constants.h"
 
 // Global Variables
 bool isFlipped = false;         // Toggles which side is front
 bool slowMode = false;          // Reduces speed by indicated percent
 bool modeHighHang = false;			// Disables the motor protection on high hang
-int slowModePercent = 4;        // Percent to reduce forward motion (Default 4)
-int slowModePercentSide = 3;    // Percent to reduce sideways motion (Default 3)
-int jsThreshold = 25; 					// Minimum amount for joystick register movement
-int shaftFullCycle = 392;       // Shaft encoder value at one revolution
-int shaftOneInch = 31;          // Shaft encoder value at one inch
-int timeOneInch = 58;           // Miliseconds to spin for one inch
-int MotorCorrection = 111;			// Percent to decrease left motors
-unsigned int loopCount = 0;     // Debug output counter
 
 // Include functions
 #include "status.c"
@@ -61,7 +54,7 @@ void pre_auton() {
   slaveMotor(rightSlave1, rightMaster);
 
   // Set LEDs to correct values
-  statFlashLeds(6);
+  stat_flashLeds(6);
 }
 
 /**
@@ -71,13 +64,13 @@ task autonomous() {
   int distSideMvt = 10;
   int autonSpeed = (SensorValue[autonJumper] ? -65 : 65);
 
-  mvtAutonFwdSnr(40, 127, false);
+  atn_mvtFwdSnr(40, 127, false);
   // wait1Msec(250);
   // 9mvtAutonSide(distSideMvt * 1.2, autonSpeed);
   for (int i=0; i<3; i++) {
     wait1Msec(250);
-    mvtAutonStar();
-    mvtAutonSide(distSideMvt * 2, -autonSpeed);
+    atn_mvtStar();
+    atn_mvtSide(distSideMvt * 2, -autonSpeed);
   }
 
   /*
@@ -94,11 +87,11 @@ task autonomous() {
 task usercontrol() {
   while (true) {
     // logState();
-    ctlFlipSides();
-    ctlSlowMode();
-    ctlHighHangMode();
-    ctlJoysticks();
-    ctlSideMovement();
-    ctlHighHang();
+    ctl_testFlipSides();
+    ctl_testSlowMode();
+    ctl_testHighHangMode();
+    ctl_testJoysticks();
+    ctl_testSideMovement();
+    ctl_testHighHang();
   }
 }
