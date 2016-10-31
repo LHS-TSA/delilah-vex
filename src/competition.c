@@ -54,7 +54,7 @@ void pre_auton() {
   slaveMotor(rightSlave1, rightMaster);
 
   // Set LEDs to correct values
-  statFlashLeds(6);
+  stat_flashLeds(6);
 }
 
 /**
@@ -64,13 +64,13 @@ task autonomous() {
   int distSideMvt = 10;
   int autonSpeed = (SensorValue[autonJumper] ? -65 : 65);
 
-  mvtAutonFwdSnr(40, 127, false);
+  atn_mvtFwdSnr(40, 127, false);
   // wait1Msec(250);
   // 9mvtAutonSide(distSideMvt * 1.2, autonSpeed);
   for (int i=0; i<3; i++) {
     wait1Msec(250);
-    mvtAutonStar();
-    mvtAutonSide(distSideMvt * 2, -autonSpeed);
+    atn_mvtStar();
+    atn_mvtSide(distSideMvt * 2, -autonSpeed);
   }
 
   /*
@@ -87,11 +87,11 @@ task autonomous() {
 task usercontrol() {
   while (true) {
     // logState();
-    ctlFlipSides();
-    ctlSlowMode();
-    ctlHighHangMode();
-    ctlJoysticks();
-    ctlSideMovement();
-    ctlHighHang();
+    ctl_testFlipSides();
+    ctl_testSlowMode();
+    ctl_testHighHangMode();
+    ctl_testJoysticks();
+    ctl_testSideMovement();
+    ctl_testHighHang();
   }
 }

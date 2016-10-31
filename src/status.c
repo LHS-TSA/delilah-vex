@@ -5,12 +5,12 @@
  * Turns the green led on if the robot is in slow mode and turns the red led on
  * if the current front of robot is the push-bar side
  */
-void statResetLeds() {
+void stat_resetLeds() {
   SensorValue[ledRed] = (isFlipped ? 0 : 1);
   SensorValue[ledGreen] = (slowMode ? 1 : 0);
 }
 
-void statFlashLeds(int amt) {
+void stat_flashLeds(int amt) {
   for (int i=0; i<amt; i++) {
     SensorValue[ledGreen] = 1;
     SensorValue[ledRed] = 1;
@@ -20,5 +20,5 @@ void statFlashLeds(int amt) {
     wait1Msec(50);
   }
 
-  statResetLeds();
+  stat_resetLeds();
 }

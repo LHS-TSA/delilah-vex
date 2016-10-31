@@ -7,7 +7,7 @@
  *
  * @param speed Speed in range -127 to 127
  */
-void mvtForwardLeft(signed char speed) {
+void mvt_setForwardLeft(signed char speed) {
   if (slowMode) { speed = speed / SLOW_PERCENT; }
 
   if (!isFlipped) {
@@ -24,7 +24,7 @@ void mvtForwardLeft(signed char speed) {
  *
  * @param speed Speed in range -127 to 127
  */
-void mvtForwardRight(signed char speed) {
+void mvt_setForwardRight(signed char speed) {
   if (slowMode) { speed = speed / SLOW_PERCENT; }
 
   if (!isFlipped) {
@@ -41,7 +41,7 @@ void mvtForwardRight(signed char speed) {
  *
  * @param speed Speed in range -127 to 127
  */
-void mvtSide(signed char speed) {
+void mvt_setSide(signed char speed) {
   if (isFlipped) { speed = -speed; }
   if (slowMode) { speed = speed / SLOW_SIDE_PERCENT; }
 
@@ -55,7 +55,7 @@ void mvtSide(signed char speed) {
  *
  * @param speed Speed in range -127 to 127
  */
-void mvtHighHang(signed char speed) {
+void mvt_setHighHang(signed char speed) {
   if (speed < 0 && (SensorValue(armSwitch) && !modeHighHang)) {
     motor[armLeft] = 0;
     motor[armRight] = 0;
