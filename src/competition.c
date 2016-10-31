@@ -24,7 +24,7 @@
 
 // Main competition background code
 #include "Vex_Competition_Includes.c"
-#include "constants.h"
+#include "../include/constants.h"
 
 // Global Variables
 bool isFlipped = false;         // Toggles which side is front
