@@ -14,7 +14,7 @@ void mvtAutonFwdEnc(int dist, signed char speed) {
   SensorValue[leftEncoder] = 0;
   SensorValue[rightEncoder] = 0;
 
-  dist *= timeOneInch;
+  dist *= TIME_ONE_INCH;
 
   mvtForwardLeft(speed);
   mvtForwardRight(speed);
@@ -65,7 +65,7 @@ void mvtAutonFwdSnr(int dist, signed char speed, bool relative) {
  * @param speed Speed in range -127 to 127
  */
 void mvtAutonSide(int dist, signed char speed) {
-  dist *= timeOneInch;
+  dist *= TIME_ONE_INCH;
 
   mvtSide(speed);
   wait1Msec(dist);

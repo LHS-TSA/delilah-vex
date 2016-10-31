@@ -64,14 +64,14 @@ void ctlHighHangMode() {
  * without joystick being over jsThreshold to prevent ghost movement
  */
 void ctlJoysticks() {
-  if (vexRT[Ch3] <= -jsThreshold || vexRT[Ch3] >= jsThreshold) {
     mvtForwardRight(vexRT[Ch3]);
+  if (vexRT[Ch3] <= -JOYSTICK_THRESHOLD || vexRT[Ch3] >= JOYSTICK_THRESHOLD) {
   } else {
     mvtForwardRight(0);
   }
 
-  if (vexRT[Ch2] <= -jsThreshold || vexRT[Ch2] >= jsThreshold) {
     mvtForwardLeft(vexRT[Ch2]);
+  if (vexRT[Ch2] <= -JOYSTICK_THRESHOLD || vexRT[Ch2] >= JOYSTICK_THRESHOLD) {
   } else {
     mvtForwardLeft(0);
   }
