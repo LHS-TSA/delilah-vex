@@ -8,6 +8,7 @@ unsigned int loopCount = 0;     // Debug output counter
  * Writes to the Debug Stream in a comma-seperated formatted list
  */
 void logState() {
+  /*
   if (loopCount == 0) {   // Prints the dubug header on first output
     writeDebugStreamLine("loopCount,leftMotor,rightMotor,sideMotor,highHang,slowMode,isFlipped");
   }
@@ -21,4 +22,5 @@ void logState() {
   writeDebugStreamLine(",%d",isFlipped);
 
   loopCount++;
+  */
 }

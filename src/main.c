@@ -36,7 +36,7 @@ bool modeHighHang = false;			// Disables the motor protection on high hang
 #include "movement.c"
 #include "autonomous.c"
 #include "control.c"
-#include "logger.c"
+// #include "logger.c"
 
 /**
  * Pre-Autonomous Functions.
