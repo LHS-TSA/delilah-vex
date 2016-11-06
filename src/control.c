@@ -4,13 +4,17 @@
  * Controls when motors are at reduced speed.
  * Tests for presses to Btn8R and flips the bool value slowMode when activated;
  * The green led will be active when in slow mode
+ *
+ * @return true if the control was activated, false otherwise
  */
 void ctl_testSlowMode() {
   if (vexRT[Btn8R]) {
     wait1Msec(250);
     slowMode = !slowMode;
     stat_resetLeds();
+    return true;
   }
+  return false;
 }
 
 /**
@@ -51,13 +55,18 @@ void ctl_testSideMovement() {
  * Controls the speed of the high hang motors.
  * Tests Btn7U and Btn7D for activation and sets speed to highest level for the
  * duration of their activation
+ *
+ * @return true if the control was activated, false otherwise
  */
-void ctl_testHighHang() {
+bool ctl_testHighHang() {
   if (vexRT[Btn7U]) {
     mvt_setHighHang(127);
+    return true;
   } else if (vexRT[Btn7D]) {
     mvt_setHighHang(-127);
+    return true;
   } else {
     mvt_setHighHang(0);
+    return false;
   }
 }
