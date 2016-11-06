@@ -68,15 +68,15 @@ void mvt_rotateOneSegment(short speed, short count) {
 }
 
 /**
- * High hang motor control.
- * Sets the value of the high hang motors in normal mode; Speed is rescaled by
- * the mvt_localTrimSpeed function before calling the motors' functions but is
- * not affected by slow mode; Motors will not activate if decending and the arm
+ * Arm motor control.
+ * Sets the value of the arm motors in normal mode; Speed is rescaled by the
+ * mvt_localTrimSpeed function before calling the motors' functions but is not
+ * affected by slow mode; Motors will not activate if decending and the arm
  * bumper is depressed
  *
  * @param speed Speed in range -127 to 127
  */
-void mvt_setHighHang(short speed) {
+void mvt_setArmSpeed(short speed) {
   speed = mvt_localTrimSpeed(speed, false)
 
   if (speed < 0 && (SensorValue(armSwitch)) {
