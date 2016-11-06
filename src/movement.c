@@ -27,38 +27,18 @@ short mvt_localTrimSpeed(short speed) {
   return mvt_localTrimSpeed(speed, slowMode);
 }
 
+
 /**
- * Left motors movement control.
- * Sets the value of the left motors in normal mode or right motors in flipped
- * mode; Speed is divided by slowModePercent if in slow mode
+ * Set straight forward movement.
+ * Calculates and sets the motor speeds so that the net movement of the robot is
+ * towards the middle boundary; Speed is rescaled by the mvt_localTrimSpeed
+ * function before calling the motors' functions
  *
  * @param speed Speed in range -127 to 127
  */
-void mvt_setForwardLeft(signed char speed) {
-  if (slowMode) { speed = speed / SLOW_PERCENT; }
-
-  if (!isFlipped) {
-    motor[leftMaster] = (-speed * MOTOR_CORRECTION) / 127;
-  } else {
-    motor[rightMaster] = -speed;
-  }
-}
-
-/**
- * Right motors movement control.
- * Sets the value of the right motors in normal mode or left motors in flipped
- * mode; Speed is divided by slowModePercent if in slow mode
- *
- * @param speed Speed in range -127 to 127
- */
-void mvt_setForwardRight(signed char speed) {
-  if (slowMode) { speed = speed / SLOW_PERCENT; }
-
-  if (!isFlipped) {
-    motor[rightMaster] = speed;
-  } else {
-    motor[leftMaster] = (speed * MOTOR_CORRECTION) / 127;
-  }
+void mvt_setSrtFwdSpeed(short speed) {
+  speed = mvt_localTrimSpeed(speed);
+  // TODO: straight forward movement
 }
 
 /**
