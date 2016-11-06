@@ -18,37 +18,86 @@ void ctl_testSlowMode() {
 }
 
 /**
- * Controls the speed of the left and right motors.
- * Tests Ch3 for right motors and Ch2 for left motors; Does not activate movement
- * without joystick being over jsThreshold to prevent ghost movement
+ * Controls Linear Motion.
+ * Tests Ch3 for forward motion and then Ch4 for sideways movement; Both forward
+ * and sideways motion cannot be used at the same time - forward takes priority;
+ * Does not activate movement without joystick being over joystick treshold to
+ * prevent ghost movement
+ *
+ * @return true if the control was activated, false otherwise
  */
-void ctl_testJoysticks() {
+bool ctl_testJoystickleft() {
   if (vexRT[Ch3] <= -JOYSTICK_THRESHOLD || vexRT[Ch3] >= JOYSTICK_THRESHOLD) {
-    mvt_setForwardRight(vexRT[Ch3]);
-  } else {
-    mvt_setForwardRight(0);
+    // TODO: straight forward movement
+    return true;
   }
 
-  if (vexRT[Ch2] <= -JOYSTICK_THRESHOLD || vexRT[Ch2] >= JOYSTICK_THRESHOLD) {
-    mvt_setForwardLeft(vexRT[Ch2]);
-  } else {
-    mvt_setForwardLeft(0);
+  if (vexRT[Ch4] <= -JOYSTICK_THRESHOLD || vexRT[Ch4] >= JOYSTICK_THRESHOLD) {
+    // TODO: straight sideways movement
+    return true;
   }
+
+  return false;
 }
 
 /**
- * Controls the speed of the side motor.
- * Tests Btn6D and Bth5D for activation and sets speed to highest level for the
- * duration of their activation
+ * Controls Freeform Motion.
+ * Tests Ch1 for forward motion and then Ch2 for sideways movement; Both forward
+ * and sideways can be used at the same time; Does not activate movement without
+ * joystick being over joystick treshold to prevent ghost movement
+ *
+ * @return true if the control was activated, false otherwise
  */
-void ctl_testSideMovement() {
-  if (vexRT[Btn6D]) {
-    mvt_setSide(127);
-  } else if (vexRT[Btn5D]) {
-    mvt_setSide(-127);
-  } else {
-    mvt_setSide(0);
+bool ctl_testJoystickRight() {
+  bool control = false;
+
+  if (vexRT[Ch1] <= -JOYSTICK_THRESHOLD || vexRT[Ch1] >= JOYSTICK_THRESHOLD) {
+    // TODO: freeform straight forward movement
+    control = true;
   }
+
+  if (vexRT[Ch2] <= -JOYSTICK_THRESHOLD || vexRT[Ch2] >= JOYSTICK_THRESHOLD) {
+    // TODO: freeform sideways movement
+    control = true;
+  }
+
+  return control;
+}
+
+/**
+ * Controls rotation in segments.
+ * Tests Btn6D and Bth5D for activation and rotates the robot by 45 degrees.
+ *
+ * @return true if the control was activated, false otherwise
+ */
+bool ctl_testRotationSegments() {
+  if (vexRT[Btn6D]) {
+    mvt_rotateOneSegment(127, 1);
+    return true;
+  } else if (vexRT[Btn5D]) {
+    mvt_rotateOneSegment(-127, 1);
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Controls freeform rotation.
+ * Tests Btn6D and Bth5D for activation and rotates the robot by 45 degrees.
+ *
+ * @return true if the control was activated, false otherwise
+ */
+bool ctl_testRotationFree() {
+  if (vexRT[Btn6D]) {
+    mvt_setRotationSpeed(127, 1);
+    return true;
+  } else if (vexRT[Btn5D]) {
+    mvt_setRotationSpeed(-127, 1);
+    return true;
+  }
+
+  return false;
 }
 
 /**
