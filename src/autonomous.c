@@ -36,27 +36,25 @@ void atn_mvtFwdTime(int dist, short speed) {
  * @param speed Speed in range -127 to 127
  * @param relative add to current position
  */
-void atn_mvtFwdSnr(int dist, signed char speed, bool relative) {
+void atn_mvtFwdSnr(int dist, short speed, bool relative) {
   if (speed == 0) { return; }
 
-  if (SensorValue[sonarFront] == -1) {    // If sensor is messed up
+  if (atn_localGetSnr(0) == -1) {    // If sensor is messed up
     stat_flashLeds(4);
 
-    atn_mvtFwdEnc(65, speed);
+    atn_mvtFwdTime(65, speed);
     return;
   }
 
   if (relative) {
-    dist += SensorValue[sonarFront];
+    dist += atn_localGetSnr(0);
   }
 
-  while (SensorValue[sonarFront] < dist) {
-    mvt_setForwardLeft(speed);
-    mvt_setForwardRight(speed);
+  while (atn_localGetSnr(0) < dist) {
+    mvt_setSrtFwdSpeed(speed);
   }
 
-  mvt_setForwardLeft(0);
-  (0);
+  mvt_setSrtFwdSpeed(0);
 }
 
 /**
@@ -69,9 +67,8 @@ void atn_mvtFwdSnr(int dist, signed char speed, bool relative) {
 void atn_mvtSide(int dist, signed char speed) {
   dist *= TIME_ONE_INCH;
 
-  mvt_setSide(speed);
+  mvt_setSrtSideSpeed(speed);
   wait1Msec(dist);
-  mvt_setSide(0);
 
   /*
   if (speed > 0) {
@@ -93,27 +90,23 @@ void atn_mvtSide(int dist, signed char speed) {
   */
 void atn_mvtStar() {
   // Extend Arm
-  mvt_setHighHang(127);
+  mvt_setArmSpeed(127);
   wait1Msec(1250);               // High hang upwards duration
-  mvt_setHighHang(0);
+  mvt_setArmSpeed(0);
 
   // Move back so doesn't climb fence
-    mvt_setForwardLeft(-65);
-    mvt_setForwardRight(-65);
+    mvt_setSrtFwdSpeed(-65);
     wait1Msec(100);               // High hang shift duration
-    mvt_setForwardLeft(0);
-    mvt_setForwardRight(0);
+    mvt_setSrtFwdSpeed(0);
 
   // Lower arm
   while (SensorValue[armSwitch] == 0) {
-    mvt_setHighHang(-65);
+    mvt_setArmSpeed(-65);
   }
-  mvt_setHighHang(0);
+  mvt_setArmSpeed(0);
 
   // Return to position
-  mvt_setForwardLeft(65);
-  mvt_setForwardRight(65);
+  mvt_setSrtFwdSpeed(65);
   wait1Msec(120);               // High hang return shift duration
-  mvt_setForwardLeft(0);
-  mvt_setForwardRight(0);
+  mvt_setSrtFwdSpeed(0);
 }
