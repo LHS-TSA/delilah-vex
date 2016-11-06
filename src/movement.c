@@ -1,6 +1,33 @@
 // SECTION: Movement Functions
 
 /**
+ * Trim and adjust speed.
+ * Lowers given speed value to between -127 and 127 and scales the speed to slow
+ * mode if enabled.
+ *
+ * @param speed Speed
+ * @param slow Scale speed for slow mode
+ */
+short mvt_localTrimSpeed(short speed, bool slow) {
+  if (speed > 127 || speed < -127) { speed %= 127; }
+
+  if (slow) { speed /= SLOW_MAX_SPEED; }
+
+  return speed;
+}
+
+/**
+ * Trim and adjust speed.
+ * Lowers given speed value to between -127 and 127 and scales the speed to slow
+ * mode if the global variable "slowMode" it true.
+ *
+ * @param speed Speed
+ */
+short mvt_localTrimSpeed(short speed) {
+  return mvt_localTrimSpeed(speed, slowMode);
+}
+
+/**
  * Left motors movement control.
  * Sets the value of the left motors in normal mode or right motors in flipped
  * mode; Speed is divided by slowModePercent if in slow mode
