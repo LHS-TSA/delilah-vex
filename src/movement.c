@@ -42,17 +42,16 @@ void mvt_setSrtFwdSpeed(short speed) {
 }
 
 /**
- * Left motors movement control.
- * Sets the value of the side motors in normal mode; Value is negated in flipped
- * mode; Speed is divided by slowModePercentSide if in slow mode
+ * Set straight sideways movement.
+ * Calculates and sets the motor speeds so that the net movement of the robot is
+ * towards the right boundary; Speed is rescaled by the mvt_localTrimSpeed
+ * function before calling the motors' functions
  *
  * @param speed Speed in range -127 to 127
  */
-void mvt_setSide(signed char speed) {
-  if (isFlipped) { speed = -speed; }
-  if (slowMode) { speed = speed / SLOW_SIDE_PERCENT; }
-
-  motor[sideMotor] = speed;
+void mvt_setSrtSideSpeed(short speed) {
+  speed = mvt_localTrimSpeed(speed);
+  // TODO: straight sideways movement
 }
 
 /**
