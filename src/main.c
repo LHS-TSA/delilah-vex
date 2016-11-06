@@ -32,7 +32,7 @@ task autonomous() {
   for (int i=0; i<3; i++) {
     wait1Msec(250);
     atn_mvtStar();
-    atn_mvtSide(distSideMvt * 2, -autonSpeed);
+    atn_mvtSideSnr(distSideMvt * 2, -autonSpeed, false);
   }
 
   /*

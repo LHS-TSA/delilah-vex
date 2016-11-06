@@ -7,7 +7,7 @@
  *
  * @return true if the control was activated, false otherwise
  */
-void ctl_testSlowMode() {
+bool ctl_testSlowMode() {
   if (vexRT[Btn8R]) {
     wait1Msec(250);
     slowMode = !slowMode;
@@ -90,13 +90,14 @@ bool ctl_testRotationSegments() {
  */
 bool ctl_testRotationFree() {
   if (vexRT[Btn6D]) {
-    mvt_setRotationSpeed(127, 1);
+    mvt_setRotationSpeed(127);
     return true;
   } else if (vexRT[Btn5D]) {
-    mvt_setRotationSpeed(-127, 1);
+    mvt_setRotationSpeed(-127);
     return true;
   }
 
+	mvt_setRotationSpeed(0);
   return false;
 }
 
@@ -109,13 +110,13 @@ bool ctl_testRotationFree() {
  */
 bool ctl_testHighHang() {
   if (vexRT[Btn7U]) {
-    mvt_setHighHang(127);
+    mvt_setArmSpeed(127);
     return true;
   } else if (vexRT[Btn7D]) {
-    mvt_setHighHang(-127);
+    mvt_setArmSpeed(-127);
     return true;
   } else {
-    mvt_setHighHang(0);
+    mvt_setArmSpeed(0);
     return false;
   }
 }
