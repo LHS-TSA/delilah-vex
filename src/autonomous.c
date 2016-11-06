@@ -82,7 +82,7 @@ void atn_mvtSideTime(int dist, short speed) {
  * @param speed Speed in range -127 to 127
  * @param relative add to current position
  */
-void atn_mvtFwdSnr(int dist, short speed, bool relative) {
+void atn_mvtSideSnr(int dist, short speed, bool relative) {
   if (speed == 0) { return; }
 
   if (atn_localGetSnr(6) == -1) {    // If sensor is messed up
