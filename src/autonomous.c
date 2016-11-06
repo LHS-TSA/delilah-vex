@@ -58,29 +58,49 @@ void atn_mvtFwdSnr(int dist, short speed, bool relative) {
 }
 
 /**
- * Autonomous sideways movement control.
- * Controls the motion of the sideways motors during an autonomous period
+ * Autonomous sideways timed movement control.
+ * Controls the motion of the motors for sideways movement using the timing
+ * during an autonomous period
  *
- * @param dist Distance to move forward in inches
+ * @param dist Distance to move sideways in inches
  * @param speed Speed in range -127 to 127
  */
-void atn_mvtSide(int dist, signed char speed) {
+void atn_mvtSideTime(int dist, short speed) {
   dist *= TIME_ONE_INCH;
 
   mvt_setSrtSideSpeed(speed);
   wait1Msec(dist);
+  mvt_setSrtSideSpeed(0);
+}
 
-  /*
-  if (speed > 0) {
-   mvtForwardRight(127);
-   wait1Msec(50);               // Sideways correction timing
-   mvtForwardRight(0);
-  } else {
-   mvtForwardLeft(127);
-   wait1Msec(50);               // Sideways correction timing
-   mvtForwardLeft(0);
+/**
+ * Autonomous forward sonar movement control.
+ * Controls the motion of the motors using the sonar thing I can't spell during an
+ * autonomous period
+ *
+ * @param dist Distance to move forward in inches
+ * @param speed Speed in range -127 to 127
+ * @param relative add to current position
+ */
+void atn_mvtFwdSnr(int dist, short speed, bool relative) {
+  if (speed == 0) { return; }
+
+  if (atn_localGetSnr(6) == -1) {    // If sensor is messed up
+    stat_flashLeds(4);
+
+    atn_mvtFwdTime(65, speed);
+    return;
   }
-  */
+
+  if (relative) {
+    dist += atn_localGetSnr(6);
+  }
+
+  while (atn_localGetSnr(6) < dist) {
+    mvt_setSrtFwdSpeed(speed);
+  }
+
+  mvt_setSrtFwdSpeed(0);
 }
 
  /**
