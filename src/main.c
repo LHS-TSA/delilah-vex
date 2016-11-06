@@ -29,7 +29,6 @@
 // Global Variables
 bool isFlipped = false;         // Toggles which side is front
 bool slowMode = false;          // Reduces speed by indicated percent
-bool modeHighHang = false;			// Disables the motor protection on high hang
 
 // Include functions
 #include "status.c"

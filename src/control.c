@@ -27,38 +27,6 @@ void ctl_testSlowMode() {
 }
 
 /**
- * Controls when the high hang protection is disabled.
- * Tests for presses to Btn8L and flips the bool value modeHighHang when activated;
- * The green led will blink if enabled and the red led will blink when disabled
- */
-void ctl_testHighHangMode() {
-  if (vexRT[Btn8L]) {
-    modeHighHang = !modeHighHang;
-
-    if (modeHighHang) {
-      SensorValue[ledGreen] = 1;
-      wait1Msec(62);
-      SensorValue[ledGreen] = 0;
-      wait1Msec(62);
-      SensorValue[ledGreen] = 1;
-      wait1Msec(62);
-      SensorValue[ledGreen] = 0;
-      wait1Msec(62);
-    } else {
-      SensorValue[ledRed] = 1;
-      wait1Msec(62);
-      SensorValue[ledRed] = 0;
-      wait1Msec(62);
-      SensorValue[ledRed] = 1;
-      wait1Msec(62);
-      SensorValue[ledRed] = 0;
-      wait1Msec(62);
-    }
-    stat_resetLeds();
-  }
-}
-
-/**
  * Controls the speed of the left and right motors.
  * Tests Ch3 for right motors and Ch2 for left motors; Does not activate movement
  * without joystick being over jsThreshold to prevent ghost movement

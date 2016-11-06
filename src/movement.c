@@ -49,14 +49,18 @@ void mvt_setSide(signed char speed) {
 }
 
 /**
- * High hang motors movement control.
- * Sets the value of the high hang motors in normal mode; Value is not effected
- * by flipped mode or slow mode
+ * High hang motor control.
+ * Sets the value of the high hang motors in normal mode; Speed is rescaled by
+ * the mvt_localTrimSpeed function before calling the motors' functions but is
+ * not affected by slow mode; Motors will not activate if decending and the arm
+ * bumper is depressed
  *
  * @param speed Speed in range -127 to 127
  */
-void mvt_setHighHang(signed char speed) {
-  if (speed < 0 && (SensorValue(armSwitch) && !modeHighHang)) {
+void mvt_setHighHang(short speed) {
+  speed = mvt_localTrimSpeed(speed, false)
+
+  if (speed < 0 && (SensorValue(armSwitch)) {
     motor[armLeft] = 0;
     motor[armRight] = 0;
   } else {
