@@ -85,7 +85,7 @@ void mvt_setRotationSpeed(short speed) {
  * Arm motor control.
  * Sets the value of the arm motors in normal mode; Speed is rescaled by the
  * mvt_localTrimSpeed function before calling the motors' functions but is not
- * affected by slow mode; Motors will not activate if decending and the arm
+ * affected by slow mode; Motors will not activate if descending and the arm
  * bumper is depressed
  *
  * @param speed Speed in range -127 to 127

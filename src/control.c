@@ -21,7 +21,7 @@ bool ctl_testSlowMode() {
  * Controls Linear Motion.
  * Tests Ch3 for forward motion and then Ch4 for sideways movement; Both forward
  * and sideways motion cannot be used at the same time - forward takes priority;
- * Does not activate movement without joystick being over joystick treshold to
+ * Does not activate movement without joystick being over joystick threshold to
  * prevent ghost movement
  *
  * @return true if the control was activated, false otherwise
@@ -44,7 +44,7 @@ bool ctl_testJoystickleft() {
  * Controls Freeform Motion.
  * Tests Ch1 for forward motion and then Ch2 for sideways movement; Both forward
  * and sideways can be used at the same time; Does not activate movement without
- * joystick being over joystick treshold to prevent ghost movement
+ * joystick being over joystick threshold to prevent ghost movement
  *
  * @return true if the control was activated, false otherwise
  */
