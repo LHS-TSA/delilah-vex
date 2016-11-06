@@ -1,6 +1,11 @@
 #pragma config(UserModel, "motor_setup.h")
 #include "Vex_Competition_Includes.c"
 #include "constants.h"
+
+// Global Variables
+short rotation = 0;             // rotation of the robot
+bool slowMode = false;          // Reduces speed by indicated percent
+
 #include "status.c"
 #include "motors.c"
 #include "movement.c"
