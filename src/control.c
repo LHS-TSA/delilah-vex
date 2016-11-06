@@ -1,19 +1,6 @@
 // SECTION: Controller Functions
 
 /**
- * Controls when front side of robot is swapped.
- * Tests for presses to Btn8D and flips the bool value isFlipped when activated;
- * The red led will be active when in flipped mode
- */
-void ctl_testFlipSides() {
-  if (vexRT[Btn8D]) {
-    wait1Msec(250);       // This is to keep button press from rapidly switching
-    isFlipped = !isFlipped;
-    stat_resetLeds();
-  }
-}
-
-/**
  * Controls when motors are at reduced speed.
  * Tests for presses to Btn8R and flips the bool value slowMode when activated;
  * The green led will be active when in slow mode
