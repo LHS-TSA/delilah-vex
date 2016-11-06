@@ -1,6 +1,15 @@
 // SECTION: Autonomous Movement
 
 /**
+ * Relative sonar value.
+ *
+ * @param facing Position of sonar
+ */
+int atn_localGetSnr(short facing) {
+  // TODO: Sonar value based on facing value
+}
+
+/**
  * Autonomous forward timed movement control.
  * Controls the motion of the motors for forward movement using the timing
  * during an autonomous period
