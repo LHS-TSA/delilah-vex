@@ -1,28 +1,21 @@
 // SECTION: Autonomous Movement
 
 /**
- * Autonomous forward encoder movement control.
- * Controls the motion of the motors using the motor encoders during an
- * autonomous period
+ * Autonomous forward timed movement control.
+ * Controls the motion of the motors for forward movement using the timing
+ * during an autonomous period
  *
  * @param dist Distance to move forward in inches
  * @param speed Speed in range -127 to 127
  */
-void atn_mvtFwdEnc(int dist, signed char speed) {
+void atn_mvtFwdTime(int dist, short speed) {
   if (speed == 0) { return; }
-
-  SensorValue[leftEncoder] = 0;
-  SensorValue[rightEncoder] = 0;
 
   dist *= TIME_ONE_INCH;
 
-  mvt_setForwardLeft(speed);
-  mvt_setForwardRight(speed);
-
-  wait1Msec(dist);              // Remove once encoders work
-
-  mvt_setForwardLeft(0);
-  mvt_setForwardRight(0);
+  mvt_setSrtFwdSpeed(speed);
+  wait1Msec(dist);
+  mvt_setSrtFwdSpeed(0);
 }
 
 /**
