@@ -24,7 +24,7 @@
 #include "../include/constants.h"
 
 // Global Variables
-short facing = 0;               // Sets which side is front (0-7)
+short rotation = 0;             // rotation of the robot
 bool slowMode = false;          // Reduces speed by indicated percent
 
 // Include functions

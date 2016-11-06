@@ -1,22 +1,18 @@
-// SECTION: Motor Control
+// SECTION: Drive Motor Control
 
+short botVelocity[3] = {0 ,0, 0};
 short motorSpeeds[4] = {0, 0, 0, 0};
 bool motorZero[4] = {false, false, false, false};
 
-void mtr_setMotorASpeed(short speed) {
-  // TODO: Motor A
+void mtr_localMotorSpeed(short speedA,
+                         short speedB,
+                         short speedC,
+                         short speedD) {
+  // TODO: motor speeds
 }
 
-void mtr_setMotorBSpeed(short speed) {
-  // TODO: Motor B
-}
-
-void mtr_setMotorCSpeed(short speed) {
-  // TODO: Motor C
-}
-
-void mtr_setMotorDSpeed(short speed) {
-  // TODO: Motor D
+void mtr_localZeroMotors() {
+  // TODO; motor zeroing
 }
 
 void mtr_doMotorTick() {

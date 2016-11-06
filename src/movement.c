@@ -63,8 +63,22 @@ void mvt_setSrtSideSpeed(short speed) {
  * @param count Number of rotations of 45 degrees
  */
 void mvt_rotateOneSegment(short speed, short count) {
-  speed = mvt_localTrimSpeed(speed);
+  speed = mvt_localTrimSpeed(speed, false);
+  count %= 8;
   // TODO: rotation movement
+}
+
+/**
+ * Variable length rotation movement.
+ * Calculates and sets the motor speeds so that the robot rotates about its center;
+ * Speed is rescaled by the mvt_localTrimSpeed function before calling the motors'
+ * functions but is not affected by slow mode
+ *
+ * @param speed Speed in range -127 to 127
+ */
+void mvt_rotateSpeed(short speed) {
+  speed = mvt_localTrimSpeed(speed, false);
+  // TODO: variable rotation movement
 }
 
 /**
