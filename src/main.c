@@ -29,6 +29,7 @@ bool slowMode = false;          // Reduces speed by indicated percent
 
 // Include functions
 #include "status.c"
+#include "motors.c"
 #include "movement.c"
 #include "autonomous.c"
 #include "control.c"
