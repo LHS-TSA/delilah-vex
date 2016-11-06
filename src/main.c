@@ -76,12 +76,20 @@ task autonomous() {
  */
 task usercontrol() {
   while (true) {
-    // logState();
-    ctl_testFlipSides();
+    // Avoid Linear and freeform movement in same cycle
+    if (!ctl_testJoystickleft()) {
+      ctl_testJoystickRight();
+    }
+
+    // Avoid Linear and freeform rotation in same cycle
+    if (!ctl_testRotationSegments()) {
+      ctl_testRotationFree();
+    }
+
     ctl_testSlowMode();
-    ctl_testHighHangMode();
-    ctl_testJoysticks();
-    ctl_testSideMovement();
     ctl_testHighHang();
+
+    mtr_doMotorTick();
+    wait1Msec(10);
   }
 }
