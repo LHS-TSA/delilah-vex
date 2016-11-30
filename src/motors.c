@@ -13,9 +13,21 @@ void mtr_localMotorSpeed(short speedA,
 }
 
 void mtr_localZeroMotors() {
-  // TODO; motor zeroing
+  for (int i=0; i<4; i++) {
+    if (!motorZero[i]) {
+      if (motorSpeeds[i] > 0) {
+        motorSpeeds[i]--;
+      } else if (motorSpeeds[i] < 0) {
+        motorSpeeds[i]++;
+      } else if (motorSpeeds[i] == 0) {
+        motorZero[i] = false;
+      }
+    }
+  }
 }
 
 void mtr_doMotorTick() {
+  mtr_localZeroMotors();
+  mtr_localMotorSpeed(motorSpeeds[0], motorSpeeds[1], motorSpeeds[2], motorSpeeds[3]);
   // TODO: Motor Tick
 }
