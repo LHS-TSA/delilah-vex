@@ -1,7 +1,8 @@
 // SECTION: Drive Motor Control
 
 // Global Variables
-short botVelocity[3] = {0 ,0, 0};  // X,Y,Z
+short botVelocityX = 0;
+short botVelocityY = 0;
 short motorSpeeds[4] = {0, 0, 0, 0};
 // bool motorZero[4] = {false, false, false, false};
 
@@ -24,10 +25,10 @@ void mtr_localMotorSpeed() {
 
 short mtr_localGetCurrentQuad() {
   // TODO: Make these more specific
-  if (botVelocity[1] >= 0) {
-    return (botVelocity[0] > 0 ? 1 : 2);
+  if (botVelocityY >= 0) {
+    return (botVelocityX > 0 ? 1 : 2);
   } else {
-    return (botVelocity[0] > 0 ? 4 : 3);
+    return (botVelocityX > 0 ? 4 : 3);
   }
 }
 
@@ -76,8 +77,8 @@ short mtr_localGetNonFacingMotorSpeed(int degree) {
 }
 
 void mtr_localCalcVelocity() {
-  botAngle = (short)(atan2(botVelocity[1], botVelocity[0]) * 57.2958);
-  botSpeed = sqrt(botVelocity[0] * botVelocity[0] + botVelocity[1] * botVelocity[1]);
+  botAngle = (short)(atan2(botVelocityY, botVelocityX) * 57.2958);
+  botSpeed = sqrt(botVelocityX * botVelocityX + botVelocityY * botVelocityY);
 }
 
 /* This won't work proportionally
