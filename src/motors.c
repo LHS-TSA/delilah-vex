@@ -65,7 +65,7 @@ short mtr_localGetNonFacingMotorSpeed(int degree) {
 }
 
 void mtr_localCalcVelocity() {
-  botAngle = (short)(atan2(botVelocity[0], botVelocity[1]) * 57.2958); // I think this is reversed
+  botAngle = (short)(atan2(botVelocity[1], botVelocity[0]) * 57.2958);
   botSpeed = sqrt(botVelocity[0] * botVelocity[0] + botVelocity[1] * botVelocity[1]);
 }
 
