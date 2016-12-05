@@ -49,13 +49,9 @@ task autonomous() {
  * User Control Task.
  */
 task usercontrol() {
+  ClearTimer(T1);
+
   while (true) {
-    // Resets timer to 0
-    ClearTimer(T1);
-
-    // Sets motors to their values found in the last cycle
-    mtr_commitMotorSpeeds();
-
     // Avoid Linear and freeform movement in same cycle
     if (!ctl_testJoystickleft()) {
       ctl_testJoystickRight();
@@ -74,6 +70,8 @@ task usercontrol() {
     // Make a cycle last exectly 20ms
     if (time1[T1] < 20) {
       while(time1[T1] < 20) { wait1Msec(1); }
+      mtr_commitMotorSpeeds();
+      ClearTimer(T1);              // Resets timer to 0
     } else {
       writeDebugStreamLine("[WARN] Cycle Exceeded 20ms");
     }
