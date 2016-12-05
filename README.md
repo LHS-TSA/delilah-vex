@@ -2,8 +2,8 @@
 **Stephen and John's Vex Robot Source**
 
 ### Documentation ###
-  See [DOCUMENTATION.md](DOCUMENTATION.md)
-  Motor math? [motor_setup.xlsx](https://drive.google.com/file/d/0B9RaWg90J14AMmFEUTl5SnpBRXM/view)
+  - See [DOCUMENTATION.md](DOCUMENTATION.md)
+  - Motor math? [motor_setup.xlsx](https://drive.google.com/file/d/0B9RaWg90J14AMmFEUTl5SnpBRXM/view)
 
 ### Licensing ###
 This program is released under the [GPL v3 License](LICENSE).
