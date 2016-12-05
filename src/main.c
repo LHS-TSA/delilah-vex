@@ -50,6 +50,9 @@ task autonomous() {
  */
 task usercontrol() {
   while (true) {
+    // Resets timer to 0
+    ClearTimer(T1);
+
     // Avoid Linear and freeform movement in same cycle
     if (!ctl_testJoystickleft()) {
       ctl_testJoystickRight();
@@ -64,6 +67,12 @@ task usercontrol() {
     ctl_testHighHang();
 
     mtr_doMotorTick();
-    wait1Msec(10);
+
+    // Make a cycle last exectly 20ms
+    if (time1[T1] < 20) {
+      while(time1[T1] < 20) { wait1Msec(1); }
+    } else {
+      writeDebugStreamLine("[WARN] Cycle Exceeded 20ms");
+    }
   }
 }
