@@ -20,4 +20,9 @@
 #define MOTOR_C motor[motorC]
 #define MOTOR_D motor[motorD]
 
+#define JOY_LX vexRT[Ch4]
+#define JOY_LY vexRT[Ch3]
+#define JOY_RX vexRT[Ch1]
+#define JOY_RY vexRT[Ch2]
+
 #endif // DELILAH_CONSTANTS_H
