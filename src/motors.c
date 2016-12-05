@@ -32,7 +32,15 @@ short mtr_localGetCurrentQuad() {
 }
 
 void mtr_localQuad1() {
+  float nfm = mtr_localGetNonFacingMotorSpeed();
+  short dom = 127;
 
+  /*
+  motorSpeeds[0] =
+  motorSpeeds[1] =
+  motorSpeeds[2] =
+  motorSpeeds[3] =
+   */
 }
 
 void mtr_localQuad2() {
