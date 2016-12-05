@@ -33,27 +33,39 @@ short mtr_localGetCurrentQuad() {
 }
 
 void mtr_localQuad1() {
-  float nfm = mtr_localGetNonFacingMotorSpeed();
-  short dom = 127;
+  float nfm = mtr_localGetNonFacingMotorSpeed(botAngle);
 
-  /*
-  motorSpeeds[0] =
-  motorSpeeds[1] =
-  motorSpeeds[2] =
-  motorSpeeds[3] =
-   */
+  motorSpeeds[0] = (nfm * botSpeed) / MAX_MOTOR_A;
+  motorSpeeds[1] = (-MAX_MOTOR_B * botSpeed) / MAX_MOTOR_B;
+  motorSpeeds[2] = (-nfm * botSpeed) / MAX_MOTOR_C;
+  motorSpeeds[3] = (MAX_MOTOR_D * botSpeed) / MAX_MOTOR_D;
 }
 
 void mtr_localQuad2() {
+  float nfm = mtr_localGetNonFacingMotorSpeed(botAngle - 90);
 
+  motorSpeeds[0] = (MAX_MOTOR_A * botSpeed) / MAX_MOTOR_A;
+  motorSpeeds[1] = (nfm * botSpeed) / MAX_MOTOR_B;
+  motorSpeeds[2] = (-MAX_MOTOR_C * botSpeed) / MAX_MOTOR_C;
+  motorSpeeds[3] = (-nfm * botSpeed) / MAX_MOTOR_D;
 }
 
 void mtr_localQuad3() {
+  float nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle - 90);
 
+  motorSpeeds[0] = (-nfm * botSpeed) / MAX_MOTOR_A;
+  motorSpeeds[1] = (MAX_MOTOR_B * botSpeed) / MAX_MOTOR_B;
+  motorSpeeds[2] = (nfm * botSpeed) / MAX_MOTOR_C;
+  motorSpeeds[3] = (-MAX_MOTOR_D * botSpeed) / MAX_MOTOR_D;
 }
 
 void mtr_localQuad4() {
+  float nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle);
 
+  motorSpeeds[0] = (-MAX_MOTOR_A * botSpeed) / MAX_MOTOR_A;
+  motorSpeeds[1] = (-nfm * botSpeed) / MAX_MOTOR_B;
+  motorSpeeds[2] = (MAX_MOTOR_C * botSpeed) / MAX_MOTOR_C;
+  motorSpeeds[3] = (nfm * botSpeed) / MAX_MOTOR_D;
 }
 
 void mtr_commitMotorSpeeds() {
