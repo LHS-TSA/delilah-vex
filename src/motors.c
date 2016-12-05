@@ -3,7 +3,7 @@
 // Global Variables
 short botVelocity[3] = {0 ,0, 0};  // X,Y,Z
 short motorSpeeds[4] = {0, 0, 0, 0};
-bool motorZero[4] = {false, false, false, false};
+// bool motorZero[4] = {false, false, false, false};
 
 short botAngle = 0;
 short botSpeed = 0;
@@ -70,22 +70,24 @@ void mtr_localCalcVelocity() {
   botSpeed = sqrt(botVelocity[0] * botVelocity[0] + botVelocity[1] * botVelocity[1]);
 }
 
-void mtr_localZeroMotors() {
-  for (int i=0; i<4; i++) {
-    if (!motorZero[i]) {
-      if (motorSpeeds[i] > 0) {
-        motorSpeeds[i]--;
-      } else if (motorSpeeds[i] < 0) {
-        motorSpeeds[i]++;
-      } else if (motorSpeeds[i] == 0) {
-        motorZero[i] = false;
-      }
-    }
-  }
-}
+/* This won't work proportionally
+ * void mtr_localZeroMotors() {
+ *   for (int i=0; i<4; i++) {
+ *     if (!motorZero[i]) {
+ *       if (motorSpeeds[i] > 0) {
+ *         motorSpeeds[i]--;
+ *       } else if (motorSpeeds[i] < 0) {
+ *         motorSpeeds[i]++;
+ *       } else if (motorSpeeds[i] == 0) {
+ *         motorZero[i] = false;
+ *       }
+ *     }
+ *   }
+ * }
+ */
 
 void mtr_doMotorTick() {
-  mtr_localZeroMotors();
+  // mtr_localZeroMotors();
   mtr_localMotorSpeed();
   // TODO: Motor Tick
 }
