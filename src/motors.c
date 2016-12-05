@@ -28,6 +28,7 @@ void mtr_localMotorSpeed() {
 }
 
 short mtr_localGetCurrentQuad() {
+  // TODO: Make these more specific
   if (botVelocity[1] >= 0) {
     return (botVelocity[0] > 0 ? 1 : 2);
   } else {
