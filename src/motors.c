@@ -20,11 +20,6 @@ void mtr_localMotorSpeed() {
     case 2: mtr_localQuad2(); break;
     case default: mtr_localQuad1();
   }
-
-  MOTOR_A = motorSpeeds[0];
-  MOTOR_B = motorSpeeds[1];
-  MOTOR_C = motorSpeeds[2];
-  MOTOR_D = motorSpeeds[3];
 }
 
 short mtr_localGetCurrentQuad() {
@@ -50,6 +45,13 @@ void mtr_localQuad3() {
 
 void mtr_localQuad4() {
 
+}
+
+void mtr_commitMotorSpeeds() {
+  MOTOR_A = motorSpeeds[0];
+  MOTOR_B = motorSpeeds[1];
+  MOTOR_C = motorSpeeds[2];
+  MOTOR_D = motorSpeeds[3];
 }
 
 short mtr_localGetNonFacingMotorSpeed(int degree) {

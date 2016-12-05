@@ -53,6 +53,9 @@ task usercontrol() {
     // Resets timer to 0
     ClearTimer(T1);
 
+    // Sets motors to their values found in the last cycle
+    mtr_commitMotorSpeeds();
+
     // Avoid Linear and freeform movement in same cycle
     if (!ctl_testJoystickleft()) {
       ctl_testJoystickRight();
