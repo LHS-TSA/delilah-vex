@@ -14,4 +14,10 @@
 #define MAX_MOTOR_C 127
 #define MAX_MOTOR_D 127
 
+// Shorthand for motors
+#define MOTOR_A motor[motorA]
+#define MOTOR_B motor[motorB]
+#define MOTOR_C motor[motorC]
+#define MOTOR_D motor[motorD]
+
 #endif // DELILAH_CONSTANTS_H
