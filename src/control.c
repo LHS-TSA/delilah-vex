@@ -27,16 +27,20 @@ bool ctl_testSlowMode() {
  * @return true if the control was activated, false otherwise
  */
 bool ctl_testJoystickleft() {
-  if (vexRT[Ch3] <= -JOYSTICK_THRESHOLD || vexRT[Ch3] >= JOYSTICK_THRESHOLD) {
-    // TODO: straight forward movement
+  if (JOY_LY <= -JOYSTICK_THRESHOLD || JOY_LY >= JOYSTICK_THRESHOLD) {
+    botVelocityY = JOY_LY;
+    botVelocityX = 0;
     return true;
   }
 
-  if (vexRT[Ch4] <= -JOYSTICK_THRESHOLD || vexRT[Ch4] >= JOYSTICK_THRESHOLD) {
-    // TODO: straight sideways movement
+  if (JOY_LX <= -JOYSTICK_THRESHOLD || JOY_LX >= JOYSTICK_THRESHOLD) {
+    botVelocityX = JOY_LY;
+    botVelocityY = 0;
     return true;
   }
 
+  botVelocityX = 0;
+  botVelocityY = 0;
   return false;
 }
 
@@ -51,14 +55,18 @@ bool ctl_testJoystickleft() {
 bool ctl_testJoystickRight() {
   bool control = false;
 
-  if (vexRT[Ch1] <= -JOYSTICK_THRESHOLD || vexRT[Ch1] >= JOYSTICK_THRESHOLD) {
-    // TODO: freeform straight forward movement
+  if (JOY_RY <= -JOYSTICK_THRESHOLD || JOY_RY >= JOYSTICK_THRESHOLD) {
+    botVelocityY = JOY_RY;
     control = true;
+  } else {
+    botVelocityY = 0;
   }
 
-  if (vexRT[Ch2] <= -JOYSTICK_THRESHOLD || vexRT[Ch2] >= JOYSTICK_THRESHOLD) {
-    // TODO: freeform sideways movement
+  if (JOY_RX <= -JOYSTICK_THRESHOLD || JOY_RX >= JOYSTICK_THRESHOLD) {
+    botVelocityX = JOY_RX;
     control = true;
+  } else {
+    botVelocityX = 0;
   }
 
   return control;
