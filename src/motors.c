@@ -12,15 +12,17 @@ short botSpeed = 0;
 short botRotation = 0;              // rotation of the robot
 bool slowMode = false;              // Reduces speed by indicated percent
 
-void mtr_localMotorSpeed() {
-  mtr_localCalcVelocity();
+short mtr_localGetNonFacingMotorSpeed(int degree) {
+  // TODO: OPTIMIZE ME!
+  // actual function: 0.00031 * deg^3 + -0.041828 * deg^2 + 4.05596*deg + -126.037
+  int deg_sq = degree * degree;
+  int deg_cu = deg_sq * degree;
 
-  switch (mtr_localGetCurrentQuad) {
-    case 4: mtr_localQuad4(); break;
-    case 3: mtr_localQuad3(); break;
-    case 2: mtr_localQuad2(); break;
-    case default: mtr_localQuad1();
-  }
+  float deg_sqf = -0.041828 * deg_sq;
+  float deg_cuf = 0.00031 * deg_cu;
+  float deg_f = 4.05596 * degree;
+
+  return (short)(deg_sqf + deg_cuf + deg_f + -126.037);
 }
 
 short mtr_localGetCurrentQuad() {
@@ -68,25 +70,7 @@ void mtr_localQuad4() {
   motorSpeeds[3] = (nfm * botSpeed) / MAX_MOTOR_D;
 }
 
-void mtr_commitMotorSpeeds() {
-  MOTOR_A = motorSpeeds[0];
-  MOTOR_B = motorSpeeds[1];
-  MOTOR_C = motorSpeeds[2];
-  MOTOR_D = motorSpeeds[3];
-}
 
-short mtr_localGetNonFacingMotorSpeed(int degree) {
-  // TODO: OPTIMIZE ME!
-  // actual function: 0.00031 * deg^3 + -0.041828 * deg^2 + 4.05596*deg + -126.037
-  int deg_sq = degree * degree;
-  int deg_cu = deg_sq * degree;
-
-  float deg_sqf *= -0.041828;
-  float deg_cuf *= 0.00031;
-  float deg_f *= 4.05596;
-
-  return (short)(deg_sqf + deg_cuf + deg_f + -126.037);
-}
 
 void mtr_localCalcVelocity() {
   botAngle = (short)(atan2(botVelocityY, botVelocityX) * 57.2958);
@@ -109,8 +93,33 @@ void mtr_localCalcVelocity() {
  * }
  */
 
+ void mtr_localMotorSpeed() {
+   mtr_localCalcVelocity();
+
+   switch (mtr_localGetCurrentQuad()) {
+     case 4: mtr_localQuad4(); break;
+     case 3: mtr_localQuad3(); break;
+     case 2: mtr_localQuad2(); break;
+     default: mtr_localQuad1();
+   }
+ }
+
 void mtr_doMotorTick() {
   // mtr_localZeroMotors();
   mtr_localMotorSpeed();
   // TODO: Motor Tick
+}
+
+void mtr_commitMotorSpeeds() {
+  if (slowMode) {
+    MOTOR_A = motorSpeeds[0] / SLOW_MAX_SPEED;
+    MOTOR_B = motorSpeeds[1] / SLOW_MAX_SPEED;
+    MOTOR_C = motorSpeeds[2] / SLOW_MAX_SPEED;
+    MOTOR_D = motorSpeeds[3] / SLOW_MAX_SPEED;
+  } else {
+    MOTOR_A = motorSpeeds[0];
+    MOTOR_B = motorSpeeds[1];
+    MOTOR_C = motorSpeeds[2];
+    MOTOR_D = motorSpeeds[3];
+  }
 }
