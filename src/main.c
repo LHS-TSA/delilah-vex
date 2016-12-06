@@ -3,10 +3,10 @@
 #include "constants.h"
 
 // Global Variables
-#include "status.c"
+// #include "status.c"
 #include "motors.c"
 #include "movement.c"
-#include "autonomous.c"
+// #include "autonomous.c"
 #include "control.c"
 
 /**
@@ -18,13 +18,15 @@ void pre_auton() {
   bStopTasksBetweenModes = true;
 
   // Set LEDs to correct values
-  stat_flashLeds(6);
+  // stat_flashLeds(6);
 }
 
 /**
  * Autonomous Task.
+ *
  */
 task autonomous() {
+	/*
   int distSideMvt = 10;
   int autonSpeed = (SensorValue[autonJumper] ? -65 : 65);
 

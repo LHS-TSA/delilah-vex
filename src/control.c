@@ -11,7 +11,7 @@ bool ctl_testSlowMode() {
   if (vexRT[Btn8R]) {
     wait1Msec(250);
     slowMode = !slowMode;
-    stat_resetLeds();
+    // stat_resetLeds();
     return true;
   }
   return false;
