@@ -49,7 +49,7 @@ task autonomous() {
  * User Control Task.
  */
 task usercontrol() {
-  ClearTimer(T1);
+  clearTimer(T1);
 
   while (true) {
     // Avoid Linear and freeform movement in same cycle
@@ -71,7 +71,7 @@ task usercontrol() {
     if (time1[T1] < 20) {
       while(time1[T1] < 20) { wait1Msec(1); }
       mtr_commitMotorSpeeds();
-      ClearTimer(T1);              // Resets timer to 0
+      clearTimer(T1);              // Resets timer to 0
     } else {
       writeDebugStreamLine("[WARN] Cycle Exceeded 20ms");
     }
