@@ -7,11 +7,12 @@
 bool slowMode = false;              // Reduces speed by indicated percent
 bool locked = false;
 bool lockingMode = false;
+bool auton = false;
 
 #include "status.c"
 #include "motors.c"
 #include "movement.c"
-// #include "autonomous.c"
+#include "autonomous.c"
 #include "control.c"
 
 /**
@@ -32,25 +33,25 @@ void pre_auton() {
  *
  */
 task autonomous() {
-	/*
-  int distSideMvt = 10;
-  int autonSpeed = (SensorValue[autonJumper] ? -65 : 65);
+  startTask(stat_ledController, 2);
+  auton = true;
+  // int distSideMvt = 10;
+  int autonSpeed = (SensorValue[autonJumper] ? -127 : 127);
 
-  atn_mvtFwdSnr(40, 127, false);
-  // wait1Msec(250);
-  // 9mvtAutonSide(distSideMvt * 1.2, autonSpeed);
-  for (int i=0; i<3; i++) {
-    wait1Msec(250);
-    atn_mvtStar();
-    atn_mvtSideSnr(distSideMvt * 2, -autonSpeed, false);
-  }
+  // If on highhang side
+    // go straight towards it
+    // go at angle to get behind
 
-  /*
-  for (int i=0; i<10; i++) {
-    mvtAutonStar();
-    mvtAutonSide(distSideMvt, autonSpeed);
-  }
-  */
+  botVelocityX = autonSpeed;
+  botVelocityY = autonSpeed / 2;
+  mtr_doMotorTick();
+  mtr_commitMotorSpeeds();
+
+  mvt_setRotationSpeed(autonSpeed);
+  mtr_doMotorTick();
+  mtr_commitMotorSpeeds();
+
+  mvt_setRotationSpeed(0);
 }
 
 /**
@@ -58,6 +59,8 @@ task autonomous() {
  */
 task usercontrol() {
   startTask(stat_ledController, 2);
+  auton = false;
+
   while (true) {
     clearTimer(T1);              // Resets timer to 0
     // Avoid different movement types in same cycle

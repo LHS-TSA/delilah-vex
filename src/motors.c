@@ -103,7 +103,7 @@ void mtr_localCalcVelocity() {
    if (botVelocityZ > 0) {
      mtr_localRotation();
    } else {
-     mtr_localCalcVelocity();
+     if (!auton) { mtr_localCalcVelocity(); }
 
      switch (mtr_localGetCurrentQuad()) {
        case 4: mtr_localQuad4(); break;
