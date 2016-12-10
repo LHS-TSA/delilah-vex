@@ -109,7 +109,7 @@ void mvt_setArmSpeed(short speed) {
     motor[armLeft] = 0;
     motor[armRight] = 0;
   } else {
-    motor[armLeft] = speed;
-    motor[armRight] = -speed;
+    motor[armLeft] = -speed;
+    motor[armRight] = speed;
   }
 }
