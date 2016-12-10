@@ -90,7 +90,7 @@ void mvt_rotateOneSegment(short speed, short count) {
  */
 void mvt_setRotationSpeed(short speed) {
   speed = mvt_localTrimSpeed(speed, false);
-  // TODO: variable rotation movement
+  botVelocityZ = speed;
 }
 
 /**

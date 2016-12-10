@@ -3,6 +3,7 @@
 // Global Variables
 short botVelocityX = 0;
 short botVelocityY = 0;
+short botVelocityZ = 0;             // Rotation
 short motorSpeeds[4] = {0, 0, 0, 0};
 // bool motorZero[4] = {false, false, false, false};
 
@@ -91,14 +92,25 @@ void mtr_localCalcVelocity() {
  * }
  */
 
- void mtr_localMotorSpeed() {
-   mtr_localCalcVelocity();
+ void mtr_localRotation() {
+   motorSpeeds[0] = botVelocityZ;
+   motorSpeeds[1] = botVelocityZ;
+   motorSpeeds[2] = botVelocityZ;
+   motorSpeeds[3] = botVelocityZ;
+ }
 
-   switch (mtr_localGetCurrentQuad()) {
-     case 4: mtr_localQuad4(); break;
-     case 3: mtr_localQuad3(); break;
-     case 2: mtr_localQuad2(); break;
-     default: mtr_localQuad1();
+ void mtr_localMotorSpeed() {
+   if (botVelocityZ > 0) {
+     mtr_localRotation();
+   } else {
+     mtr_localCalcVelocity();
+
+     switch (mtr_localGetCurrentQuad()) {
+       case 4: mtr_localQuad4(); break;
+       case 3: mtr_localQuad3(); break;
+       case 2: mtr_localQuad2(); break;
+       default: mtr_localQuad1();
+     }
    }
  }
 
