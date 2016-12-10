@@ -11,14 +11,12 @@ bool ctl_testLock() {
   if (BTM_LOCKING) {
     wait1Msec(250);
     lockingMode = !lockingMode;
-    stat_resetLeds();
     return true;
   }
 
   if (lockingMode && sensorValue(armSwitch)) {
     mvt_toggleLock();
     lockingMode = false;
-    stat_resetLeds();
     return true;
   }
   return false;
@@ -35,7 +33,6 @@ bool ctl_testSlowMode() {
   if (BTN_SLOW) {
     wait1Msec(250);
     slowMode = !slowMode;
-    // stat_resetLeds();
     return true;
   }
   return false;

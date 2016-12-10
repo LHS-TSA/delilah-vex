@@ -57,6 +57,7 @@ task autonomous() {
  * User Control Task.
  */
 task usercontrol() {
+  startTask(stat_ledController, 2);
   while (true) {
     clearTimer(T1);              // Resets timer to 0
     // Avoid different movement types in same cycle
