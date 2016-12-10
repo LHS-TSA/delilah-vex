@@ -60,15 +60,13 @@ task usercontrol() {
   clearTimer(T1);
 
   while (true) {
-    // Avoid Linear and freeform movement in same cycle
-    if (!ctl_testJoystickleft()) {
-      ctl_testJoystickRight();
-    }
+    // Avoid different movement types in same cycle
+    bool botMoved = false;
 
-    // Avoid Linear and freeform rotation in same cycle
-    if (!ctl_testRotationSegments()) {
-      ctl_testRotationFree();
-    }
+    if (!botMoved) { botMoved = ctl_testJoystickleft(); }
+    if (!botMoved) { botMoved = ctl_testJoystickRight(); }
+    // if (!botMoved) { botMoved = ctl_testRotationSegments(); }
+    if (!botMoved) { botMoved = ctl_testRotationFree(); }
 
     ctl_testSlowMode();
     ctl_testHighHang();
@@ -81,7 +79,8 @@ task usercontrol() {
       mtr_commitMotorSpeeds();
       clearTimer(T1);              // Resets timer to 0
     } else {
-      writeDebugStreamLine("[WARN] Cycle Exceeded 20ms");
+      writeDebugStreamLine("[WARN] Cycle Exceeded 20ms; Lasted %d", time1(T1));
+      clearTimer(T1);
     }
   }
 }
