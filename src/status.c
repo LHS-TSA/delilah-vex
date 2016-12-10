@@ -4,6 +4,7 @@ short allFlashCount = 0;
 short redFlashCount = 0;
 short yellowFlashCount = 0;
 short greenFlashCount = 0;
+bool pretest = false;
 
 void stat_flashLeds(int amt) {
   allFlashCount = amt;
@@ -19,6 +20,10 @@ void stat_flashLedYellow(int amt) {
 
 void stat_flashLedGreen(int amt) {
   greenFlashCount = amt;
+}
+
+void stat_doLedPretest() {
+  pretest = true;
 }
 
 /**
@@ -80,6 +85,17 @@ void stat_localFlashLedGreen() {
   greenFlashCount = 0;
 }
 
+void stat_localDoLedPretest() {
+  redFlashCount = 3;
+  yellowFlashCount = 3;
+  greenFlashCount = 3;
+  stat_localFlashLedRed()
+  stat_localFlashLedYellow()
+  stat_localFlashLedGreen()
+  SensorValue[ledGreen] = 1;
+  wait1Msec(250);  
+}
+
 bool stat_localExecuteFlashCount() {
   if (allFlashCount > 0) {
     stat_localFlashLeds();
@@ -105,6 +121,7 @@ bool stat_localExecuteFlashCount() {
 
 task stat_ledController() {
   bool flash = false;
+  if (pretest) { stat_localDoLedPretest(); }
 
   while (true) {
     clearTimer(T2);              // Resets timer to 0
