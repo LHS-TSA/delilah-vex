@@ -12,7 +12,7 @@ short mvt_localTrimSpeed(short speed, bool slow) {
   if (speed > 127) { speed %= 127; }
   if (speed < -127) { speed = -(speed % 127); }
 
-  if (slow) { speed /= SLOW_MAX_SPEED; }
+  if (slow) { speed = (speed * SLOW_MAX_SPEED) / 127; }
 
   return speed;
 }
