@@ -89,11 +89,11 @@ void stat_localDoLedPretest() {
   redFlashCount = 3;
   yellowFlashCount = 3;
   greenFlashCount = 3;
-  stat_localFlashLedRed()
-  stat_localFlashLedYellow()
-  stat_localFlashLedGreen()
+  stat_localFlashLedRed();
+  stat_localFlashLedYellow();
+  stat_localFlashLedGreen();
   SensorValue[ledGreen] = 1;
-  wait1Msec(250);  
+  wait1Msec(250);
 }
 
 bool stat_localExecuteFlashCount() {

@@ -21,7 +21,7 @@ bool auton = false;
  * leds off and sets up the slave motors.
  */
 void pre_auton() {
-  stat_doLedTest();
+  stat_doLedPretest();
 
   bStopTasksBetweenModes = true;
   motor[lockServo] = -127;

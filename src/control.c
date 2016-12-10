@@ -14,7 +14,7 @@ bool ctl_testLock() {
     return true;
   }
 
-  if (lockingMode && sensorValue(armSwitch)) {
+  if (lockingMode && SensorValue(armSwitch)) {
     mvt_toggleLock();
     lockingMode = false;
     return true;
