@@ -21,11 +21,12 @@ bool auton = false;
  * leds off and sets up the slave motors.
  */
 void pre_auton() {
+  stat_doLedTest();
+
   bStopTasksBetweenModes = true;
   motor[lockServo] = -127;
 
-  // Set LEDs to correct values
-  stat_flashLeds(6);
+  startTask(stat_ledController, 2);
 }
 
 /**
