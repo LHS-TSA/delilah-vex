@@ -28,6 +28,17 @@ short mvt_localTrimSpeed(short speed) {
   return mvt_localTrimSpeed(speed, slowMode);
 }
 
+bool mvt_toggleLock() {
+  if (locked) {
+    motor[lockServo] = -127;
+    locked = false;
+  } else {
+    motor[lockServo] = 127;
+    locked = true;
+  }
+  return locked;
+}
+
 /**
  * Set straight forward movement.
  * Calculates and sets the motor speeds so that the net movement of the robot is

@@ -1,9 +1,12 @@
 #pragma config(UserModel, "motor_setup.h")
+
 #include "Vex_Competition_Includes.c"
 #include "constants.h"
 
 // Global Variables
 // #include "status.c"
+bool locked = false;
+bool lockingMode = false;
 #include "motors.c"
 #include "movement.c"
 // #include "autonomous.c"
@@ -16,6 +19,7 @@
  */
 void pre_auton() {
   bStopTasksBetweenModes = true;
+  motor[lockServo] = -127;
 
   // Set LEDs to correct values
   // stat_flashLeds(6);
@@ -66,7 +70,7 @@ task usercontrol() {
 
     ctl_testSlowMode();
     ctl_testHighHang();
-
+    ctl_testLock();
     mtr_doMotorTick();
 
     // Make a cycle last exectly 20ms

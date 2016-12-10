@@ -9,8 +9,9 @@
 #pragma config(Motor,  port5,  motorB,        tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port6,  motorC,        tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port7,  motorD,        tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port8,  armRight,      tmotorVex393_MC29, openLoop, driveLeft)
-#pragma config(Motor,  port9,  armLeft,       tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port7,  lockServo,   tmotorServoStandard, openLoop)
+#pragma config(Motor,  port8,  armRight,    tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port9,  armLeft,     tmotorVex393_MC29, openLoop)
 
 #pragma platform(VEX2)
 #pragma competitionControl(Competition)

@@ -7,6 +7,30 @@
  *
  * @return true if the control was activated, false otherwise
  */
+bool ctl_testLock() {
+  if (vexRT[Btn7L]) {
+    wait1Msec(250);
+    lockingMode = !lockingMode;
+    stat_resetLeds();
+    return true;
+  }
+
+  if (lockingMode && sensorValue(armSwitch)) {
+    mvt_toggleLock();
+    lockingMode = false;
+    stat_resetLeds();
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Controls when motors are at reduced speed.
+ * Tests for presses to Btn8R and flips the bool value slowMode when activated;
+ * The green led will be active when in slow mode
+ *
+ * @return true if the control was activated, false otherwise
+ */
 bool ctl_testSlowMode() {
   if (vexRT[Btn8R]) {
     wait1Msec(250);
