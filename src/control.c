@@ -8,7 +8,7 @@
  * @return true if the control was activated, false otherwise
  */
 bool ctl_testLock() {
-  if (vexRT[Btn7L]) {
+  if (BTM_LOCKING) {
     wait1Msec(250);
     lockingMode = !lockingMode;
     stat_resetLeds();
@@ -32,7 +32,7 @@ bool ctl_testLock() {
  * @return true if the control was activated, false otherwise
  */
 bool ctl_testSlowMode() {
-  if (vexRT[Btn8R]) {
+  if (BTN_SLOW) {
     wait1Msec(250);
     slowMode = !slowMode;
     // stat_resetLeds();
@@ -103,10 +103,10 @@ bool ctl_testJoystickRight() {
  * @return true if the control was activated, false otherwise
  */
 bool ctl_testRotationSegments() {
-  if (vexRT[Btn6D]) {
+  if (BTN_SROT_NEG) {
     mvt_rotateOneSegment(127, 1);
     return true;
-  } else if (vexRT[Btn5D]) {
+  } else if (BTN_SROT_POS) {
     mvt_rotateOneSegment(-127, 1);
     return true;
   }
@@ -121,15 +121,15 @@ bool ctl_testRotationSegments() {
  * @return true if the control was activated, false otherwise
  */
 bool ctl_testRotationFree() {
-  if (vexRT[Btn6D]) {
+  if (BTN_ROT_NEG) {
     mvt_setRotationSpeed(127);
     return true;
-  } else if (vexRT[Btn5D]) {
+  } else if (BTN_ROT_POS) {
     mvt_setRotationSpeed(-127);
     return true;
   }
 
-	mvt_setRotationSpeed(0);
+  mvt_setRotationSpeed(0);
   return false;
 }
 
@@ -141,10 +141,10 @@ bool ctl_testRotationFree() {
  * @return true if the control was activated, false otherwise
  */
 bool ctl_testHighHang() {
-  if (vexRT[Btn7U]) {
+  if (BTN_ARM_UP) {
     mvt_setArmSpeed(127);
     return true;
-  } else if (vexRT[Btn7D]) {
+  } else if (BTN_ARM_DN) {
     mvt_setArmSpeed(-127);
     return true;
   } else {
