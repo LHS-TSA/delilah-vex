@@ -74,6 +74,7 @@ task usercontrol() {
     ctl_testSlowMode();
     ctl_testHighHang();
     ctl_testLock();
+    ctl_testNetRotation();
     mtr_doMotorTick();
 
     // Make a cycle last exectly 20ms

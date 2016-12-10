@@ -130,6 +130,30 @@ bool ctl_testRotationFree() {
   return false;
 }
 
+bool ctl_testNetRotation() {
+  if (BTN_DEG_0) {
+    botRotation = 0;
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
+    return true;
+  } else if (BTN_DEG_90) {
+    botRotation = 90;
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
+    return true;
+  } else if (BTN_DEG_180) {
+    botRotation = 180;
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
+    return true;
+  } else if (DTN_DEG_270) {
+    botRotation = 270;
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
+    return true;
+  } else {
+    mvt_setRotationSpeed(0);
+    return false;
+  }
+}
+
+
 /**
  * Controls the speed of the high hang motors.
  * Tests Btn7U and Btn7D for activation and sets speed to highest level for the
