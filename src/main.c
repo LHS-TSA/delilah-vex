@@ -57,9 +57,8 @@ task autonomous() {
  * User Control Task.
  */
 task usercontrol() {
-  clearTimer(T1);
-
   while (true) {
+    clearTimer(T1);              // Resets timer to 0
     // Avoid different movement types in same cycle
     bool botMoved = false;
 
@@ -77,10 +76,8 @@ task usercontrol() {
     if (time1[T1] < 20) {
       while(time1[T1] < 20) { wait1Msec(1); }
       mtr_commitMotorSpeeds();
-      clearTimer(T1);              // Resets timer to 0
     } else {
-      writeDebugStreamLine("[WARN] Cycle Exceeded 20ms; Lasted %d", time1(T1));
-      clearTimer(T1);
+      writeDebugStreamLine("[WARN] Main Cycle Exceeded 20ms; Lasted %dms", time1(T1));
     }
   }
 }
