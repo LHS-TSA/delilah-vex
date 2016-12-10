@@ -4,9 +4,11 @@
 #include "constants.h"
 
 // Global Variables
-// #include "status.c"
+bool slowMode = false;              // Reduces speed by indicated percent
 bool locked = false;
 bool lockingMode = false;
+
+#include "status.c"
 #include "motors.c"
 #include "movement.c"
 // #include "autonomous.c"
@@ -22,7 +24,7 @@ void pre_auton() {
   motor[lockServo] = -127;
 
   // Set LEDs to correct values
-  // stat_flashLeds(6);
+  stat_flashLeds(6);
 }
 
 /**

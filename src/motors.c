@@ -8,9 +8,7 @@ short motorSpeeds[4] = {0, 0, 0, 0};
 
 short botAngle = 0;
 short botSpeed = 0;
-
 short botRotation = 0;              // rotation of the robot
-bool slowMode = false;              // Reduces speed by indicated percent
 
 short mtr_localGetNonFacingMotorSpeed(int degree) {
   // TODO: OPTIMIZE ME!

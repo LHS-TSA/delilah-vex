@@ -6,16 +6,18 @@
  * if the current front of robot is the push-bar side
  */
 void stat_resetLeds() {
-  SensorValue[ledRed] = 0;      // (isFlipped ? 0 : 1)
-  SensorValue[ledGreen] = (slowMode ? 1 : 0);
+  SensorValue[ledRed] = (slowMode ? 1 : 0);
+  SensorValue[ledYellow] = (locked ? 1 : 0);
+  SensorValue[ledGreen] = (lockingMode ? 1 : 0);
+
 }
 
 void stat_flashLeds(int amt) {
   for (int i=0; i<amt; i++) {
-    SensorValue[ledGreen] = 1;
+    SensorValue[ledYellow] = 1;
     SensorValue[ledRed] = 1;
     wait1Msec(50);
-    SensorValue[ledGreen] = 0;
+    SensorValue[ledYellow] = 0;
     SensorValue[ledRed] = 0;
     wait1Msec(50);
   }
@@ -25,11 +27,20 @@ void stat_flashLeds(int amt) {
 
 void stat_flashLedRed(int amt) {
   for (int i=0; i<amt; i++) {
-    // SensorValue[ledGreen] = 1;
     SensorValue[ledRed] = 1;
     wait1Msec(50);
-    // SensorValue[ledGreen] = 0;
     SensorValue[ledRed] = 0;
+    wait1Msec(50);
+  }
+
+  stat_resetLeds();
+}
+
+void stat_flashLedYellow(int amt) {
+  for (int i=0; i<amt; i++) {
+    SensorValue[ledYellow] = 1;
+    wait1Msec(50);
+    SensorValue[ledYellow] = 0;
     wait1Msec(50);
   }
 
@@ -39,10 +50,8 @@ void stat_flashLedRed(int amt) {
 void stat_flashLedGreen(int amt) {
   for (int i=0; i<amt; i++) {
     SensorValue[ledGreen] = 1;
-    // SensorValue[ledRed] = 1;
     wait1Msec(50);
     SensorValue[ledGreen] = 0;
-    // SensorValue[ledRed] = 0;
     wait1Msec(50);
   }
 
