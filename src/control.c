@@ -9,7 +9,7 @@
  */
 bool ctl_testLock() {
   if (BTM_LOCKING) {
-    wait1Msec(250);
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
     lockingMode = !lockingMode;
     return true;
   }
@@ -31,7 +31,7 @@ bool ctl_testLock() {
  */
 bool ctl_testSlowMode() {
   if (BTN_SLOW) {
-    wait1Msec(250);
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
     slowMode = !slowMode;
     return true;
   }
