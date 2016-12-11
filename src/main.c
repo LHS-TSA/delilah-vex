@@ -37,22 +37,28 @@ task autonomous() {
   startTask(stat_ledController, 2);
   auton = true;
   // int distSideMvt = 10;
-  int autonSpeed = (SensorValue[autonJumper] ? -127 : 127);
+  // int autonSpeed = (SensorValue[autonJumper] ? -127 : 127);
 
   // If on highhang side
     // go straight towards it
     // go at angle to get behind
-
-  botVelocityX = autonSpeed;
-  botVelocityY = autonSpeed / 2;
+  botSpeed = 127;
+  botAngle = 0;
   mtr_doMotorTick();
   mtr_commitMotorSpeeds();
 
-  mvt_setRotationSpeed(autonSpeed);
+  wait1Msec(1750);
+
+  botSpeed = 0;
+  //mvt_setRotationSpeed(autonSpeed);
   mtr_doMotorTick();
   mtr_commitMotorSpeeds();
 
-  mvt_setRotationSpeed(0);
+  mvt_setArmSpeed(127);
+  wait1Msec(2000);
+  mvt_setArmSpeed(-127);
+  wait1Msec(2000);
+  mvt_setArmSpeed(0);
 }
 
 /**
