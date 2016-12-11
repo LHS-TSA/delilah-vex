@@ -66,6 +66,8 @@ task autonomous() {
  */
 task usercontrol() {
   startTask(stat_ledController, 2);
+  stat_flashLedGreen(3);
+  motor[lockServo] = -127;
   auton = false;
 
   while (true) {
