@@ -11,15 +11,22 @@ short botAngle = 0;
 short botSpeed = 0;
 short botRotation = 0;              // rotation of the robot
 
+int deg_sq = 0;
+int deg_cu = 0;
+float deg_sqf = 0;
+float deg_cuf = 0;
+float deg_f = 0;
+float nfm = 0;
+
 short mtr_localGetNonFacingMotorSpeed(int degree) {
   // TODO: OPTIMIZE ME!
   // actual function: 0.00031 * deg^3 + -0.041828 * deg^2 + 4.05596*deg + -126.037
-  int deg_sq = degree * degree;
-  int deg_cu = deg_sq * degree;
+  deg_sq = degree * degree;
+  deg_cu = deg_sq * degree;
 
-  float deg_sqf = -0.041828 * deg_sq;
-  float deg_cuf = 0.00031 * deg_cu;
-  float deg_f = 4.05596 * degree;
+  deg_sqf = -0.041828 * deg_sq;
+  deg_cuf = 0.00031 * deg_cu;
+  deg_f = 4.05596 * degree;
 
   return (short)(deg_sqf + deg_cuf + deg_f + -126.037);
 }
@@ -34,7 +41,7 @@ short mtr_localGetCurrentQuad() {
 }
 
 void mtr_localQuad1() {
-  float nfm = mtr_localGetNonFacingMotorSpeed(botAngle);
+  nfm = mtr_localGetNonFacingMotorSpeed(botAngle);
 
   motorSpeeds[0] = (nfm * botSpeed) / MAX_MOTOR_A;
   motorSpeeds[1] = (-MAX_MOTOR_B * botSpeed) / MAX_MOTOR_B;
@@ -43,7 +50,7 @@ void mtr_localQuad1() {
 }
 
 void mtr_localQuad2() {
-  float nfm = mtr_localGetNonFacingMotorSpeed(botAngle - 90);
+  nfm = mtr_localGetNonFacingMotorSpeed(botAngle - 90);
 
   motorSpeeds[0] = (MAX_MOTOR_A * botSpeed) / MAX_MOTOR_A;
   motorSpeeds[1] = (nfm * botSpeed) / MAX_MOTOR_B;
@@ -52,7 +59,7 @@ void mtr_localQuad2() {
 }
 
 void mtr_localQuad3() {
-  float nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle - 90);
+  nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle - 90);
 
   motorSpeeds[0] = (-nfm * botSpeed) / MAX_MOTOR_A;
   motorSpeeds[1] = (MAX_MOTOR_B * botSpeed) / MAX_MOTOR_B;
@@ -61,7 +68,7 @@ void mtr_localQuad3() {
 }
 
 void mtr_localQuad4() {
-  float nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle);
+  nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle);
 
   motorSpeeds[0] = (-MAX_MOTOR_A * botSpeed) / MAX_MOTOR_A;
   motorSpeeds[1] = (-nfm * botSpeed) / MAX_MOTOR_B;
