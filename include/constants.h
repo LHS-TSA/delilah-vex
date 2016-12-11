@@ -7,7 +7,7 @@
 #define TIME_ONE_SEGMENT 200      // Milliseconds to rotate for 45 degrees
 #define TIME_ONE_DEGREE -1        // Centiseconds that count towards a degree of rotation
 #define MOTOR_ZERO_SPEED 5        // Jumps to skip when zeroing motors
-#define BTN_TOGGLE_TIMEOUT 125    // Time to wait after toggling buttons
+#define BTN_TOGGLE_TIMEOUT 250    // Time to wait after toggling buttons
 
 // Motor Correction
 #define MAX_MOTOR_A 127
