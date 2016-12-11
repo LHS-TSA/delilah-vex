@@ -55,7 +55,7 @@ bool ctl_testJoystickleft() {
   }
 
   if (JOY_LX <= -JOYSTICK_THRESHOLD || JOY_LX >= JOYSTICK_THRESHOLD) {
-    botVelocityX = JOY_LY;
+    botVelocityX = JOY_LX;
     botVelocityY = 0;
     return true;
   }
