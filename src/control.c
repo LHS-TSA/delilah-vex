@@ -119,10 +119,12 @@ bool ctl_testRotationSegments() {
  */
 bool ctl_testRotationFree() {
   if (BTN_ROT_NEG) {
-    mvt_setRotationSpeed(127);
+    mvt_setRotationSpeed(60);
     return true;
-  } else if (BTN_ROT_POS) {
-    mvt_setRotationSpeed(-127);
+  }
+
+  if (BTN_ROT_POS) {
+    mvt_setRotationSpeed(-60);
     return true;
   }
 
@@ -148,7 +150,6 @@ bool ctl_testNetRotation() {
     wait1Msec(BTN_TOGGLE_TIMEOUT);
     return true;
   } else {
-    mvt_setRotationSpeed(0);
     return false;
   }
 }
