@@ -107,24 +107,22 @@ void mtr_localCalcVelocity() {
  }
 
  void mtr_localMotorSpeed() {
-   if (botVelocityZ > 0) {
-     mtr_localRotation();
-   } else {
-     if (!auton) { mtr_localCalcVelocity(); }
+   if (!auton) { mtr_localCalcVelocity(); }
 
-     switch (mtr_localGetCurrentQuad()) {
-       case 4: mtr_localQuad4(); break;
-       case 3: mtr_localQuad3(); break;
-       case 2: mtr_localQuad2(); break;
-       default: mtr_localQuad1();
-     }
+   switch (mtr_localGetCurrentQuad()) {
+     case 4: mtr_localQuad4(); break;
+     case 3: mtr_localQuad3(); break;
+     case 2: mtr_localQuad2(); break;
+     default: mtr_localQuad1();
    }
  }
 
 void mtr_doMotorTick() {
-  // mtr_localZeroMotors();
-  mtr_localMotorSpeed();
-  // TODO: Motor Tick
+  if (botVelocityZ != 0) {
+    mtr_localRotation();
+  } else {
+    mtr_localMotorSpeed();
+  }
 }
 
 void mtr_commitMotorSpeeds() {
