@@ -129,10 +129,10 @@ void mtr_doMotorTick() {
 
 void mtr_commitMotorSpeeds() {
   if (slowMode) {
-    MOTOR_A = motorSpeeds[0] / SLOW_MAX_SPEED;
-    MOTOR_B = motorSpeeds[1] / SLOW_MAX_SPEED;
-    MOTOR_C = motorSpeeds[2] / SLOW_MAX_SPEED;
-    MOTOR_D = motorSpeeds[3] / SLOW_MAX_SPEED;
+    MOTOR_A = (motorSpeeds[0] * SLOW_MAX_SPEED) / 127;
+    MOTOR_B = (motorSpeeds[1] * SLOW_MAX_SPEED) / 127;
+    MOTOR_C = (motorSpeeds[2] * SLOW_MAX_SPEED) / 127;
+    MOTOR_D = (motorSpeeds[3] * SLOW_MAX_SPEED) / 127;
   } else {
     MOTOR_A = motorSpeeds[0];
     MOTOR_B = motorSpeeds[1];
