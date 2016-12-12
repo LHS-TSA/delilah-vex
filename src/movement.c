@@ -89,7 +89,7 @@ void mvt_rotateOneSegment(short speed, short count) {
  * @param speed Speed in range -127 to 127
  */
 void mvt_setRotationSpeed(short speed) {
-  speed = mvt_localTrimSpeed(speed, false);
+  // speed = mvt_localTrimSpeed(speed, false);
   botVelocityZ = speed;
 }
 
