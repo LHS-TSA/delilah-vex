@@ -83,24 +83,23 @@ void mtr_localCalcVelocity() {
   botSpeed = sqrt(botVelocityX * botVelocityX + botVelocityY * botVelocityY);
 }
 
+void mtr_localRotation() {
+  motorSpeeds[0] = botVelocityZ;
+  motorSpeeds[1] = botVelocityZ;
+  motorSpeeds[2] = botVelocityZ;
+  motorSpeeds[3] = botVelocityZ;
+}
 
- void mtr_localRotation() {
-   motorSpeeds[0] = botVelocityZ;
-   motorSpeeds[1] = botVelocityZ;
-   motorSpeeds[2] = botVelocityZ;
-   motorSpeeds[3] = botVelocityZ;
- }
+void mtr_localMotorSpeed() {
+  if (!auton) { mtr_localCalcVelocity(); }
 
- void mtr_localMotorSpeed() {
-   if (!auton) { mtr_localCalcVelocity(); }
-
-   switch (mtr_localGetCurrentQuad()) {
-     case 4: mtr_localQuad4(); break;
-     case 3: mtr_localQuad3(); break;
-     case 2: mtr_localQuad2(); break;
-     default: mtr_localQuad1();
-   }
- }
+  switch (mtr_localGetCurrentQuad()) {
+    case 4: mtr_localQuad4(); break;
+    case 3: mtr_localQuad3(); break;
+    case 2: mtr_localQuad2(); break;
+    default: mtr_localQuad1();
+  }
+}
 
 void mtr_doMotorTick() {
   if (botVelocityZ != 0) {
