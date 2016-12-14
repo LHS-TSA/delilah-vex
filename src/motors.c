@@ -17,9 +17,16 @@ float deg_cuf = 0;
 float deg_f = 0;
 float nfm = 0;
 
+/**
+ * Return the speed of the non-facing motor speed.
+ * Does fancy math things to get the speed of the opposing motors in such that
+ * the full speed motors are offset to correctly match the povided degree.
+ *
+ * @param degree Degree of the direction of the robot's movement
+ * @return 0.00031 * degree^3 + -0.041828 * degree^2 + 4.05596*degree + -126.037
+ */
 short mtr_localGetNonFacingMotorSpeed(int degree) {
   // TODO: OPTIMIZE ME!
-  // actual function: 0.00031 * deg^3 + -0.041828 * deg^2 + 4.05596*deg + -126.037
   deg_sq = degree * degree;
   deg_cu = deg_sq * degree;
 
@@ -30,6 +37,10 @@ short mtr_localGetNonFacingMotorSpeed(int degree) {
   return (short)(deg_sqf + deg_cuf + deg_f + -126.037);
 }
 
+/**
+ * Get the quadrant of the current movement vector
+ * @return Quadrant
+ */
 short mtr_localGetCurrentQuad() {
   // TODO: Make these more specific
   if (botVelocityY >= 0) {
@@ -39,6 +50,9 @@ short mtr_localGetCurrentQuad() {
   }
 }
 
+/**
+ * Generates the motor speeds for Quadrant 1
+ */
 void mtr_localQuad1() {
   nfm = mtr_localGetNonFacingMotorSpeed(botAngle);
 
@@ -48,6 +62,9 @@ void mtr_localQuad1() {
   motorSpeeds[3] = (MAX_MOTOR_D * botSpeed) / MAX_MOTOR_D;
 }
 
+/**
+ * Generates the motor speeds for Quadrant 2
+ */
 void mtr_localQuad2() {
   nfm = mtr_localGetNonFacingMotorSpeed(botAngle - 90);
 
@@ -57,6 +74,9 @@ void mtr_localQuad2() {
   motorSpeeds[3] = (-nfm * botSpeed) / MAX_MOTOR_D;
 }
 
+/**
+ * Generates the motor speeds for Quadrant 3
+ */
 void mtr_localQuad3() {
   nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle - 90);
 
@@ -66,6 +86,9 @@ void mtr_localQuad3() {
   motorSpeeds[3] = (-MAX_MOTOR_D * botSpeed) / MAX_MOTOR_D;
 }
 
+/**
+ * Generates the motor speeds for Quadrant 4
+ */
 void mtr_localQuad4() {
   nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle);
 
@@ -75,13 +98,17 @@ void mtr_localQuad4() {
   motorSpeeds[3] = (nfm * botSpeed) / MAX_MOTOR_D;
 }
 
-
-
+/**
+ * Calculates the angle and speed of the robot based upon the x and y velocities.
+ */
 void mtr_localCalcVelocity() {
   botAngle = (short)(atan2(botVelocityY, botVelocityX) * 57.2958);
   botSpeed = sqrt(botVelocityX * botVelocityX + botVelocityY * botVelocityY);
 }
 
+/**
+ * Generates the motor speeds during a rotation event
+ */
 void mtr_localRotation() {
   motorSpeeds[0] = botVelocityZ;
   motorSpeeds[1] = botVelocityZ;
