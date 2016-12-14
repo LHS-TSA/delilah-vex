@@ -62,9 +62,11 @@ void stat_localFlashLeds() {
   for (int i=0; i<allFlashCount; i++) {
     SensorValue[ledYellow] = 1;
     SensorValue[ledRed] = 1;
+    SensorValue[ledGreen] = 1;
     wait1Msec(50);
     SensorValue[ledYellow] = 0;
     SensorValue[ledRed] = 0;
+    SensorValue[ledGreen] = 0;
     wait1Msec(50);
   }
 
