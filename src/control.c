@@ -8,7 +8,7 @@
  * @return true if the control was activated, false otherwise
  */
 bool ctl_testLock() {
-  if (BTM_LOCKING) {
+  if (BTN_LOCKING) {
     wait1Msec(BTN_TOGGLE_TIMEOUT);
     lockingMode = !lockingMode;
     return true;

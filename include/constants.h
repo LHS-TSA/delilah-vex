@@ -27,7 +27,7 @@
 #define JOY_RY vexRT[Ch2]         // Joystick Right, Up-Down
 
 #define BTN_SLOW vexRT[Btn7R]     // Toggles Slow Mode
-#define BTM_LOCKING vexRT[Btn7L]  // Toggles Locking Mode
+#define BTN_LOCKING vexRT[Btn7L]  // Toggles Locking Mode
 #define BTN_ARM_UP vexRT[Btn7U]   // Extends arm up
 #define BTN_ARM_DN vexRT[Btn7D]   // Retracts arm down
 
