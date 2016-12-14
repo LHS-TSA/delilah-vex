@@ -174,3 +174,19 @@ bool ctl_testHighHang() {
     return false;
   }
 }
+
+void ctl_doControllerTick() {
+  // Avoid different movement types in same cycle
+  bool botMoved = false;
+
+  if (!botMoved) { botMoved = ctl_testJoystickleft(); }
+  if (!botMoved) { botMoved = ctl_testJoystickRight(); }
+  if (!botMoved) { botMoved = ctl_testRotationFree(); }
+
+  // if (!botMoved) { botMoved = ctl_testRotationSegments(); }
+
+  ctl_testSlowMode();
+  ctl_testHighHang();
+  ctl_testLock();
+  ctl_testNetRotation();
+}

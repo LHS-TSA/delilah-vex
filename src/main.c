@@ -73,19 +73,8 @@ task usercontrol() {
 
   while (true) {
     clearTimer(T1);              // Resets timer to 0
-    // Avoid different movement types in same cycle
-    bool botMoved = false;
 
-    if (!botMoved) { botMoved = ctl_testJoystickleft(); }
-    if (!botMoved) { botMoved = ctl_testJoystickRight(); }
-    // if (!botMoved) { botMoved = ctl_testRotationSegments(); }
-    if (!botMoved) { botMoved = ctl_testRotationFree(); }
-
-    ctl_testSlowMode();
-    ctl_testHighHang();
-    ctl_testLock();
-    ctl_testNetRotation();
-    mtr_doMotorTick();
+    ctl_doControllerTick();     // Handles all controller processes
 
     // Make a cycle last exectly 20ms
     if (time1[T1] < 20) {
