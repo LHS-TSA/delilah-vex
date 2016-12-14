@@ -14,6 +14,7 @@ bool auton = false;
 #include "movement.c"
 #include "autonomous.c"
 #include "control.c"
+#include "logger.c"
 
 /**
  * Pre-Autonomous Functions.
