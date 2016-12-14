@@ -6,30 +6,45 @@ short yellowFlashCount = 0;
 short greenFlashCount = 0;
 bool pretest = false;
 
+/**
+ * Stores the amount to the corresponding flashCount variable.
+ */
 void stat_flashLeds(int amt) {
   allFlashCount = amt;
 }
 
+/**
+ * Stores the amount to the corresponding flashCount variable.
+ */
 void stat_flashLedRed(int amt) {
   redFlashCount = amt;
 }
 
+/**
+ * Stores the amount to the corresponding flashCount variable.
+ */
 void stat_flashLedYellow(int amt) {
   yellowFlashCount = amt;
 }
 
+/**
+ * Stores the amount to the corresponding flashCount variable.
+ */
 void stat_flashLedGreen(int amt) {
   greenFlashCount = amt;
 }
 
+/**
+ * Enables the LED Pretest after initialization of the LED Controller Task
+ */
 void stat_doLedPretest() {
   pretest = true;
 }
 
 /**
  * Resets LEDs.
- * Turns the green led on if the robot is in slow mode and turns the red led on
- * if the current front of robot is the push-bar side
+ * Sets the state of the red, yellow, and green leds based upon the values of the
+ * slowMode, locked, and lockingMode, respectfully.
  */
 void stat_resetLeds() {
   SensorValue[ledRed] = (slowMode ? 1 : 0);
@@ -38,6 +53,11 @@ void stat_resetLeds() {
 
 }
 
+/**
+ * Flashes the LEDs.
+ * Turns the LEDs on and off based upon the values of the allFlashCount variable
+ * with 50ms delay in between each cycle
+ */
 void stat_localFlashLeds() {
   for (int i=0; i<allFlashCount; i++) {
     SensorValue[ledYellow] = 1;
@@ -52,6 +72,11 @@ void stat_localFlashLeds() {
   stat_resetLeds();
 }
 
+/**
+ * Flashes the red LED.
+ * Turns the red LED on and off based upon the values of the redFlashCount variable
+ * with 50ms delay in between each cycle
+ */
 void stat_localFlashLedRed() {
   for (int i=0; i<redFlashCount; i++) {
     SensorValue[ledRed] = 1;
@@ -63,6 +88,11 @@ void stat_localFlashLedRed() {
   redFlashCount = 0;
 }
 
+/**
+ * Flashes the yellow LED.
+ * Turns the yellow LED on and off based upon the values of the yellowFlashCount
+ * variable with 50ms delay in between each cycle
+ */
 void stat_localFlashLedYellow() {
   for (int i=0; i<yellowFlashCount; i++) {
     SensorValue[ledYellow] = 1;
@@ -74,6 +104,11 @@ void stat_localFlashLedYellow() {
   yellowFlashCount = 0;
 }
 
+/**
+ * Flashes the green LED.
+ * Turns the green LED on and off based upon the values of the greenFlashCount
+ * variable with 50ms delay in between each cycle
+ */
 void stat_localFlashLedGreen() {
   for (int i=0; i<greenFlashCount; i++) {
     SensorValue[ledGreen] = 1;
@@ -85,6 +120,10 @@ void stat_localFlashLedGreen() {
   greenFlashCount = 0;
 }
 
+/**
+ * Turns the LEDs on and off in a pattern.
+ * Preforms visual LED test and indicates the start of a task.
+ */
 void stat_localDoLedPretest() {
   redFlashCount = 3;
   yellowFlashCount = 3;
@@ -96,6 +135,9 @@ void stat_localDoLedPretest() {
   wait1Msec(250);
 }
 
+/**
+ * Handles Execution of flashCount Variables.
+ */
 bool stat_localExecuteFlashCount() {
   if (allFlashCount > 0) {
     stat_localFlashLeds();
@@ -119,6 +161,10 @@ bool stat_localExecuteFlashCount() {
   return false;
 }
 
+/**
+ * LED controller.
+ * Handles ticking of the LEDs without devoting time away from the main loop.
+ */
 task stat_ledController() {
   bool flash = false;
   if (pretest) { stat_localDoLedPretest(); }

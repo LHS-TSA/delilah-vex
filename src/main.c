@@ -32,7 +32,6 @@ void pre_auton() {
 
 /**
  * Autonomous Task.
- *
  */
 task autonomous() {
   // TODO: Autonomous

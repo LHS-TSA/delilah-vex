@@ -1,9 +1,9 @@
 // SECTION: Controller Functions
 
 /**
- * Controls when motors are at reduced speed.
- * Tests for presses to Btn8R and flips the bool value slowMode when activated;
- * The green led will be active when in slow mode
+ * Controls when the locking mechanism should be automatically activated.
+ * Tests for presses to BTN_LOCKING and flips the bool value lockingMode when
+ * activated; The green led will be active when in locking mode
  *
  * @return true if the control was activated, false otherwise
  */
@@ -24,8 +24,8 @@ bool ctl_testLock() {
 
 /**
  * Controls when motors are at reduced speed.
- * Tests for presses to Btn8R and flips the bool value slowMode when activated;
- * The green led will be active when in slow mode
+ * Tests for presses to BTN_SLOW and flips the bool value slowMode when activated;
+ * The red led will be active when in slow mode
  *
  * @return true if the control was activated, false otherwise
  */
@@ -40,10 +40,10 @@ bool ctl_testSlowMode() {
 
 /**
  * Controls Linear Motion.
- * Tests Ch3 for forward motion and then Ch4 for sideways movement; Both forward
- * and sideways motion cannot be used at the same time - forward takes priority;
- * Does not activate movement without joystick being over joystick threshold to
- * prevent ghost movement
+ * Tests JOY_LY for forward motion and then JOY_LX for sideways movement; Both
+ * forward and sideways motion cannot be used at the same time - forward takes
+ * priority; Does not activate movement without joystick being over joystick
+ * threshold to prevent ghost movement
  *
  * @return true if the control was activated, false otherwise
  */
@@ -67,9 +67,9 @@ bool ctl_testJoystickleft() {
 
 /**
  * Controls Freeform Motion.
- * Tests Ch1 for forward motion and then Ch2 for sideways movement; Both forward
- * and sideways can be used at the same time; Does not activate movement without
- * joystick being over joystick threshold to prevent ghost movement
+ * Tests JOY_RY for forward motion and then JOY_RX for sideways movement; Both
+ * forward and sideways can be used at the same time; Does not activate movement
+ * without joystick being over joystick threshold to prevent ghost movement
  *
  * @return true if the control was activated, false otherwise
  */
@@ -95,7 +95,8 @@ bool ctl_testJoystickRight() {
 
 /**
  * Controls rotation in segments.
- * Tests Btn6D and Bth5D for activation and rotates the robot by 45 degrees.
+ * Tests BTN_SROT_NEG and BTN_SROT_POS for activation and rotates the robot by
+ * 45 degrees.
  *
  * @return true if the control was activated, false otherwise
  */
@@ -113,7 +114,7 @@ bool ctl_testRotationSegments() {
 
 /**
  * Controls freeform rotation.
- * Tests Btn6D and Bth5D for activation and rotates the robot by 45 degrees.
+ * Tests BTN_ROT_NEG and BTN_ROT_POS for activation and rotates the robot.
  *
  * @return true if the control was activated, false otherwise
  */
@@ -157,8 +158,8 @@ bool ctl_testNetRotation() {
 
 /**
  * Controls the speed of the high hang motors.
- * Tests Btn7U and Btn7D for activation and sets speed to highest level for the
- * duration of their activation
+ * Tests BTN_ARM_UP and BTN_ARM_DN for activation and sets speed to highest level
+ * for the duration of their activation
  *
  * @return true if the control was activated, false otherwise
  */
@@ -175,6 +176,10 @@ bool ctl_testHighHang() {
   }
 }
 
+/**
+ * Tests the controllers for input change.
+ * See child functions for more detailed discriptions of tasks.
+ */
 void ctl_doControllerTick() {
   // Avoid different movement types in same cycle
   bool botMoved = false;
