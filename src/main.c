@@ -4,10 +4,10 @@
 #include "constants.h"
 
 // Global Variables
-bool slowMode = false;              // Reduces speed by indicated percent
-bool locked = false;
-bool lockingMode = false;
-bool auton = false;
+bool slowMode = false;          // Rescales speed to SLOW_MAX_SPEED
+bool locked = false;            // Arm lock status
+bool lockingMode = false;       // Auto engage arm lock
+bool auton = false;             // Should motor tick calculate speed and direction
 
 #include "status.c"
 #include "motors.c"
@@ -72,12 +72,12 @@ task usercontrol() {
   auton = false;
 
   while (true) {
-    clearTimer(T1);              // Resets timer to 0
+    clearTimer(T1);             // Resets timer to 0
 
     ctl_doControllerTick();     // Handles all controller processes
+    mtr_doMotorTick();          // Fancy holonomic math stuff
 
-    // Make a cycle last exectly 20ms
-    if (time1[T1] < 20) {
+    if (time1[T1] < 20) {       // Make a cycle last exectly 20ms
       while(time1[T1] < 20) { wait1Msec(1); }
       mtr_commitMotorSpeeds();
     } else {

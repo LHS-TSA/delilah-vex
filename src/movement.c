@@ -28,6 +28,9 @@ short mvt_localTrimSpeed(short speed) {
   return mvt_localTrimSpeed(speed, slowMode);
 }
 
+/**
+ * Toggles Lock.
+ */
 bool mvt_toggleLock() {
   if (locked) {
     motor[lockServo] = -127;

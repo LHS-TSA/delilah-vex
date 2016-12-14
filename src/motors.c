@@ -1,15 +1,16 @@
 // SECTION: Drive Motor Control
 
 // Global Variables
-short botVelocityX = 0;
-short botVelocityY = 0;
-short botVelocityZ = 0;             // Rotation
-short motorSpeeds[4] = {0, 0, 0, 0};
 // bool motorZero[4] = {false, false, false, false};
 
-short botAngle = 0;
-short botSpeed = 0;
-short botRotation = 0;              // rotation of the robot
+short botVelocityX = 0;               // Velocity towards right boundary
+short botVelocityY = 0;               // Velocity towards middle fence
+short botVelocityZ = 0;               // Rotation
+short motorSpeeds[4] = {0, 0, 0, 0};  // Speed of each motor ()
+
+short botAngle = 0;                   // angle of the robot
+short botSpeed = 0;                   // speed of the robot
+short botRotation = 0;                // rotation of the robot
 
 int deg_sq = 0;
 int deg_cu = 0;
