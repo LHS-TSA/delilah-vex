@@ -1,66 +1,77 @@
 // SECTION: Movement Functions
 
 /**
- * Left motors movement control.
- * Sets the value of the left motors in normal mode or right motors in flipped
- * mode; Speed is divided by slowModePercent if in slow mode
+ * Trim and adjust speed.
+ * Lowers given speed value to between -127 and 127 and scales the speed to slow
+ * mode if enabled.
  *
- * @param speed Speed in range -127 to 127
+ * @param speed Speed
+ * @param slow Scale speed for slow mode
  */
-void mvt_setForwardLeft(signed char speed) {
-  if (slowMode) { speed = speed / SLOW_PERCENT; }
+short mvt_localTrimSpeed(short speed, bool slow) {
+  if (speed > 127) { speed %= 127; }
+  if (speed < -127) { speed = -(speed % 127); }
 
-  if (!isFlipped) {
-    motor[leftMaster] = (-speed * MOTOR_CORRECTION) / 127;
+  if (slow) { speed = (speed * SLOW_MAX_SPEED) / 127; }
+
+  return speed;
+}
+
+/**
+ * Trim and adjust speed.
+ * Lowers given speed value to between -127 and 127 and scales the speed to slow
+ * mode if the global variable "slowMode" it true.
+ *
+ * @param speed Speed
+ */
+short mvt_localTrimSpeed(short speed) {
+  return mvt_localTrimSpeed(speed, slowMode);
+}
+
+/**
+ * Toggles Lock.
+ */
+bool mvt_toggleLock() {
+  if (locked) {
+    motor[lockServo] = -127;
+    locked = false;
   } else {
-    motor[rightMaster] = -speed;
+    motor[lockServo] = 127;
+    locked = true;
   }
+  return locked;
 }
 
 /**
- * Right motors movement control.
- * Sets the value of the right motors in normal mode or left motors in flipped
- * mode; Speed is divided by slowModePercent if in slow mode
+ * Variable length rotation movement.
+ * Calculates and sets the motor speeds so that the robot rotates about its center;
+ * Speed is rescaled by the mvt_localTrimSpeed function before calling the motors'
+ * functions but is not affected by slow mode
  *
  * @param speed Speed in range -127 to 127
  */
-void mvt_setForwardRight(signed char speed) {
-  if (slowMode) { speed = speed / SLOW_PERCENT; }
-
-  if (!isFlipped) {
-    motor[rightMaster] = speed;
-  } else {
-    motor[leftMaster] = (speed * MOTOR_CORRECTION) / 127;
-  }
+void mvt_setRotationSpeed(short speed) {
+  // speed = mvt_localTrimSpeed(speed, false);
+  botVelocityZ = speed;
 }
 
 /**
- * Left motors movement control.
- * Sets the value of the side motors in normal mode; Value is negated in flipped
- * mode; Speed is divided by slowModePercentSide if in slow mode
+ * Arm motor control.
+ * Sets the value of the arm motors in normal mode; Speed is rescaled by the
+ * mvt_localTrimSpeed function before calling the motors' functions but is not
+ * affected by slow mode; Motors will not activate if descending and the arm
+ * bumper is depressed
  *
  * @param speed Speed in range -127 to 127
  */
-void mvt_setSide(signed char speed) {
-  if (isFlipped) { speed = -speed; }
-  if (slowMode) { speed = speed / SLOW_SIDE_PERCENT; }
+void mvt_setArmSpeed(short speed) {
+  speed = mvt_localTrimSpeed(speed, false);
 
-  motor[sideMotor] = speed;
-}
-
-/**
- * High hang motors movement control.
- * Sets the value of the high hang motors in normal mode; Value is not effected
- * by flipped mode or slow mode
- *
- * @param speed Speed in range -127 to 127
- */
-void mvt_setHighHang(signed char speed) {
-  if (speed < 0 && (SensorValue(armSwitch) && !modeHighHang)) {
+  if (speed < 0 && SensorValue(armSwitch)) {
     motor[armLeft] = 0;
     motor[armRight] = 0;
   } else {
-    motor[armLeft] = speed;
-    motor[armRight] = -speed;
+    motor[armLeft] = -speed;
+    motor[armRight] = speed;
   }
 }

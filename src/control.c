@@ -1,108 +1,197 @@
 // SECTION: Controller Functions
 
 /**
- * Controls when front side of robot is swapped.
- * Tests for presses to Btn8D and flips the bool value isFlipped when activated;
- * The red led will be active when in flipped mode
+ * Controls when the locking mechanism should be automatically activated.
+ * Tests for presses to BTN_LOCKING and flips the bool value lockingMode when
+ * activated; The green led will be active when in locking mode
+ *
+ * @return true if the control was activated, false otherwise
  */
-void ctl_testFlipSides() {
-  if (vexRT[Btn8D]) {
-    wait1Msec(250);       // This is to keep button press from rapidly switching
-    isFlipped = !isFlipped;
-    stat_resetLeds();
+bool ctl_testLock() {
+  if (BTN_LOCKING) {
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
+    lockingMode = !lockingMode;
+    return true;
   }
+
+  if (lockingMode && SensorValue(armSwitch)) {
+    mvt_toggleLock();
+    lockingMode = false;
+    return true;
+  }
+  return false;
 }
 
 /**
  * Controls when motors are at reduced speed.
- * Tests for presses to Btn8R and flips the bool value slowMode when activated;
- * The green led will be active when in slow mode
+ * Tests for presses to BTN_SLOW and flips the bool value slowMode when activated;
+ * The red led will be active when in slow mode
+ *
+ * @return true if the control was activated, false otherwise
  */
-void ctl_testSlowMode() {
-  if (vexRT[Btn8R]) {
-    wait1Msec(250);
+bool ctl_testSlowMode() {
+  if (BTN_SLOW) {
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
     slowMode = !slowMode;
-    stat_resetLeds();
+    return true;
   }
+  return false;
 }
 
 /**
- * Controls when the high hang protection is disabled.
- * Tests for presses to Btn8L and flips the bool value modeHighHang when activated;
- * The green led will blink if enabled and the red led will blink when disabled
+ * Controls Linear Motion.
+ * Tests JOY_LY for forward motion and then JOY_LX for sideways movement; Both
+ * forward and sideways motion cannot be used at the same time - forward takes
+ * priority; Does not activate movement without joystick being over joystick
+ * threshold to prevent ghost movement
+ *
+ * @return true if the control was activated, false otherwise
  */
-void ctl_testHighHangMode() {
-  if (vexRT[Btn8L]) {
-    modeHighHang = !modeHighHang;
-
-    if (modeHighHang) {
-      SensorValue[ledGreen] = 1;
-      wait1Msec(62);
-      SensorValue[ledGreen] = 0;
-      wait1Msec(62);
-      SensorValue[ledGreen] = 1;
-      wait1Msec(62);
-      SensorValue[ledGreen] = 0;
-      wait1Msec(62);
-    } else {
-      SensorValue[ledRed] = 1;
-      wait1Msec(62);
-      SensorValue[ledRed] = 0;
-      wait1Msec(62);
-      SensorValue[ledRed] = 1;
-      wait1Msec(62);
-      SensorValue[ledRed] = 0;
-      wait1Msec(62);
-    }
-    stat_resetLeds();
+bool ctl_testJoystickleft() {
+  if (JOY_LY <= -JOYSTICK_THRESHOLD || JOY_LY >= JOYSTICK_THRESHOLD) {
+    botVelocityY = JOY_LY;
+    botVelocityX = 0;
+    return true;
   }
+
+  if (JOY_LX <= -JOYSTICK_THRESHOLD || JOY_LX >= JOYSTICK_THRESHOLD) {
+    botVelocityX = JOY_LX;
+    botVelocityY = 0;
+    return true;
+  }
+
+  botVelocityX = 0;
+  botVelocityY = 0;
+  return false;
 }
 
 /**
- * Controls the speed of the left and right motors.
- * Tests Ch3 for right motors and Ch2 for left motors; Does not activate movement
- * without joystick being over jsThreshold to prevent ghost movement
+ * Controls Freeform Motion.
+ * Tests JOY_RY for forward motion and then JOY_RX for sideways movement; Both
+ * forward and sideways can be used at the same time; Does not activate movement
+ * without joystick being over joystick threshold to prevent ghost movement
+ *
+ * @return true if the control was activated, false otherwise
  */
-void ctl_testJoysticks() {
-  if (vexRT[Ch3] <= -JOYSTICK_THRESHOLD || vexRT[Ch3] >= JOYSTICK_THRESHOLD) {
-    mvt_setForwardRight(vexRT[Ch3]);
+bool ctl_testJoystickRight() {
+  bool control = false;
+
+  if (JOY_RY <= -JOYSTICK_THRESHOLD || JOY_RY >= JOYSTICK_THRESHOLD) {
+    botVelocityY = JOY_RY;
+    control = true;
   } else {
-    mvt_setForwardRight(0);
+    botVelocityY = 0;
   }
 
-  if (vexRT[Ch2] <= -JOYSTICK_THRESHOLD || vexRT[Ch2] >= JOYSTICK_THRESHOLD) {
-    mvt_setForwardLeft(vexRT[Ch2]);
+  if (JOY_RX <= -JOYSTICK_THRESHOLD || JOY_RX >= JOYSTICK_THRESHOLD) {
+    botVelocityX = JOY_RX;
+    control = true;
   } else {
-    mvt_setForwardLeft(0);
+    botVelocityX = 0;
   }
+
+  return control;
 }
 
 /**
- * Controls the speed of the side motor.
- * Tests Btn6D and Bth5D for activation and sets speed to highest level for the
- * duration of their activation
+ * Controls rotation in segments.
+ * Tests BTN_SROT_NEG and BTN_SROT_POS for activation and rotates the robot by
+ * 45 degrees.
+ *
+ * @return true if the control was activated, false otherwise
  */
-void ctl_testSideMovement() {
-  if (vexRT[Btn6D]) {
-    mvt_setSide(127);
-  } else if (vexRT[Btn5D]) {
-    mvt_setSide(-127);
+bool ctl_testRotationSegments() {
+  if (BTN_SROT_NEG) {
+    mvt_rotateOneSegment(127, 1);
+    return true;
+  } else if (BTN_SROT_POS) {
+    mvt_rotateOneSegment(-127, 1);
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Controls freeform rotation.
+ * Tests BTN_ROT_NEG and BTN_ROT_POS for activation and rotates the robot.
+ *
+ * @return true if the control was activated, false otherwise
+ */
+bool ctl_testRotationFree() {
+  if (BTN_ROT_NEG) {
+    mvt_setRotationSpeed(60);
+    return true;
+  }
+
+  if (BTN_ROT_POS) {
+    mvt_setRotationSpeed(-60);
+    return true;
+  }
+
+  mvt_setRotationSpeed(0);
+  return false;
+}
+
+bool ctl_testNetRotation() {
+  if (BTN_DEG_0) {
+    botRotation = 0;
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
+    return true;
+  } else if (BTN_DEG_90) {
+    botRotation = 90;
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
+    return true;
+  } else if (BTN_DEG_180) {
+    botRotation = 180;
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
+    return true;
+  } else if (DTN_DEG_270) {
+    botRotation = 270;
+    wait1Msec(BTN_TOGGLE_TIMEOUT);
+    return true;
   } else {
-    mvt_setSide(0);
+    return false;
   }
 }
+
 
 /**
  * Controls the speed of the high hang motors.
- * Tests Btn7U and Btn7D for activation and sets speed to highest level for the
- * duration of their activation
+ * Tests BTN_ARM_UP and BTN_ARM_DN for activation and sets speed to highest level
+ * for the duration of their activation
+ *
+ * @return true if the control was activated, false otherwise
  */
-void ctl_testHighHang() {
-  if (vexRT[Btn7U]) {
-    mvt_setHighHang(127);
-  } else if (vexRT[Btn7D]) {
-    mvt_setHighHang(-127);
+bool ctl_testHighHang() {
+  if (BTN_ARM_UP) {
+    mvt_setArmSpeed(127);
+    return true;
+  } else if (BTN_ARM_DN) {
+    mvt_setArmSpeed(-127);
+    return true;
   } else {
-    mvt_setHighHang(0);
+    mvt_setArmSpeed(0);
+    return false;
   }
+}
+
+/**
+ * Tests the controllers for input change.
+ * See child functions for more detailed discriptions of tasks.
+ */
+void ctl_doControllerTick() {
+  // Avoid different movement types in same cycle
+  bool botMoved = false;
+
+  if (!botMoved) { botMoved = ctl_testJoystickleft(); }
+  if (!botMoved) { botMoved = ctl_testJoystickRight(); }
+  if (!botMoved) { botMoved = ctl_testRotationFree(); }
+
+  // if (!botMoved) { botMoved = ctl_testRotationSegments(); }
+
+  ctl_testSlowMode();
+  ctl_testHighHang();
+  ctl_testLock();
+  ctl_testNetRotation();
 }
