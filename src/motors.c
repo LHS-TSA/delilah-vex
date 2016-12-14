@@ -1,8 +1,6 @@
 // SECTION: Drive Motor Control
 
 // Global Variables
-// bool motorZero[4] = {false, false, false, false};
-
 short botVelocityX = 0;               // Velocity towards right boundary
 short botVelocityY = 0;               // Velocity towards middle fence
 short botVelocityZ = 0;               // Rotation
