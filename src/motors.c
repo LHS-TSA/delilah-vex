@@ -83,21 +83,6 @@ void mtr_localCalcVelocity() {
   botSpeed = sqrt(botVelocityX * botVelocityX + botVelocityY * botVelocityY);
 }
 
-/* This won't work proportionally
- * void mtr_localZeroMotors() {
- *   for (int i=0; i<4; i++) {
- *     if (!motorZero[i]) {
- *       if (motorSpeeds[i] > 0) {
- *         motorSpeeds[i]--;
- *       } else if (motorSpeeds[i] < 0) {
- *         motorSpeeds[i]++;
- *       } else if (motorSpeeds[i] == 0) {
- *         motorZero[i] = false;
- *       }
- *     }
- *   }
- * }
- */
 
  void mtr_localRotation() {
    motorSpeeds[0] = botVelocityZ;
