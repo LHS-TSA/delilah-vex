@@ -22,12 +22,7 @@ bool auton = false;             // Should motor tick calculate speed and directi
  * leds off and sets up the slave motors.
  */
 void pre_auton() {
-  stat_doLedPretest();
 
-  bStopTasksBetweenModes = true;
-  motor[lockServo] = -127;
-
-  startTask(stat_ledController, 2);
 }
 
 /**

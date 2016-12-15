@@ -1,5 +1,7 @@
 // SECTION: Controller Functions
 
+#include "constants.h"
+
 /**
  * Controls when the locking mechanism should be automatically activated.
  * Tests for presses to BTN_LOCKING and flips the bool value lockingMode when

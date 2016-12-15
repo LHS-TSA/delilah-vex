@@ -1,5 +1,7 @@
 // SECTION: Drive Motor Control
 
+#include "constants.h"
+
 // Global Variables
 short botVelocityX = 0;               // Velocity towards right boundary
 short botVelocityY = 0;               // Velocity towards middle fence

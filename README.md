@@ -3,7 +3,7 @@
 
 ### Documentation ###
   - See [DOCUMENTATION.md](DOCUMENTATION.md)
-  - Motor math? [motor_setup.xlsx](https://drive.google.com/file/d/0B9RaWg90J14AMmFEUTl5SnpBRXM/view)
+  - Motor math? [motor_setup.xlsx]()
 
 ### Licensing ###
 This program is released under the [GPL v3 License](LICENSE).

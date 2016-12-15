@@ -1,5 +1,8 @@
 // SECTION: Movement Functions
 
+#include "constants.h"
+#include "main.h"
+
 /**
  * Trim and adjust speed.
  * Lowers given speed value to between -127 and 127 and scales the speed to slow

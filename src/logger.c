@@ -6,6 +6,6 @@ unsigned int loopCount = 0;     // Debug output counter
 /**
  * Logs the state of the motors.
  */
-void logState() {
+void log_doLogTick() {
   // TODO: LCD Code
 }
