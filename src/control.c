@@ -30,33 +30,6 @@ bool ctl_testSlowMode() {
 }
 
 /**
- * Controls Linear Motion.
- * Tests JOY_LY for forward motion and then JOY_LX for sideways movement; Both
- * forward and sideways motion cannot be used at the same time - forward takes
- * priority; Does not activate movement without joystick being over joystick
- * threshold to prevent ghost movement
- *
- * @return true if the control was activated, false otherwise
- */
-bool ctl_testJoystickleft() {
-  if (joystickGetAnalog(JOY_LY) <= -JOYSTICK_THRESHOLD || joystickGetAnalog(JOY_LY) >= JOYSTICK_THRESHOLD) {
-    botVelocityY = joystickGetAnalog(JOY_LY);
-    botVelocityX = 0;
-    return true;
-  }
-
-  if (joystickGetAnalog(JOY_LX) <= -JOYSTICK_THRESHOLD || joystickGetAnalog(JOY_LX) >= JOYSTICK_THRESHOLD) {
-    botVelocityX = joystickGetAnalog(JOY_LX);
-    botVelocityY = 0;
-    return true;
-  }
-
-  botVelocityX = 0;
-  botVelocityY = 0;
-  return false;
-}
-
-/**
  * Controls Freeform Motion.
  * Tests JOY_RY for forward motion and then JOY_RX for sideways movement; Both
  * forward and sideways can be used at the same time; Does not activate movement
