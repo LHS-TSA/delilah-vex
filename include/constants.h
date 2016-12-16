@@ -15,31 +15,35 @@
 #define MAX_MOTOR_C 127
 #define MAX_MOTOR_D 127
 
-// Shorthand for motors
-#define MOTOR_A motor[motorA]
-#define MOTOR_B motor[motorB]
-#define MOTOR_C motor[motorC]
-#define MOTOR_D motor[motorD]
+// Motor index numbers
+#define MOTOR_A 2
+#define MOTOR_B 3
+#define MOTOR_C 4
+#define MOTOR_D 5
+#define MOTOR_LEFT_LOW 6
+#define MOTOR_RIGHT_LOW 7
+#define MOTOR_LEFT_HIGH 8
+#define MOTOR_RIGHT_HIGH 9
 
-#define JOY_LX vexRT[Ch4]         // Joystick Left, Left-Right
-#define JOY_LY vexRT[Ch3]         // Joystick Left, Up-Down
-#define JOY_RX vexRT[Ch1]         // Joystick Right, Left-Right
-#define JOY_RY vexRT[Ch2]         // Joystick Right, Up-Down
+#define JOY_LX 0,4                // Joystick Left, Left-Right
+#define JOY_LY 0,3                // Joystick Left, Up-Down
+#define JOY_RX 0,1                // Joystick Right, Left-Right
+#define JOY_RY 0,2                // Joystick Right, Up-Down
 
-#define BTN_SLOW vexRT[Btn7R]     // Toggles Slow Mode
-#define BTN_LOCKING vexRT[Btn7L]  // Toggles Locking Mode
-#define BTN_ARM_UP vexRT[Btn7U]   // Extends arm up
-#define BTN_ARM_DN vexRT[Btn7D]   // Retracts arm down
+#define BTN_SLOW 0,7,JOY_RIGHT    // Toggles Slow Mode
+#define BTN_LOCKING 0,7,JOY_LEFT  // Toggles Locking Mode
+#define BTN_ARM_UP 0,7,JOY_UP     // Extends arm up
+#define BTN_ARM_DN 0,7,JOY_DOWN   // Retracts arm down
 
-#define BTN_ROT_NEG vexRT[Btn6D]  // Free Rotation Counterclockwise
-#define BTN_ROT_POS vexRT[Btn5D]  // Free Rotation Clockwise
+#define BTN_ROT_NEG 0,6,JOY_DOWN  // Free Rotation Counterclockwise
+#define BTN_ROT_POS 0,5,JOY_DOWN  // Free Rotation Clockwise
 
-#define BTN_SROT_NEG vexRT[Btn6U] // Segmented Rotation Counterclockwise
-#define BTN_SROT_POS vexRT[Btn5U] // Segmented Rotation Clockwise
+#define BTN_SROT_NEG 0,6,JOY_UP   // Segmented Rotation Counterclockwise
+#define BTN_SROT_POS 0,5,JOY_UP   // Segmented Rotation Clockwise
 
-#define BTN_DEG_0 vexRT[Btn8U]    // Set rotation value to 0
-#define BTN_DEG_90 vexRT[Btn8R]   // Set rotation value to 90
-#define BTN_DEG_180 vexRT[Btn8D]  // Set rotation value to 180
-#define DTN_DEG_270 vexRT[Btn8L]  // Set rotation value to 270
+#define BTN_DEG_0 0,8,JOY_UP      // Set rotation value to 0
+#define BTN_DEG_90 0,8,JOY_RIGHT  // Set rotation value to 90
+#define BTN_DEG_180 0,8,JOY_DOWN  // Set rotation value to 180
+#define DTN_DEG_270 0,8,JOY_RIGHT // Set rotation value to 270
 
 #endif // DELILAH_CONSTANTS_H
