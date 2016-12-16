@@ -26,9 +26,5 @@ void initializeIO() {
  */
 void initialize() {
   stat_doLedPretest();
-
-  bStopTasksBetweenModes = true;
-  motor[lockServo] = -127;
-
   startTask(stat_ledController, 2);
 }

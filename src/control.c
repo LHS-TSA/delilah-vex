@@ -4,28 +4,6 @@
 #include "constants.h"
 
 /**
- * Controls when the locking mechanism should be automatically activated.
- * Tests for presses to BTN_LOCKING and flips the bool value lockingMode when
- * activated; The green led will be active when in locking mode
- *
- * @return true if the control was activated, false otherwise
- */
-bool ctl_testLock() {
-  if (BTN_LOCKING) {
-    wait1Msec(BTN_TOGGLE_TIMEOUT);
-    lockingMode = !lockingMode;
-    return true;
-  }
-
-  if (lockingMode && SensorValue(armSwitch)) {
-    mvt_toggleLock();
-    lockingMode = false;
-    return true;
-  }
-  return false;
-}
-
-/**
  * Controls when motors are at reduced speed.
  * Tests for presses to BTN_SLOW and flips the bool value slowMode when activated;
  * The red led will be active when in slow mode
@@ -195,6 +173,5 @@ void ctl_doControllerTick() {
 
   ctl_testSlowMode();
   ctl_testHighHang();
-  ctl_testLock();
   ctl_testNetRotation();
 }
