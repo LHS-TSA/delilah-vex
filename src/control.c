@@ -6,6 +6,13 @@
 #include "main.h"
 #include "movement.h"
 
+// Quick Controller Changing
+#define BTN_SLOW L_BTN_RIGHT    // Toggles Slow Mode
+#define BTN_ROT_NEG TL_BTN_DOWN // Free Rotation Counterclockwise
+#define BTN_ROT_POS TR_BTN_DOWN // Free Rotation Clockwise
+#define BTN_ARM_UP L_BTN_UP     // Extends Arm Up
+#define BTN_ARM_DOWN L_BTN_DOWN // Retracts Arm Down
+
 /**
  * Controls when motors are at reduced speed.
  * Tests for presses to BTN_SLOW and flips the bool value slowMode when activated;
