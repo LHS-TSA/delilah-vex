@@ -1,5 +1,7 @@
 // SECTION: Autonomous Movement
 
+#include "API.h"
+
 /**
  * Autonomous forward timed movement control.
  * Controls the motion of the motors for forward movement using the timing

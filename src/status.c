@@ -1,5 +1,8 @@
 // SECTION: Status Functions
 
+#include "main.h"
+
+// Global Variables
 short allFlashCount = 0;
 short redFlashCount = 0;
 short yellowFlashCount = 0;

@@ -1,7 +1,7 @@
 // SECTION: Movement Functions
 
-#include "constants.h"
 #include "main.h"
+#include "constants.h"
 
 /**
  * Trim and adjust speed.

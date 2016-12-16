@@ -1,5 +1,7 @@
 // SECTION: Logger
 
+#include "API.h"
+
 // Global Variables
 unsigned int loopCount = 0;     // Debug output counter
 
