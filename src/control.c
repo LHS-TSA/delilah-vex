@@ -37,17 +37,17 @@ bool ctl_testSlowMode() {
  *
  * @return true if the control was activated, false otherwise
  */
-bool ctl_testJoystickRight() {
+bool ctl_testJoystickleft() {
   bool control = false;
 
-  if (joystickGetAnalog(JOY_RY) <= -JOYSTICK_THRESHOLD || joystickGetAnalog(JOY_RY) >= JOYSTICK_THRESHOLD) {
+  if (joystickGetAnalog(JOY_LY) <= -JOYSTICK_THRESHOLD || joystickGetAnalog(JOY_LY) >= JOYSTICK_THRESHOLD) {
     botVelocityY = joystickGetAnalog(JOY_RY);
     control = true;
   } else {
     botVelocityY = 0;
   }
 
-  if (joystickGetAnalog(JOY_RX) <= -JOYSTICK_THRESHOLD || joystickGetAnalog(JOY_RX) >= JOYSTICK_THRESHOLD) {
+  if (joystickGetAnalog(JOY_LX) <= -JOYSTICK_THRESHOLD || joystickGetAnalog(JOY_LX) >= JOYSTICK_THRESHOLD) {
     botVelocityX = joystickGetAnalog(JOY_RX);
     control = true;
   } else {
@@ -55,6 +55,14 @@ bool ctl_testJoystickRight() {
   }
 
   return control;
+}
+
+/**
+ * Controls Robot "Looking" Direction.
+ */
+bool ctl_testJoystickRight() {
+  // TODO: Right Joystick
+  return false;
 }
 
 /**
