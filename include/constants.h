@@ -45,5 +45,9 @@
 #define BTN_DEG_90 0,8,JOY_RIGHT  // Set rotation value to 90
 #define BTN_DEG_180 0,8,JOY_DOWN  // Set rotation value to 180
 #define DTN_DEG_270 0,8,JOY_RIGHT // Set rotation value to 270
+// Global Variables
+#define STARTING_BOX digitalRead(20) // Digital Port 12, I think
+#define BUMPER_ARM digitalRead(9)    // Digital Port 1, I think
+extern bool slowMode;
 
 #endif // DELILAH_CONSTANTS_H
