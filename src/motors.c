@@ -2,23 +2,27 @@
 
 #include "API.h"
 #include "constants.h"
+#include <math.h>
 
-// Global Variables
-short botVelocityX = 0;               // Velocity towards right boundary
-short botVelocityY = 0;               // Velocity towards middle fence
+/**
+ * Global Variables.
+ * X and Y as described as (0,0)
+ */
+int botPosX;
+int botPosY;
+
+short botVelocityX = 0;               // Velocity relative to x-coordinate in xy-coordinate plane
+short botVelocityY = 0;               // Velocity relative to y-coordinate in xy-coordinate plane
 short botVelocityZ = 0;               // Rotation
+
+short botRotationX = 0;               // Facing x-coordinate in xy-coordinate plane
+short botRotationY = 0;               // Facing y-coordinate in xy-coordinate plane
+
 short motorSpeeds[4] = {0, 0, 0, 0};  // Speed of each motor ()
 
 short botAngle = 0;                   // angle of the robot
 short botSpeed = 0;                   // speed of the robot
 short botRotation = 0;                // rotation of the robot
-
-int deg_sq = 0;
-int deg_cu = 0;
-float deg_sqf = 0;
-float deg_cuf = 0;
-float deg_f = 0;
-float nfm = 0;
 
 /**
  * Return the speed of the non-facing motor speed.
@@ -30,12 +34,12 @@ float nfm = 0;
  */
 short mtr_localGetNonFacingMotorSpeed(int degree) {
   // TODO: OPTIMIZE ME!
-  deg_sq = degree * degree;
-  deg_cu = deg_sq * degree;
+  int deg_sq = degree * degree;
+  int deg_cu = deg_sq * degree;
 
-  deg_sqf = -0.041828 * deg_sq;
-  deg_cuf = 0.00031 * deg_cu;
-  deg_f = 4.05596 * degree;
+  float deg_sqf = -0.041828 * deg_sq;
+  float deg_cuf = 0.00031 * deg_cu;
+  float deg_f = 4.05596 * degree;
 
   return (short)(deg_sqf + deg_cuf + deg_f + -126.037);
 }
@@ -57,7 +61,7 @@ short mtr_localGetCurrentQuad() {
  * Generates the motor speeds for Quadrant 1
  */
 void mtr_localQuad1() {
-  nfm = mtr_localGetNonFacingMotorSpeed(botAngle);
+  short nfm = mtr_localGetNonFacingMotorSpeed(botAngle);
 
   motorSpeeds[0] = (nfm * botSpeed) / MAX_MOTOR_A;
   motorSpeeds[1] = (-MAX_MOTOR_B * botSpeed) / MAX_MOTOR_B;
@@ -69,7 +73,7 @@ void mtr_localQuad1() {
  * Generates the motor speeds for Quadrant 2
  */
 void mtr_localQuad2() {
-  nfm = mtr_localGetNonFacingMotorSpeed(botAngle - 90);
+  short nfm = mtr_localGetNonFacingMotorSpeed(botAngle - 90);
 
   motorSpeeds[0] = (MAX_MOTOR_A * botSpeed) / MAX_MOTOR_A;
   motorSpeeds[1] = (nfm * botSpeed) / MAX_MOTOR_B;
@@ -81,7 +85,7 @@ void mtr_localQuad2() {
  * Generates the motor speeds for Quadrant 3
  */
 void mtr_localQuad3() {
-  nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle - 90);
+  short nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle - 90);
 
   motorSpeeds[0] = (-nfm * botSpeed) / MAX_MOTOR_A;
   motorSpeeds[1] = (MAX_MOTOR_B * botSpeed) / MAX_MOTOR_B;
@@ -93,7 +97,7 @@ void mtr_localQuad3() {
  * Generates the motor speeds for Quadrant 4
  */
 void mtr_localQuad4() {
-  nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle);
+  short nfm = -mtr_localGetNonFacingMotorSpeed(-botAngle);
 
   motorSpeeds[0] = (-MAX_MOTOR_A * botSpeed) / MAX_MOTOR_A;
   motorSpeeds[1] = (-nfm * botSpeed) / MAX_MOTOR_B;
@@ -120,7 +124,7 @@ void mtr_localRotation() {
 }
 
 void mtr_localMotorSpeed() {
-  if (!auton) { mtr_localCalcVelocity(); }
+  if (!isAutonomous()) { mtr_localCalcVelocity(); }
 
   switch (mtr_localGetCurrentQuad()) {
     case 4: mtr_localQuad4(); break;

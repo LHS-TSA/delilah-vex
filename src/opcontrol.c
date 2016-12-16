@@ -12,6 +12,9 @@
 
 #include "main.h"
 #include "constants.h"
+#include "status.h"
+#include "control.h"
+#include "motors.h"
 
 /*
  * Runs the user operator control code. This function will be started in its own task with the
@@ -31,22 +34,21 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
-  startTask(stat_ledController, 2);
   stat_flashLedGreen(3);
-  motor[lockServo] = -127;
-  auton = false;
 
   while (true) {
-    clearTimer(T1);             // Resets timer to 0
+    // clearTimer(T1);             // Resets timer to 0
 
     ctl_doControllerTick();     // Handles all controller processes
     mtr_doMotorTick();          // Fancy holonomic math stuff
-
+    taskDelay(5);
+    /**
     if (time1[T1] < 20) {       // Make a cycle last exectly 20ms
-      while(time1[T1] < 20) { wait1Msec(1); }
+      while(time1[T1] < 20) { wait1Msec(time1); }
       mtr_commitMotorSpeeds();
     } else {
       writeDebugStreamLine("[WARN] Main Cycle Exceeded 20ms; Lasted %dms", time1(T1));
     }
+    */
   }
 }

@@ -68,13 +68,17 @@ void mvt_setRotationSpeed(short speed) {
  * @param speed Speed in range -127 to 127
  */
 void mvt_setArmSpeed(short speed) {
-  speed = mvt_localTrimSpeed(speed, false);
+  speed = mvt_localTrimSpeed(speed);
 
-  if (speed < 0 && SensorValue(armSwitch)) {
-    motor[armLeft] = 0;
-    motor[armRight] = 0;
+  if (speed < 0 && BUMPER_ARM) {
+    motorSet(MOTOR_LEFT_LOW, 0);
+    motorSet(MOTOR_LEFT_HIGH, 0);
+    motorSet(MOTOR_RIGHT_LOW, 0);
+    motorSet(MOTOR_RIGHT_HIGH, 0);
   } else {
-    motor[armLeft] = -speed;
-    motor[armRight] = speed;
+    motorSet(MOTOR_LEFT_LOW, -speed);
+    motorSet(MOTOR_LEFT_HIGH, -speed);
+    motorSet(MOTOR_RIGHT_LOW, speed);
+    motorSet(MOTOR_RIGHT_HIGH, speed);
   }
 }

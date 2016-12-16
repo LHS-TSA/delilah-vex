@@ -1,6 +1,7 @@
 // SECTION: Status Functions
 
 #include "main.h"
+#include "constants.h"
 
 // Global Variables
 short allFlashCount = 0;
@@ -50,10 +51,9 @@ void stat_doLedPretest() {
  * slowMode, locked, and lockingMode, respectfully.
  */
 void stat_resetLeds() {
-  SensorValue[ledRed] = (slowMode ? 1 : 0);
-  SensorValue[ledYellow] = (locked ? 1 : 0);
-  SensorValue[ledGreen] = (lockingMode ? 1 : 0);
-
+  digitalWrite(LED_RED, (slowMode ? 1 : 0));
+  digitalWrite(LED_YELLOW, 0);
+  digitalWrite(LED_GREEN, 0);
 }
 
 /**
@@ -63,14 +63,14 @@ void stat_resetLeds() {
  */
 void stat_localFlashLeds() {
   for (int i=0; i<allFlashCount; i++) {
-    SensorValue[ledYellow] = 1;
-    SensorValue[ledRed] = 1;
-    SensorValue[ledGreen] = 1;
-    wait1Msec(50);
-    SensorValue[ledYellow] = 0;
-    SensorValue[ledRed] = 0;
-    SensorValue[ledGreen] = 0;
-    wait1Msec(50);
+    digitalWrite(LED_RED, 1);
+    digitalWrite(LED_YELLOW, 1);
+    digitalWrite(LED_GREEN, 1);
+    taskDelay(50);
+    digitalWrite(LED_RED, 0);
+    digitalWrite(LED_YELLOW, 0);
+    digitalWrite(LED_GREEN, 0);
+    taskDelay(50);
   }
 
   allFlashCount = 0;
@@ -80,49 +80,49 @@ void stat_localFlashLeds() {
 /**
  * Flashes the red LED.
  * Turns the red LED on and off based upon the values of the redFlashCount variable
- * with 50ms delay in between each cycle
+ * with 50ms delay in between each cycle; This code is really redundant but pointers
+ * are confusing and copy-pasting is easier than learning how to actually do it
+ * correctly
  */
 void stat_localFlashLedRed() {
-  for (int i=0; i<redFlashCount; i++) {
-    SensorValue[ledRed] = 1;
-    wait1Msec(50);
-    SensorValue[ledRed] = 0;
-    wait1Msec(50);
+  for (; redFlashCount>0; redFlashCount--) {
+    digitalWrite(LED_RED, 1);
+    taskDelay(50);
+    digitalWrite(LED_RED, 0);
+    taskDelay(50);
   }
-
-  redFlashCount = 0;
 }
 
 /**
  * Flashes the yellow LED.
  * Turns the yellow LED on and off based upon the values of the yellowFlashCount
- * variable with 50ms delay in between each cycle
+ * variable with 50ms delay in between each cycle; This code is really redundant
+ * but pointers are confusing and copy-pasting is easier than learning how to
+ * actually do it correctly
  */
 void stat_localFlashLedYellow() {
-  for (int i=0; i<yellowFlashCount; i++) {
-    SensorValue[ledYellow] = 1;
-    wait1Msec(50);
-    SensorValue[ledYellow] = 0;
-    wait1Msec(50);
+  for (; yellowFlashCount>0; yellowFlashCount--) {
+    digitalWrite(LED_YELLOW, 1);
+    taskDelay(50);
+    digitalWrite(LED_YELLOW, 0);
+    taskDelay(50);
   }
-
-  yellowFlashCount = 0;
 }
 
 /**
  * Flashes the green LED.
  * Turns the green LED on and off based upon the values of the greenFlashCount
- * variable with 50ms delay in between each cycle
+ * variable with 50ms delay in between each cycle; This code is really redundant
+ * but pointers are confusing and copy-pasting is easier than learning how to
+ * actually do it correctly
  */
 void stat_localFlashLedGreen() {
-  for (int i=0; i<greenFlashCount; i++) {
-    SensorValue[ledGreen] = 1;
-    wait1Msec(50);
-    SensorValue[ledGreen] = 0;
-    wait1Msec(50);
+  for (; greenFlashCount>0; greenFlashCount--) {
+    digitalWrite(LED_GREEN, 1);
+    taskDelay(50);
+    digitalWrite(LED_GREEN, 0);
+    taskDelay(50);
   }
-
-  greenFlashCount = 0;
 }
 
 /**
@@ -131,13 +131,13 @@ void stat_localFlashLedGreen() {
  */
 void stat_localDoLedPretest() {
   redFlashCount = 3;
-  yellowFlashCount = 3;
-  greenFlashCount = 3;
   stat_localFlashLedRed();
+
+  yellowFlashCount = 3;
   stat_localFlashLedYellow();
-  stat_localFlashLedGreen();
-  SensorValue[ledGreen] = 1;
-  wait1Msec(250);
+
+  digitalWrite(LED_GREEN, 1);
+  taskDelay(250);
 
   pretest = false;
 }
