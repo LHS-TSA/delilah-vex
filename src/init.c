@@ -1,5 +1,7 @@
 #include "main.h"
 #include "status.h"
+#include "constants.h"
+#include "motors.h"
 
 /*
  * Runs pre-initialization code. This function will be started in kernel mode one time while the
@@ -27,5 +29,7 @@ void initializeIO() {
  */
 void initialize() {
   taskRunLoop(stat_ledController, 50);
+  botPosX = (STARTING_BOX ? LEFT_BOX_X : RIGHT_BOX_X);
+  botPosY = 0;
   stat_doLedPretest();
 }
