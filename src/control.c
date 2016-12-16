@@ -75,25 +75,6 @@ bool ctl_testJoystickRight() {
 }
 
 /**
- * Controls rotation in segments.
- * Tests BTN_SROT_NEG and BTN_SROT_POS for activation and rotates the robot by
- * 45 degrees.
- *
- * @return true if the control was activated, false otherwise
- */
-bool ctl_testRotationSegments() {
-  if (BTN_SROT_NEG) {
-    mvt_rotateOneSegment(127, 1);
-    return true;
-  } else if (BTN_SROT_POS) {
-    mvt_rotateOneSegment(-127, 1);
-    return true;
-  }
-
-  return false;
-}
-
-/**
  * Controls freeform rotation.
  * Tests BTN_ROT_NEG and BTN_ROT_POS for activation and rotates the robot.
  *
@@ -113,29 +94,6 @@ bool ctl_testRotationFree() {
   mvt_setRotationSpeed(0);
   return false;
 }
-
-bool ctl_testNetRotation() {
-  if (BTN_DEG_0) {
-    botRotation = 0;
-    wait1Msec(BTN_TOGGLE_TIMEOUT);
-    return true;
-  } else if (BTN_DEG_90) {
-    botRotation = 90;
-    wait1Msec(BTN_TOGGLE_TIMEOUT);
-    return true;
-  } else if (BTN_DEG_180) {
-    botRotation = 180;
-    wait1Msec(BTN_TOGGLE_TIMEOUT);
-    return true;
-  } else if (DTN_DEG_270) {
-    botRotation = 270;
-    wait1Msec(BTN_TOGGLE_TIMEOUT);
-    return true;
-  } else {
-    return false;
-  }
-}
-
 
 /**
  * Controls the speed of the high hang motors.
@@ -173,5 +131,4 @@ void ctl_doControllerTick() {
 
   ctl_testSlowMode();
   ctl_testHighHang();
-  ctl_testNetRotation();
 }
