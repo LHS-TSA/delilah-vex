@@ -26,6 +26,6 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
+  taskRunLoop(stat_ledController, 50);
   stat_doLedPretest();
-  taskCreate(stat_ledController, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
 }

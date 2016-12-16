@@ -138,6 +138,8 @@ void stat_localDoLedPretest() {
   stat_localFlashLedGreen();
   SensorValue[ledGreen] = 1;
   wait1Msec(250);
+
+  pretest = false;
 }
 
 /**
@@ -170,20 +172,11 @@ bool stat_localExecuteFlashCount() {
  * LED controller.
  * Handles ticking of the LEDs without devoting time away from the main loop.
  */
-void stat_ledController(void* args) {
-  bool flash = false;
-  if (pretest) { stat_localDoLedPretest(); }
-
-  while (true) {
-    clearTimer(T2);              // Resets timer to 0
-    stat_resetLeds();
-    flash = stat_localExecuteFlashCount();
-
-    // Make a cycle last exectly 50ms
-    if (time1[T2] < 50) {
-      while(time1[T2] < 50) { wait1Msec(1); }
-    } else if (!flash) {
-      writeDebugStreamLine("[WARN] LED Cycle Exceeded 50ms; Lasted %dms", time1(T2));
-    }
+void stat_ledController() {
+  if (pretest) {
+    stat_localDoLedPretest();
   }
+
+  stat_resetLeds();
+  stat_localExecuteFlashCount();
 }
