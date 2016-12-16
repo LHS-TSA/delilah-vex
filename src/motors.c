@@ -140,14 +140,14 @@ void mtr_doMotorTick() {
 
 void mtr_commitMotorSpeeds() {
   if (slowMode) {
-    MOTOR_A = (motorSpeeds[0] * SLOW_MAX_SPEED) / 127;
-    MOTOR_B = (motorSpeeds[1] * SLOW_MAX_SPEED) / 127;
-    MOTOR_C = (motorSpeeds[2] * SLOW_MAX_SPEED) / 127;
-    MOTOR_D = (motorSpeeds[3] * SLOW_MAX_SPEED) / 127;
+    motorSet(MOTOR_A, (motorSpeeds[0] * SLOW_MAX_SPEED) / 127);
+    motorSet(MOTOR_B, (motorSpeeds[1] * SLOW_MAX_SPEED) / 127);
+    motorSet(MOTOR_C, (motorSpeeds[2] * SLOW_MAX_SPEED) / 127);
+    motorSet(MOTOR_D, (motorSpeeds[3] * SLOW_MAX_SPEED) / 127);
   } else {
-    MOTOR_A = motorSpeeds[0];
-    MOTOR_B = motorSpeeds[1];
-    MOTOR_C = motorSpeeds[2];
-    MOTOR_D = motorSpeeds[3];
+    motorSet(MOTOR_A, motorSpeeds[0]);
+    motorSet(MOTOR_B, motorSpeeds[1]);
+    motorSet(MOTOR_C, motorSpeeds[2]);
+    motorSet(MOTOR_D, motorSpeeds[3]);
   }
 }

@@ -2,6 +2,9 @@
 
 #include "API.h"
 #include "constants.h"
+#include "motors.h"
+#include "main.h"
+#include "movement.h"
 
 /**
  * Controls when motors are at reduced speed.
@@ -11,8 +14,8 @@
  * @return true if the control was activated, false otherwise
  */
 bool ctl_testSlowMode() {
-  if (BTN_SLOW) {
-    wait1Msec(BTN_TOGGLE_TIMEOUT);
+  if (joystickGetDigital(BTN_SLOW)) {
+    wait(BTN_TOGGLE_TIMEOUT);
     slowMode = !slowMode;
     return true;
   }
@@ -29,14 +32,14 @@ bool ctl_testSlowMode() {
  * @return true if the control was activated, false otherwise
  */
 bool ctl_testJoystickleft() {
-  if (JOY_LY <= -JOYSTICK_THRESHOLD || JOY_LY >= JOYSTICK_THRESHOLD) {
-    botVelocityY = JOY_LY;
+  if (joystickGetAnalog(JOY_LY) <= -JOYSTICK_THRESHOLD || joystickGetAnalog(JOY_LY) >= JOYSTICK_THRESHOLD) {
+    botVelocityY = joystickGetAnalog(JOY_LY);
     botVelocityX = 0;
     return true;
   }
 
-  if (JOY_LX <= -JOYSTICK_THRESHOLD || JOY_LX >= JOYSTICK_THRESHOLD) {
-    botVelocityX = JOY_LX;
+  if (joystickGetAnalog(JOY_LX) <= -JOYSTICK_THRESHOLD || joystickGetAnalog(JOY_LX) >= JOYSTICK_THRESHOLD) {
+    botVelocityX = joystickGetAnalog(JOY_LX);
     botVelocityY = 0;
     return true;
   }
@@ -57,15 +60,15 @@ bool ctl_testJoystickleft() {
 bool ctl_testJoystickRight() {
   bool control = false;
 
-  if (JOY_RY <= -JOYSTICK_THRESHOLD || JOY_RY >= JOYSTICK_THRESHOLD) {
-    botVelocityY = JOY_RY;
+  if (joystickGetAnalog(JOY_RY) <= -JOYSTICK_THRESHOLD || joystickGetAnalog(JOY_RY) >= JOYSTICK_THRESHOLD) {
+    botVelocityY = joystickGetAnalog(JOY_RY);
     control = true;
   } else {
     botVelocityY = 0;
   }
 
-  if (JOY_RX <= -JOYSTICK_THRESHOLD || JOY_RX >= JOYSTICK_THRESHOLD) {
-    botVelocityX = JOY_RX;
+  if (joystickGetAnalog(JOY_RX) <= -JOYSTICK_THRESHOLD || joystickGetAnalog(JOY_RX) >= JOYSTICK_THRESHOLD) {
+    botVelocityX = joystickGetAnalog(JOY_RX);
     control = true;
   } else {
     botVelocityX = 0;
@@ -81,12 +84,12 @@ bool ctl_testJoystickRight() {
  * @return true if the control was activated, false otherwise
  */
 bool ctl_testRotationFree() {
-  if (BTN_ROT_NEG) {
+  if (joystickGetDigital(BTN_ROT_NEG)) {
     mvt_setRotationSpeed(60);
     return true;
   }
 
-  if (BTN_ROT_POS) {
+  if (joystickGetDigital(BTN_ROT_POS)) {
     mvt_setRotationSpeed(-60);
     return true;
   }
@@ -103,10 +106,10 @@ bool ctl_testRotationFree() {
  * @return true if the control was activated, false otherwise
  */
 bool ctl_testHighHang() {
-  if (BTN_ARM_UP) {
+  if (joystickGetDigital(BTN_ARM_UP)) {
     mvt_setArmSpeed(127);
     return true;
-  } else if (BTN_ARM_DN) {
+  } else if (joystickGetDigital(BTN_ARM_DN)) {
     mvt_setArmSpeed(-127);
     return true;
   } else {
