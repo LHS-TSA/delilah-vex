@@ -1,4 +1,5 @@
 #include "main.h"
+#include "status.h"
 
 /*
  * Runs pre-initialization code. This function will be started in kernel mode one time while the
@@ -26,5 +27,5 @@ void initializeIO() {
  */
 void initialize() {
   stat_doLedPretest();
-  startTask(stat_ledController, 2);
+  taskCreate(stat_ledController, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
 }
