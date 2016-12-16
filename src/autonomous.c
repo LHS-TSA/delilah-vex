@@ -13,7 +13,6 @@
  * @param rot Degrees to rotate from current position
  */
 void atn_mvtVelocityTimed(int duration, short x, short y, short rot) {
-  dist *= 1000;
   // TODO: atn_mvtFwdVelocityTime
 }
 
