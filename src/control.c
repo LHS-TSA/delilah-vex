@@ -97,7 +97,7 @@ bool ctl_testHighHang() {
   if (joystickGetDigital(BTN_ARM_UP)) {
     mvt_setArmSpeed(127);
     return true;
-  } else if (joystickGetDigital(BTN_ARM_DN)) {
+  } else if (joystickGetDigital(BTN_ARM_DOWN)) {
     mvt_setArmSpeed(-127);
     return true;
   } else {
