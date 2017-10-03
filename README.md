@@ -10,7 +10,34 @@
 
 ### Documentation ###
   - See [~~DOCUMENTATION.md~~](#)
-  - Holonomic Motor Math? [motor_setup.xlsx](https://docs.google.com/spreadsheets/d/1gFXbpu1K45QSy5w5Fn7_MTskXsVlCkQGFXL7q78xL94/edit?usp=sharing)
+
+### Python Motor Math Script ###
+- Holonomic Motor Math? [motor_setup.xlsx](https://docs.google.com/spreadsheets/d/1gFXbpu1K45QSy5w5Fn7_MTskXsVlCkQGFXL7q78xL94/edit?usp=sharing)
+```python
+import math
+
+motor_stable = 89.803
+
+for i in range(-127,127):
+  ax = -(i / 1.414)
+  ay = i / 1.414
+  bx = -motor_stable
+  by = -motor_stable
+  cx = -(i / 1.414)
+  cy = i / 1.414
+  dx = -motor_stable
+  dy = -motor_stable
+
+  sum_x = ax + bx + cx + dx
+  sum_y = ay + by + cy + dy
+
+  if sum_x != 0 or sum_y != 0:
+    angle = math.degrees(math.atan2(sum_y, sum_x))
+  else:
+    angle = 0
+
+  print(i,'-127',-i,'127',angle,sep=',')
+```
 
 ### Licensing ###
 This program is released under the [GPL v3 License](LICENSE).
