@@ -172,11 +172,14 @@ bool stat_localExecuteFlashCount() {
  * LED controller.
  * Handles ticking of the LEDs without devoting time away from the main loop.
  */
-void stat_ledController() {
-  if (pretest) {
-    stat_localDoLedPretest();
-  }
+void stat_ledController(void* argseee) {
+  while (true) {
+    if (pretest) {
+      stat_localDoLedPretest();
+    }
 
-  stat_resetLeds();
-  stat_localExecuteFlashCount();
+    stat_resetLeds();
+    stat_localExecuteFlashCount();
+    taskDelay(100);
+  }
 }

@@ -56,8 +56,8 @@
 #define LED_GREEN 11
 
 // Global Variables
-#define STARTING_BOX digitalRead(20) // Digital Port 12, I think
-#define BUMPER_ARM digitalRead(9)    // Digital Port 1, I think
+#define STARTING_BOX digitalRead(12) // Digital Port 12, I think
+#define BUMPER_ARM digitalRead(1)    // Digital Port 1, I think
 extern bool slowMode;
 
 #endif // DELILAH_CONSTANTS_H

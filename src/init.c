@@ -28,7 +28,7 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
-  taskRunLoop(stat_ledController, 50);
+  taskCreate(stat_ledController, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
   botPosX = (STARTING_BOX ? LEFT_BOX_X : RIGHT_BOX_X);
   botPosY = 0;
   stat_doLedPretest();
